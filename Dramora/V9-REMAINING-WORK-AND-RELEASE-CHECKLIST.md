@@ -136,3 +136,15 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - [ ] Change Blogger blog title and verify header brand text updates automatically.
 - [ ] Check mobile/desktop spacing, sticky header, footer, and homepage sections.
 - [ ] Confirm Firebase auth, Blogger post pages, episode switching, and mobile bottom navigation remain functional.
+
+
+## V9.12 — Layout-managed navigation and category verification
+- [ ] Install the updated XML on a private Blogger test blog and confirm it saves without `Update failed`.
+- [ ] In Blogger Dashboard → Layout, confirm the new `dramoraNavWidgets` and `dramoraCategoryWidgets` areas appear.
+- [ ] Add one native LinkList gadget to `dramoraNavWidgets`; configure Home, Discover, Community, My List, Profile, and any label archive links with valid destination URLs.
+- [ ] Confirm adding the LinkList gadget hides the built-in desktop menu links (no duplicate menu) and that the mobile menu button expands/collapses the custom menu.
+- [ ] Add one native Label gadget to `dramoraCategoryWidgets`; select the intended genre labels and confirm they render as purple/dark category pills.
+- [ ] Confirm adding the Label gadget hides the default mood chips; remove the gadget and confirm the original fallback chips return.
+- [ ] Confirm empty new sections do not create visible gaps and existing five V9.11 gadget areas still work.
+- [ ] Confirm the fixed five-item mobile bottom navigation remains visible and usable; it intentionally remains a compact app navigation, independent of the desktop LinkList.
+- [ ] Confirm Blogger Pages still exist at the exact required paths; menu configuration does not create pages.
