@@ -537,6 +537,8 @@
     .archive-post-feed { display:grid; gap:14px; }
     .archive-post-feed .post-outer { margin:0; }
     .archive-post-feed .post { display:grid; grid-template-columns:minmax(150px,220px) minmax(0,1fr); gap:18px; align-items:start; padding:15px; }
+    .archive-post-thumb { display:block; grid-row:1 / span 2; min-width:0; aspect-ratio:3/4; overflow:hidden; border-radius:12px; background:#171827; }
+    .archive-post-thumb img { width:100%; height:100%; object-fit:cover; }
     .archive-post-feed .post-header { min-width:0; }
     .archive-post-feed .post-title { font-size:19px; margin:2px 0 9px; }
     .archive-post-feed .post-body { min-width:0; font-size:13px; line-height:1.65; }
@@ -702,7 +704,7 @@
         </div>
           <aside class='sidebar home-sidebar'>
             <div class='sidebar-box sidebar-feature-box'><span class='eyebrow'>YOUR NEXT STORY</span><h3>Stories worth staying up for.</h3><p>Discover short dramas, new episodes and unforgettable moments — always free.</p><a class='button-primary' href='/p/discover.html'>Explore dramas</a></div>
-            <b:section class='layout-slot layout-sidebar-slot' id='dramoraSidebarWidgets' maxwidgets='6' showaddelement='yes'/>
+            <div class='sidebar-widget-area'><b:section class='layout-slot layout-sidebar-slot' id='dramoraSidebarWidgets' maxwidgets='6' showaddelement='yes'/></div>
             <div class='sidebar-box'><h3>Browse genres</h3><div class='sidebar-link-list'><a href='/search/label/Romance'>Romance</a><a href='/search/label/Thriller'>Thriller</a><a href='/search/label/Comedy'>Comedy</a><a href='/search/label/Action'>Action</a><a href='/search/label/Drama'>Drama</a></div></div>
             <div class='sidebar-box'><h3>Your Dramora</h3><div class='sidebar-link-list'><a href='/p/my-list.html'>My List</a><a href='/p/profile.html'>Watch history</a><a href='/p/community.html'>Community</a></div></div>
           </aside>
@@ -744,19 +746,24 @@
                                 </b:loop>
                               </div>
                             <b:else/>
-                              <div class='blog-posts hfeed archive-post-feed'>
-                                <b:loop values='data:posts' var='post'>
-                                  <b:include data='post' name='dramoraPost'/>
-                                </b:loop>
-                              </div>
-                              <nav class='blog-pager dramora-pager' aria-label='Post navigation'>
-                                <b:if cond='data:newerPageUrl'><a class='pager-newer' expr:href='data:newerPageUrl'>← Newer stories</a></b:if>
-                                <b:if cond='data:olderPageUrl'><a class='pager-older' expr:href='data:olderPageUrl'>Older stories →</a></b:if>
-                              </nav>
+                              <b:if cond='!data:view.isHomepage'>
+                                <div class='blog-posts hfeed archive-post-feed'>
+                                  <b:loop values='data:posts' var='post'>
+                                    <b:include data='post' name='dramoraPost'/>
+                                  </b:loop>
+                                </div>
+                                <nav class='blog-pager dramora-pager' aria-label='Post navigation'>
+                                  <b:if cond='data:newerPageUrl'><a class='pager-newer' expr:href='data:newerPageUrl'>← Newer stories</a></b:if>
+                                  <b:if cond='data:olderPageUrl'><a class='pager-older' expr:href='data:olderPageUrl'>Older stories →</a></b:if>
+                                </nav>
+                              </b:if>
                             </b:if>
                           </b:includable>
                           <b:includable id='dramoraPost' var='post'>
                             <article class='post-outer post hentry'>
+                              <b:if cond='!data:view.isSingleItem and data:post.thumbnailUrl'>
+                                <a class='archive-post-thumb' expr:href='data:post.url'><img expr:src='data:post.thumbnailUrl' expr:alt='data:post.title' loading='lazy' decoding='async'/></a>
+                              </b:if>
                               <header class='post-header'>
                                 <h2 class='post-title entry-title'>
                                   <b:if cond='data:view.isSingleItem'>
@@ -791,7 +798,7 @@
         </section>
         <aside class='sidebar blog-sidebar'>
           <div class='sidebar-box sidebar-feature-box'><span class='eyebrow'>DRAMORA</span><h3>Every story has a next episode.</h3><p>Explore free short dramas across your favourite genres.</p><a class='button-primary' href='/p/discover.html'>Discover stories</a></div>
-          <b:section class='layout-slot layout-sidebar-slot' id='dramoraPostSidebarWidgets' maxwidgets='6' showaddelement='yes'/>
+          <div class='sidebar-widget-area'><b:section class='layout-slot layout-sidebar-slot' id='dramoraPostSidebarWidgets' maxwidgets='6' showaddelement='yes'/></div>
           <div class='sidebar-box'><h3>Browse genres</h3><div class='sidebar-link-list'><a href='/search/label/Romance'>Romance</a><a href='/search/label/Thriller'>Thriller</a><a href='/search/label/Comedy'>Comedy</a><a href='/search/label/Action'>Action</a><a href='/search/label/Drama'>Drama</a></div></div>
           <div class='sidebar-box'><h3>Quick links</h3><div class='sidebar-link-list'><a href='/search/label/Trending'>Trending dramas</a><a href='/search/label/Latest'>Latest episodes</a><a href='/p/my-list.html'>My List</a><a href='/p/community.html'>Community</a></div></div>
         </aside>
