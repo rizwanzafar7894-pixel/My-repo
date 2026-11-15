@@ -251,3 +251,16 @@ Use the Blogger editor's actual uploaded image URL; do not leave the placeholder
 - Added responsive archive-card and sidebar styling in Dramora's existing dark cinematic purple visual system.
 - Existing Firebase Auth/Firestore, favorites, watch history/progress, episode navigation, Blogger-first media storage and Backblaze B2 fallback decisions were left unchanged. No premium, paid-membership, or payment flow was added.
 - XML tag nesting was checked after the edits, and static feature-presence checks passed. This is not a Blogger server/parser validation: installation, Layout gadget registration, archive pagination, and live post rendering still require a test-blog confirmation.
+
+
+## V11 — Firebase, Firestore and community static audit
+
+- Reviewed the current V10 Blogger XML auth initialization, email/password and Google flows, password reset/verification, profile synchronization, personal Firestore paths, public/private messaging, reports, blocks, reactions, pagination and admin custom-claim checks.
+- Added `Dramora/V11-FIREBASE-AND-COMMUNITY-AUDIT.md` with the findings and required remediation sequence.
+- Confirmed the committed theme still has placeholder Firebase Web App values and a placeholder Cloudflare Worker URL.
+- Identified that email verification is sent and displayed but is not currently an access gate in the inspected client flow.
+- Identified that the community send function writes a `communityRateLimits/{uid}` timestamp but does not enforce a cooldown. This must not be described as an active rate limiter.
+- Client-side block and private conversation membership checks are UX checks only; Firestore Rules must enforce the access policy.
+- No Firestore Rules/index or Worker source file was located in the repository default-branch search results. The exact deployed artifacts must be obtained before any security-rule rewrite.
+- This is a static source audit only. No live Firebase project, Rules Simulator, Worker, or Blogger deployment was accessed or tested.
+- No XML runtime/data contract was changed in V11; the audit deliberately avoids guessing security policy or overwriting unknown production rules.
