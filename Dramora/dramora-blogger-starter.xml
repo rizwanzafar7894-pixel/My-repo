@@ -481,7 +481,28 @@
     .layout-footer-slot { padding-top:14px; padding-bottom:8px; }
     .layout-slot img { height:auto; max-width:100%; border-radius:12px; }
     .layout-slot a { color:#c9a8ff; }
-    @media(max-width:760px) { .layout-slot { padding-left:16px; padding-right:16px; } .layout-header-slot { padding-top:4px; } }
+    /* V9.12 — native Blogger LinkList and Label gadgets */
+    .nav-fallback-links { display:contents; }
+    .layout-nav-slot { display:contents; }
+    .layout-nav-slot .widget { margin:0; }
+    .layout-nav-slot .title { display:none; }
+    .layout-nav-slot .widget-content ul { display:flex; align-items:center; gap:24px; margin:0; padding:0; list-style:none; }
+    .layout-nav-slot .widget-content li { margin:0; padding:0; list-style:none; }
+    .layout-nav-slot .widget-content a { color:#c6c7d3; font-size:14px; white-space:nowrap; text-decoration:none; }
+    .layout-nav-slot .widget-content a:hover { color:#fff; }
+    .layout-category-slot { display:contents; }
+    .layout-category-slot .widget { margin:0; }
+    .layout-category-slot .title { display:none; }
+    .layout-category-slot .widget-content { display:flex; flex-wrap:wrap; gap:9px; }
+    .layout-category-slot .widget-content a { display:inline-flex; align-items:center; padding:8px 13px; border:1px solid var(--line); border-radius:999px; color:#c8c8d4; background:var(--surface); font-size:12px; text-decoration:none; }
+    .layout-category-slot .widget-content a:hover { color:#fff; border-color:rgba(155,92,255,.5); background:rgba(155,92,255,.15); }
+    .category-fallback-links { display:contents; }
+    @media(max-width:760px) {
+      .layout-slot { padding-left:16px; padding-right:16px; }
+      .layout-header-slot { padding-top:4px; }
+      .layout-nav-slot .widget-content ul { flex-direction:column; align-items:flex-start; gap:16px; }
+      .layout-nav-slot .widget-content a { font-size:14px; }
+    }
   ]]></b:skin>
 </head>
 <body>
@@ -492,14 +513,17 @@
           <span class='brand-mark'>D</span><span><data:blog.title/></span>
         </a>
         <div class='nav-links' id='mainNav'>
-          <a class='active' expr:href='data:blog.homepageUrl'>Home</a>
-          <a href='/search/label/Trending'>Trending</a>
-          <a href='/search/label/Latest'>Latest</a>
-          <a href='/p/discover.html'>Discover</a>
-          <a href='/p/community.html'>Community</a>
-          <a href='/p/my-list.html'>My List</a>
-          <a href='/p/profile.html'>Profile</a>
-          <a href='/p/admin.html' id='adminNavLink' hidden='hidden'>Admin</a>
+          <div class='nav-fallback-links' id='navFallbackLinks'>
+            <a class='active' expr:href='data:blog.homepageUrl'>Home</a>
+            <a href='/search/label/Trending'>Trending</a>
+            <a href='/search/label/Latest'>Latest</a>
+            <a href='/p/discover.html'>Discover</a>
+            <a href='/p/community.html'>Community</a>
+            <a href='/p/my-list.html'>My List</a>
+            <a href='/p/profile.html'>Profile</a>
+            <a href='/p/admin.html' id='adminNavLink' hidden='hidden'>Admin</a>
+          </div>
+          <b:section class='layout-nav-slot' id='dramoraNavWidgets' maxwidgets='1' showaddelement='yes'/>
         </div>
         <div class='nav-spacer'></div>
         <label class='search-box' aria-label='Search dramas'>
@@ -557,14 +581,17 @@
         <section class='section'>
           <div class='section-head'><div><h2>Explore by mood</h2><p>Find a story that matches your mood.</p></div></div>
           <div class='chips'>
-            <a class='chip active' href='/'>For you</a>
-            <a class='chip' href='/search/label/Romance'>Romance</a>
-            <a class='chip' href='/search/label/Thriller'>Thriller</a>
-            <a class='chip' href='/search/label/Trending'>Trending</a>
-            <a class='chip' href='/search/label/Drama'>Drama</a>
-            <a class='chip' href='/search/label/Comedy'>Comedy</a>
-            <a class='chip' href='/search/label/Action'>Action</a>
-            <a class='chip' href='/search/label/Latest'>Latest</a>
+            <div class='category-fallback-links' id='categoryFallbackLinks'>
+              <a class='chip active' href='/'>For you</a>
+              <a class='chip' href='/search/label/Romance'>Romance</a>
+              <a class='chip' href='/search/label/Thriller'>Thriller</a>
+              <a class='chip' href='/search/label/Trending'>Trending</a>
+              <a class='chip' href='/search/label/Drama'>Drama</a>
+              <a class='chip' href='/search/label/Comedy'>Comedy</a>
+              <a class='chip' href='/search/label/Action'>Action</a>
+              <a class='chip' href='/search/label/Latest'>Latest</a>
+            </div>
+            <b:section class='layout-category-slot' id='dramoraCategoryWidgets' maxwidgets='1' showaddelement='yes'/>
           </div>
         </section>
         <section class='section'>
@@ -747,6 +774,12 @@
   <script type='text/javascript'>
     //<![CDATA[
     (function () {
+      var navSlot = document.getElementById('dramoraNavWidgets');
+      var navFallback = document.getElementById('navFallbackLinks');
+      if (navSlot && navFallback && navSlot.querySelector('.widget')) navFallback.hidden = true;
+      var categorySlot = document.getElementById('dramoraCategoryWidgets');
+      var categoryFallback = document.getElementById('categoryFallbackLinks');
+      if (categorySlot && categoryFallback && categorySlot.querySelector('.widget')) categoryFallback.hidden = true;
       var toggle = document.getElementById('menuToggle');
       var nav = document.getElementById('mainNav');
       if (toggle && nav) toggle.addEventListener('click', function () { nav.classList.toggle('open'); });
