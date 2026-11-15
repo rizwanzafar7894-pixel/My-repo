@@ -471,6 +471,17 @@
       .mobile-bottom-item:focus-visible { outline:2px solid #b78aff; outline-offset:-2px; }
     }
 
+    /* V9.11 — Blogger Layout editor slots */
+    .layout-slot { display:block; width:100%; max-width:var(--content); margin:0 auto; padding-left:24px; padding-right:24px; }
+    .layout-slot:empty { display:none; }
+    .layout-slot .widget { margin:0 0 16px; }
+    .layout-slot .widget-content { color:var(--text); }
+    .layout-header-slot { padding-top:0; padding-bottom:8px; }
+    .layout-home-top-slot,.layout-home-after-hero-slot,.layout-home-bottom-slot { padding-top:10px; padding-bottom:10px; }
+    .layout-footer-slot { padding-top:14px; padding-bottom:8px; }
+    .layout-slot img { height:auto; max-width:100%; border-radius:12px; }
+    .layout-slot a { color:#c9a8ff; }
+    @media(max-width:760px) { .layout-slot { padding-left:16px; padding-right:16px; } .layout-header-slot { padding-top:4px; } }
   ]]></b:skin>
 </head>
 <body>
@@ -478,7 +489,7 @@
     <header class='topbar'>
       <nav class='nav'>
         <a class='brand' expr:href='data:blog.homepageUrl'>
-          <span class='brand-mark'>D</span><span>DRAMORA</span>
+          <span class='brand-mark'>D</span><span><data:blog.title/></span>
         </a>
         <div class='nav-links' id='mainNav'>
           <a class='active' expr:href='data:blog.homepageUrl'>Home</a>
@@ -497,10 +508,12 @@
         <button class='nav-action' id='authOpenBtn' type='button'>Sign in</button>
         <button aria-label='Open menu' class='mobile-menu' id='menuToggle' type='button'>☰</button>
       </nav>
+      <b:section class='layout-slot layout-header-slot' id='dramoraHeaderWidgets' maxwidgets='2' showaddelement='yes'/>
     </header>
 
     <b:if cond='data:blog.pageType == &quot;index&quot;'>
       <main class='container'>
+        <b:section class='layout-slot layout-home-top-slot' id='dramoraHomeTopWidgets' maxwidgets='3' showaddelement='yes'/>
         <section class='hero' aria-label='Featured dramas'>
           <div class='hero-panel' id='dramoraFeatured'>
             <div class='featured-track' aria-live='off'>
@@ -536,6 +549,7 @@
             </div>
           </div>
         </section>
+        <b:section class='layout-slot layout-home-after-hero-slot' id='dramoraHomeAfterHeroWidgets' maxwidgets='3' showaddelement='yes'/>
         <section class='section continue-section' id='dramoraContinueSection' aria-labelledby='continueHeading' hidden='hidden'>
           <div class='section-head'><div><h2 id='continueHeading'>Continue watching</h2><p>Pick up right where you left off.</p></div><a class='text-link' href='/p/profile.html'>View history →</a></div>
           <div class='continue-grid' id='dramoraContinueGrid' aria-live='polite'><div class='empty-state'>Loading your watch history…</div></div>
@@ -587,6 +601,7 @@
           <div class='section-head'><div><h2>Latest episodes</h2><p>The newest stories published on Dramora.</p></div><a class='text-link' href='/search/label/Latest'>View all →</a></div>
           <div class='drama-grid' id='dramoraLatestGrid'><div class='empty-state'>Loading latest episodes…</div></div>
         </section>
+        <b:section class='layout-slot layout-home-bottom-slot' id='dramoraHomeBottomWidgets' maxwidgets='3' showaddelement='yes'/>
       </main>
     <b:else/>
       <main class='container' style='padding-top:34px'>
@@ -716,6 +731,7 @@
         <span>© <data:blog.title/> · All stories in one place.</span>
         <span><a href='/p/about.html'>About</a> · <a href='/p/contact.html'>Contact</a> · <a href='/p/privacy-policy.html'>Privacy</a></span>
       </div>
+      <div class='container'><b:section class='layout-slot layout-footer-slot' id='dramoraFooterWidgets' maxwidgets='3' showaddelement='yes'/></div>
     </footer>
     <nav class='mobile-bottom-nav' id='mobileBottomNav' aria-label='Mobile navigation'>
       <a class='mobile-bottom-item' data-nav='home' expr:href='data:blog.homepageUrl' aria-label='Home'><span class='mobile-bottom-icon' aria-hidden='true'>⌂</span><span>Home</span></a>
