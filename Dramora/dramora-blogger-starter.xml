@@ -183,6 +183,25 @@
     .comments h4 { color:white; }
     .comment-thread, .comment-form { color:#c6c7d3; }
     .status-msg-wrap { margin:20px 0; padding:16px; border:1px solid var(--line); border-radius:12px; color:var(--muted); }
+    /* DRAMORA V9.7 — one-post multi-episode hybrid series layout */
+    .dramora-hybrid-series { display:grid; gap:18px; }
+    .dramora-series-overview { display:grid; grid-template-columns:minmax(110px,180px) minmax(0,1fr); gap:18px; align-items:start; padding:16px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(140deg,rgba(155,92,255,.12),rgba(255,255,255,.025)); }
+    .dramora-series-cover { width:100%; max-height:250px; object-fit:cover; border-radius:13px; margin:0!important; }
+    .dramora-series-overview h2 { margin:0 0 8px; color:#fff; font-size:23px; line-height:1.2; }
+    .dramora-series-description { color:#c9c5d5; font-size:13px; line-height:1.75; white-space:pre-wrap; }
+    .dramora-hybrid-player { min-width:0; padding:14px; border:1px solid rgba(174,126,255,.22); border-radius:17px; background:#0b0c13; }
+    .dramora-hybrid-player h3 { margin:0 0 11px; color:#fff; font-size:16px; }
+    .dramora-hybrid-player .dramora-native-video { display:block; width:100%!important; max-width:100%; min-height:190px; height:auto; aspect-ratio:16/9; margin:0 auto; background:#000; border:0; border-radius:12px; }
+    .dramora-current-episode-description { margin:12px 2px 0; color:#bdb8cd; font-size:13px; line-height:1.65; white-space:pre-wrap; }
+    .dramora-episode-heading { margin:2px 0 0; color:#fff; font-size:18px; }
+    .dramora-hybrid-episode-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+    .dramora-hybrid-episode { display:flex; align-items:center; gap:10px; min-width:0; padding:12px; text-align:left; color:#e9e4f4; border:1px solid var(--line); border-radius:12px; background:var(--surface-2); cursor:pointer; }
+    .dramora-hybrid-episode:hover,.dramora-hybrid-episode.is-active { border-color:rgba(174,126,255,.7); background:rgba(155,92,255,.16); }
+    .dramora-hybrid-episode-number { flex:0 0 34px; width:34px; height:34px; display:grid; place-items:center; border-radius:10px; background:rgba(155,92,255,.2); color:#e4d4ff; font-size:11px; font-weight:850; }
+    .dramora-hybrid-episode-copy { min-width:0; display:grid; gap:3px; }
+    .dramora-hybrid-episode-copy strong { font-size:12px; overflow-wrap:anywhere; }
+    .dramora-hybrid-episode-copy small { color:var(--muted); font-size:10px; }
+    @media(max-width:560px) { .dramora-series-overview { grid-template-columns:104px minmax(0,1fr); gap:12px; padding:12px; } .dramora-series-overview h2 { font-size:18px; } .dramora-series-cover { max-height:160px; } .dramora-hybrid-episode-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .dramora-hybrid-episode { padding:9px; } }
     .post-body .episode-heading { margin:24px 0 10px; color:white; font-size:20px; font-weight:800; }
     .post-body .episode-note { color:var(--muted); font-size:13px; }
     .post-body .episode-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin:18px 0; }
@@ -1036,7 +1055,7 @@
       function currentContent() {
         var canonical = document.querySelector('link[rel="canonical"]');
         var titleNode = document.querySelector('.post-title.entry-title, .post-title');
-        var imageNode = document.querySelector('.post-body .separator img, .post-body img');
+        var imageNode = document.querySelector('.post-body .dramora-series-cover, .post-body .separator img, .post-body img');
         var ogImage = document.querySelector('meta[property="og:image"]');
         return normalizeItem({
           contentId: safeUrl(canonical && canonical.href) || window.location.href,
@@ -1091,11 +1110,104 @@
         body.dataset.dramoraNativeVideo = 'true';
         return true;
       }
+      function buildHybridSeriesExperience(body) {
+        if (!body || body.dataset.dramoraHybridReady === 'true') return body && body.dataset.dramoraHybridReady === 'true';
+        var episodeNodes = Array.prototype.slice.call(body.querySelectorAll('.dramora-episodes > .dramora-episode[ep-id], .dramora-episodes .dramora-episode[ep-id]'));
+        if (!episodeNodes.length) return false;
+        var used = Object.create(null), episodes = [];
+        episodeNodes.forEach(function (node) {
+          var idText = String(node.getAttribute('ep-id') || '').trim();
+          if (!/^\\d{1,4}$/.test(idText)) return;
+          var number = Number(idText);
+          if (!number || used[number]) return;
+          var media = node.querySelector('object.BLOG_video_class, object[id^="BLOG_video-"], iframe.BLOG_video_class, iframe[id^="BLOG_video-"], video, iframe');
+          if (!media) return;
+          used[number] = true;
+          var descriptionNode = node.querySelector('description.dramora-episode-description, .dramora-episode-description, description');
+          var description = descriptionNode ? descriptionNode.textContent.trim() : '';
+          var title = String(node.getAttribute('ep-title') || node.getAttribute('data-episode-title') || ('Episode ' + number)).trim().slice(0,120);
+          episodes.push({ id:number, title:title, description:description.slice(0,1200), media:media });
+        });
+        episodes.sort(function (a,b) { return a.id-b.id; });
+        if (!episodes.length) return false;
+        var seriesDescriptionNode = body.querySelector('description.dramora-series-description, .dramora-series-description');
+        if (!seriesDescriptionNode) {
+          seriesDescriptionNode = Array.prototype.slice.call(body.querySelectorAll('description')).find(function (node) {
+            return !node.closest('.dramora-episode');
+          }) || null;
+        }
+        var seriesDescription = seriesDescriptionNode ? seriesDescriptionNode.textContent.trim() : '';
+        var poster = Array.prototype.slice.call(body.querySelectorAll('.separator img, img')).find(function (img) {
+          return !img.closest('.dramora-episode');
+        }) || null;
+        var titleNode = document.querySelector('.post-title.entry-title, .post-title');
+        var seriesTitle = titleNode ? titleNode.textContent.trim() : document.title;
+        var host = document.createElement('section'); host.className = 'dramora-hybrid-series';
+        var overview = document.createElement('header'); overview.className = 'dramora-series-overview';
+        if (poster) {
+          poster.classList.add('dramora-series-cover');
+          poster.alt = poster.alt || (seriesTitle + ' poster');
+          poster.loading = 'eager'; poster.decoding = 'async';
+          overview.appendChild(poster);
+        }
+        var summary = document.createElement('div');
+        var heading = document.createElement('h2'); heading.textContent = seriesTitle;
+        var description = document.createElement('div'); description.className = 'dramora-series-description';
+        description.textContent = seriesDescription || 'Explore the episodes of this series.';
+        summary.appendChild(heading); summary.appendChild(description); overview.appendChild(summary);
+        var playerPanel = document.createElement('section'); playerPanel.className = 'dramora-hybrid-player';
+        playerPanel.setAttribute('aria-label','Episode player');
+        var playerTitle = document.createElement('h3');
+        var playerSlot = document.createElement('div'); playerSlot.className = 'dramora-hybrid-player-slot';
+        var episodeDescription = document.createElement('p'); episodeDescription.className = 'dramora-current-episode-description';
+        playerPanel.appendChild(playerTitle); playerPanel.appendChild(playerSlot); playerPanel.appendChild(episodeDescription);
+        var listHeading = document.createElement('h3'); listHeading.className = 'dramora-episode-heading'; listHeading.textContent = 'Episodes';
+        var list = document.createElement('div'); list.className = 'dramora-hybrid-episode-list'; list.setAttribute('role','group'); list.setAttribute('aria-label','Choose an episode');
+        host.appendChild(overview); host.appendChild(playerPanel); host.appendChild(listHeading); host.appendChild(list);
+        var requested = Number(new URLSearchParams(window.location.search).get('ep')) || episodes[0].id;
+        var active = episodes.find(function (entry) { return entry.id === requested; }) || episodes[0];
+        function selectEpisode(entry, updateUrl) {
+          active = entry;
+          playerTitle.textContent = entry.title;
+          playerSlot.replaceChildren(entry.media);
+          if (entry.media.tagName === 'OBJECT' || entry.media.tagName === 'IFRAME') {
+            entry.media.classList.add('dramora-native-video');
+            entry.media.setAttribute('aria-label', seriesTitle + ' ' + entry.title);
+            entry.media.style.width = '100%'; entry.media.style.maxWidth = '100%';
+          }
+          episodeDescription.textContent = entry.description;
+          Array.prototype.forEach.call(list.children, function (button) {
+            var selected = Number(button.getAttribute('data-episode-id')) === entry.id;
+            button.classList.toggle('is-active', selected);
+            button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+          });
+          if (updateUrl && window.history && window.history.replaceState) {
+            var url = new URL(window.location.href); url.searchParams.set('ep', String(entry.id));
+            window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+          }
+        }
+        episodes.forEach(function (entry) {
+          var button = document.createElement('button'); button.type = 'button'; button.className = 'dramora-hybrid-episode';
+          button.setAttribute('data-episode-id',String(entry.id)); button.setAttribute('aria-pressed','false');
+          var number = document.createElement('span'); number.className = 'dramora-hybrid-episode-number'; number.textContent = 'EP ' + entry.id;
+          var copy = document.createElement('span'); copy.className = 'dramora-hybrid-episode-copy';
+          var name = document.createElement('strong'); name.textContent = entry.title;
+          var meta = document.createElement('small'); meta.textContent = entry.description ? 'Episode details' : 'Free episode';
+          copy.appendChild(name); copy.appendChild(meta); button.appendChild(number); button.appendChild(copy);
+          button.addEventListener('click',function(){ selectEpisode(entry,true); });
+          list.appendChild(button);
+        });
+        body.replaceChildren(host);
+        body.dataset.dramoraHybridReady = 'true';
+        selectEpisode(active,false);
+        return true;
+      }
+
       function attachRegisteredMediaPlayer() {
         if (!db || window.location.pathname.indexOf('/p/') === 0) return;
         var body = document.querySelector('.post-body');
         if (!body || body.dataset.dramoraMediaLookup === 'done' || body.dataset.dramoraMediaLookup === 'loading') return;
-        if (prepareNativeBloggerPost(body) || body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
+        if (buildHybridSeriesExperience(body) || prepareNativeBloggerPost(body) || body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
         var item;
         try { item = currentContent(); } catch (error) { return; }
         body.dataset.dramoraMediaLookup = 'loading';
