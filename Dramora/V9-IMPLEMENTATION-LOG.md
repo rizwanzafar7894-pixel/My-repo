@@ -153,3 +153,35 @@ Use one Blogger post per series. Put the series poster image and series descript
 - GitHub branch code updated; live Blogger rendering and native playback still require a test post.
 - Blogger may normalize or sanitize unknown `description` tags/attributes in the post editor. Confirm the saved post HTML retains the `class`, `ep-id`, and `ep-title` attributes. If Blogger strips them, use equivalent `data-*` attributes or a Blogger-safe wrapper structure.
 - Native Blogger OBJECT playback remains opaque to page JavaScript; per-episode playback position/resume cannot be reliably read from that player. Standard HTML `video` tracking remains separate.
+
+
+### V9.8 dedicated hidden thumbnail image
+
+- Added a dedicated Blogger post-body thumbnail wrapper: `<div class="dramora-thumbnail"><img ... /></div>`.
+- The wrapper is hidden on the single-post page with `display:none !important`, so the thumbnail does not appear in the visible series/player layout or leave a blank gap.
+- The post image resolver prioritizes `.dramora-thumbnail img`, allowing the dedicated image to be used as the content thumbnail for cards and saved content metadata.
+- The hybrid series poster selector and native-video poster selector explicitly skip the hidden thumbnail, so it is not moved into the visible series overview or displayed as an episode poster.
+- Existing post images remain supported as fallback thumbnails when no dedicated thumbnail is provided.
+- Live Blogger feed thumbnail extraction and editor preservation still require verification on a test blog.
+
+Recommended authoring format:
+
+```html
+<div class="dramora-thumbnail">
+  <!-- Upload the thumbnail image with Blogger's image uploader -->
+  <img src="YOUR_BLOGGER_IMAGE_URL" alt="Drama thumbnail" />
+</div>
+
+<div class="dramora-series-description">
+  Series description goes here.
+</div>
+
+<div class="dramora-episodes">
+  <div class="dramora-episode" ep-id="1" ep-title="Episode 1">
+    <!-- Insert Blogger's native uploaded-video object here -->
+    <div class="dramora-episode-description">Episode 1 description.</div>
+  </div>
+</div>
+```
+
+Use the Blogger editor's actual uploaded image URL; do not leave the placeholder URL in a published post.
