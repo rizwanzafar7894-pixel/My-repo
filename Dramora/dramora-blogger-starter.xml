@@ -168,6 +168,7 @@
     .post-body iframe { max-width:100%; border:0; border-radius:14px; }
     /* Blogger-native uploaded videos use an OBJECT element, not a VIDEO/IFRAME tag. */
     .post-body object.BLOG_video_class, .post-body object[id^='BLOG_video-'] { display:block; width:100% !important; max-width:100%; height:auto; aspect-ratio:16/9; min-height:180px; max-height:78vh; margin:18px auto; background:#000; border:0; border-radius:16px; }
+    .post-body .dramora-thumbnail { display:none !important; }
     .post-body .dramora-episode-poster { display:block; width:auto; max-width:min(100%,480px); height:auto; margin:16px auto; object-fit:contain; }
     .post-body video { display:block; width:100%; max-height:78vh; background:#000; border-radius:16px; }
     .drama-player, .episode-player, .video-container { width:100%; aspect-ratio:16/9; background:#000; border:1px solid var(--line); border-radius:17px; overflow:hidden; margin:20px 0 24px; }
@@ -1055,7 +1056,7 @@
       function currentContent() {
         var canonical = document.querySelector('link[rel="canonical"]');
         var titleNode = document.querySelector('.post-title.entry-title, .post-title');
-        var imageNode = document.querySelector('.post-body .dramora-series-cover, .post-body .separator img, .post-body img');
+        var imageNode = document.querySelector('.post-body .dramora-thumbnail img, .post-body .dramora-series-cover, .post-body .separator img, .post-body img');
         var ogImage = document.querySelector('meta[property="og:image"]');
         return normalizeItem({
           contentId: safeUrl(canonical && canonical.href) || window.location.href,
@@ -1100,7 +1101,7 @@
         if (!nativeVideo) return false;
         nativeVideo.classList.add('dramora-native-video');
         if (!nativeVideo.getAttribute('aria-label')) nativeVideo.setAttribute('aria-label', 'Blogger uploaded episode video');
-        var poster = body.querySelector('.separator img, img');
+        var poster = Array.prototype.slice.call(body.querySelectorAll('.separator img, img')).find(function (img) { return !img.closest('.dramora-thumbnail'); }) || null;
         if (poster) {
           poster.classList.add('dramora-episode-poster');
           if (!poster.getAttribute('alt')) poster.setAttribute('alt', 'Episode poster');
@@ -1138,7 +1139,7 @@
         }
         var seriesDescription = seriesDescriptionNode ? seriesDescriptionNode.textContent.trim() : '';
         var poster = Array.prototype.slice.call(body.querySelectorAll('.separator img, img')).find(function (img) {
-          return !img.closest('.dramora-episode');
+          return !img.closest('.dramora-episode') && !img.closest('.dramora-thumbnail');
         }) || null;
         var titleNode = document.querySelector('.post-title.entry-title, .post-title');
         var seriesTitle = titleNode ? titleNode.textContent.trim() : document.title;
