@@ -483,6 +483,7 @@
             <a class='chip active' href='/'>For you</a>
             <a class='chip' href='/search/label/Romance'>Romance</a>
             <a class='chip' href='/search/label/Thriller'>Thriller</a>
+            <a class='chip' href='/search/label/Trending'>Trending</a>
             <a class='chip' href='/search/label/Drama'>Drama</a>
             <a class='chip' href='/search/label/Comedy'>Comedy</a>
             <a class='chip' href='/search/label/Action'>Action</a>
@@ -2637,13 +2638,14 @@
           return;
         }
         section.hidden = false;
+        var requestedUid = currentUser.uid;
         grid.replaceChildren();
         var loading = document.createElement('div');
         loading.className = 'empty-state';
         loading.textContent = 'Loading your watch history…';
         grid.appendChild(loading);
         DramoraData.listWatchHistory(8).then(function (result) {
-          if (!document.getElementById('dramoraContinueGrid') || !currentUser) return;
+          if (!document.getElementById('dramoraContinueGrid') || !currentUser || currentUser.uid !== requestedUid) return;
           grid.replaceChildren();
           var items = (result && result.items) || [];
           if (!items.length) {
@@ -2709,6 +2711,7 @@
             grid.appendChild(invalid);
           }
         }).catch(function (error) {
+          if (!currentUser || currentUser.uid !== requestedUid) return;
           grid.replaceChildren();
           var failed = document.createElement('div');
           failed.className = 'empty-state';
