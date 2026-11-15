@@ -78,3 +78,21 @@ File: `Dramora/dramora-blogger-starter.xml`
 3. Upgrade drama detail/episode browsing while retaining current media registration and navigation.
 4. Improve player states and progress reliability.
 5. Finish responsive, performance, SEO, and security passes.
+
+
+## V9.5 — Blogger-native Blog1 rendering and installation audit (implemented)
+
+- Replaced the empty `Blog1` widget body with explicit Blogger v2 `main` and `dramoraPost` includables.
+- The main includable iterates `data:posts` and delegates each post to the local post includable.
+- Single-item views render the full Blogger post body; multi-item views render the title, snippet, and a direct Watch episode link.
+- Post labels are rendered as Blogger label links, and index pages receive older/newer navigation when Blogger supplies those URLs.
+- Kept the existing widget ID, type, version, settings, containing section, Firebase code, media code, community code, and V9 homepage feeds.
+- Used a small purpose-built Blogger rendering layer rather than copying SoraFlix's 73-includable widget wholesale. The reference contains legacy markup/dependencies that are not required by Dramora.
+- The theme still requires Blogger Pages to be created in the dashboard for the client-rendered account/community routes. Required slugs are documented in the release checklist.
+
+## V9.5 verification limits
+
+- GitHub write completed on `dramora-v9`; `main` remains unchanged.
+- Static preflight confirmed one `Blog1` widget, explicit `main` and `dramoraPost` includables, a matching main-to-post include, and balanced CDATA markers.
+- This is not a live Blogger parser/install test. Blogger may still reject an unsupported data expression or widget construct; the test blog remains the final authority.
+- Do not claim the generic Blogger “Update failed” message is resolved until the updated XML is accepted by Blogger.
