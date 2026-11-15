@@ -166,6 +166,9 @@
     .post-body a { color:#c49aff; text-decoration:underline; text-underline-offset:3px; }
     .post-body img { height:auto; max-width:100%; border-radius:13px; margin:16px auto; }
     .post-body iframe { max-width:100%; border:0; border-radius:14px; }
+    /* Blogger-native uploaded videos use an OBJECT element, not a VIDEO/IFRAME tag. */
+    .post-body object.BLOG_video_class, .post-body object[id^='BLOG_video-'] { display:block; width:100% !important; max-width:100%; height:auto; aspect-ratio:16/9; min-height:180px; max-height:78vh; margin:18px auto; background:#000; border:0; border-radius:16px; }
+    .post-body .dramora-episode-poster { display:block; width:auto; max-width:min(100%,480px); height:auto; margin:16px auto; object-fit:contain; }
     .post-body video { display:block; width:100%; max-height:78vh; background:#000; border-radius:16px; }
     .drama-player, .episode-player, .video-container { width:100%; aspect-ratio:16/9; background:#000; border:1px solid var(--line); border-radius:17px; overflow:hidden; margin:20px 0 24px; }
     .drama-player iframe, .episode-player iframe, .video-container iframe,
@@ -1033,7 +1036,7 @@
       function currentContent() {
         var canonical = document.querySelector('link[rel="canonical"]');
         var titleNode = document.querySelector('.post-title.entry-title, .post-title');
-        var imageNode = document.querySelector('.post-body img');
+        var imageNode = document.querySelector('.post-body .separator img, .post-body img');
         var ogImage = document.querySelector('meta[property="og:image"]');
         return normalizeItem({
           contentId: safeUrl(canonical && canonical.href) || window.location.href,
@@ -1068,11 +1071,31 @@
       }
 
       var registeredPlayerLookups = Object.create(null);
+      function findNativeBloggerVideo(body) {
+        if (!body) return null;
+        return body.querySelector('object.BLOG_video_class, object[id^="BLOG_video-"], iframe.BLOG_video_class, iframe[id^="BLOG_video-"]');
+      }
+      function prepareNativeBloggerPost(body) {
+        if (!body) return false;
+        var nativeVideo = findNativeBloggerVideo(body);
+        if (!nativeVideo) return false;
+        nativeVideo.classList.add('dramora-native-video');
+        if (!nativeVideo.getAttribute('aria-label')) nativeVideo.setAttribute('aria-label', 'Blogger uploaded episode video');
+        var poster = body.querySelector('.separator img, img');
+        if (poster) {
+          poster.classList.add('dramora-episode-poster');
+          if (!poster.getAttribute('alt')) poster.setAttribute('alt', 'Episode poster');
+          poster.loading = 'eager';
+          poster.decoding = 'async';
+        }
+        body.dataset.dramoraNativeVideo = 'true';
+        return true;
+      }
       function attachRegisteredMediaPlayer() {
         if (!db || window.location.pathname.indexOf('/p/') === 0) return;
         var body = document.querySelector('.post-body');
         if (!body || body.dataset.dramoraMediaLookup === 'done' || body.dataset.dramoraMediaLookup === 'loading') return;
-        if (body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
+        if (prepareNativeBloggerPost(body) || body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
         var item;
         try { item = currentContent(); } catch (error) { return; }
         body.dataset.dramoraMediaLookup = 'loading';
