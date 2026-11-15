@@ -21,12 +21,32 @@
 5. Add the `Latest` label if you want it available in the existing Latest label archive. The homepage Latest feed itself reads the newest posts, regardless of label.
 6. For multi-episode dramas, keep the existing V8 media registration metadata and episode numbering consistent. Do not publish a fake video URL or expose storage credentials in post HTML.
 
+## Blogger Pages that must exist
+
+The theme renders these client-side sections only after Blogger serves the corresponding static page. Create and publish each page in Blogger Dashboard → Pages, then verify its URL slug exactly:
+
+| Page title | Required URL |
+| --- | --- |
+| Discover | `/p/discover.html` |
+| Community | `/p/community.html` |
+| My List | `/p/my-list.html` |
+| Profile | `/p/profile.html` |
+| Admin | `/p/admin.html` |
+| Drama series | `/p/drama.html` |
+| About | `/p/about.html` |
+| Contact | `/p/contact.html` |
+| Privacy Policy | `/p/privacy-policy.html` |
+
+Use blank page bodies for the app-rendered pages (Discover, Community, My List, Profile, Admin, Drama series); the theme supplies their interface. About, Contact, and Privacy Policy need real page content before public launch. Admin remains hidden unless the signed-in account has the server-assigned Firebase admin claim. A theme XML upload cannot create Blogger Pages through the template file itself.
+
 ## Required live acceptance tests (cannot be completed from a GitHub-only edit)
 
 ### Blogger template installation
 - Back up the current live Blogger theme.
 - Install the XML from this branch on a private/test Blogger blog first.
 - Confirm Blogger accepts the XML without template parser errors.
+- Confirm the Blog1 widget renders the homepage/index post list, single post body, title, labels, and older/newer navigation correctly.
+- Confirm static Blogger Pages are published at every exact URL in the page table above; refresh each URL directly and confirm it does not return 404.
 - Test homepage with zero posts, one post, and multiple posts.
 - Confirm Blogger JSON feeds are enabled and same-origin feed requests return JSON.
 - Test a post with an image, a post without an image, and a post with unusual characters in its title.
