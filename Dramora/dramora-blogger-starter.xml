@@ -1117,7 +1117,7 @@
         var used = Object.create(null), episodes = [];
         episodeNodes.forEach(function (node) {
           var idText = String(node.getAttribute('ep-id') || '').trim();
-          if (!/^\\d{1,4}$/.test(idText)) return;
+          if (!/^\d{1,4}$/.test(idText)) return;
           var number = Number(idText);
           if (!number || used[number]) return;
           var media = node.querySelector('object.BLOG_video_class, object[id^="BLOG_video-"], iframe.BLOG_video_class, iframe[id^="BLOG_video-"], video, iframe');
