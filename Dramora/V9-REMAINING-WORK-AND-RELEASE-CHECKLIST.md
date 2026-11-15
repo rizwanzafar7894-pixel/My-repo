@@ -158,3 +158,17 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - [ ] Open the homepage and confirm the custom Dramora homepage still renders normally without a duplicate post list.
 - [ ] Confirm static pages and the mobile layout remain intact.
 - [ ] If the Blog widget is still missing from Layout after XML installation, export the currently active Blogger theme and compare its widget/section IDs before any further rewrite.
+
+
+## V10 — Reference-led layout and Blogger feed regression tests (pending)
+
+- [ ] Install the latest `dramora-v9` XML on a test theme after backing up the current Blogger theme.
+- [ ] Confirm homepage uses the new main + sidebar layout and that hero, Continue Watching, mood categories, Recently Added, Trending, and Latest sections still work.
+- [ ] Confirm homepage does not show a duplicate Blog1 archive feed below the custom home feed.
+- [ ] In Blogger Layout, confirm the new `dramoraSidebarWidgets` and `dramoraPostSidebarWidgets` gadget areas are available and can accept supported gadgets.
+- [ ] Open a label/search archive and confirm thumbnail cards, post title, snippet, Watch Episode link, and older/newer pagination render correctly.
+- [ ] Open a single drama post and confirm title, full post body, labels, episode navigation, and native Blogger video output remain intact.
+- [ ] Check desktop, tablet, and mobile widths; ensure the sidebar stacks cleanly and the five-item mobile bottom navigation remains usable.
+- [ ] Confirm Firebase login, Google sign-in, favorites, Continue Watching, watch progress, community, and private messages are unchanged and still work after installation.
+- [ ] Confirm no paid/VIP/premium/payment UI has appeared.
+- [ ] Do not merge the draft PR or publish the theme until all acceptance checks pass.
