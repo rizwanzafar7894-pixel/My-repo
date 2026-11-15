@@ -229,3 +229,13 @@ Use the Blogger editor's actual uploaded image URL; do not leave the placeholder
 - Setup: add a LinkList gadget to the Dramora navigation menu area and configure its URLs; add a Label gadget to the Dramora categories area and select the labels to show. Keep category labels on posts consistent with those selected in the Label gadget.
 - Static Blogger Pages still must be created separately in Dashboard → Pages; adding a menu link does not create its destination page.
 - GitHub source changes are not a Blogger installation test. Confirm the Layout editor accepts both sections and that LinkList/Label gadget output matches the intended CSS on a private test blog.
+
+
+## V9.13 — Blog widget Layout registration and single-post recovery (code updated; live test pending)
+
+- Moved the existing locked `Blog1` widget section out of the homepage-versus-inner-page conditional so Blogger can register the Blog section consistently in the Layout structure.
+- Kept the existing `Blog1` ID, Blog widget type, settings, and `dramoraPost` renderer.
+- The Blog widget now renders its post loop only on single-item views; homepage content remains handled by the existing Dramora homepage layout.
+- The full post body remains sourced from Blogger's `data:post.body` field.
+- This is a targeted structural change; it does not alter Firebase, Firestore, player, community, or media-storage contracts.
+- GitHub update completed on `dramora-v9`. The live Blogger Layout editor and single-post output have not yet been re-tested; do not mark this as fixed until the user installs the updated XML and confirms the Blog Posts gadget and post content appear.
