@@ -45,6 +45,22 @@ File: `Dramora/dramora-blogger-starter.xml`
 - The feature reuses the existing V8 Firestore watch-history contract; no rules or indexes were changed.
 - Not yet verified on a live Blogger blog or against a live Firebase project. Actual rendered Blogger data, security rules, and mobile layout still require runtime testing.
 
+## V9.3 — Dynamic Trending and Latest feeds (implemented)
+
+File: `Dramora/dramora-blogger-starter.xml`
+
+- Added a Trending feed section backed by Blogger's `/feeds/posts/default/-/Trending` JSON feed.
+- Trending is explicitly editorial curation using the `Trending` label. It is not presented as a real-time popularity ranking.
+- Added a Latest Episodes section backed by Blogger's newest-post JSON feed.
+- Feed cards use safe URL parsing, DOM creation, textContent for post text, lazy image loading, and empty/error states.
+- Added mobile grid refinements and reduced-motion CSS handling.
+
+## V9.4 — Drama sharing and release checklist (implemented)
+
+- Added a Share Drama action to Blogger post pages using the Web Share API, with clipboard fallback where supported.
+- Added `Dramora/V9-REMAINING-WORK-AND-RELEASE-CHECKLIST.md` documenting publishing conventions, test matrix, security checks, and release blockers.
+- No new Firebase collections, Firestore rules, or media storage contracts were introduced.
+
 ## Live verification still required
 
 1. Install the branch XML on a Blogger test blog and confirm Blogger accepts the template.
