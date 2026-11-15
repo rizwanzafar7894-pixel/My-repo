@@ -111,3 +111,45 @@ File: `Dramora/dramora-blogger-starter.xml`
 - GitHub commit completed on `dramora-v9`; no live Blogger playback test was performed in this change.
 - Blogger's native video is an `OBJECT` embed, not a standard HTML `VIDEO` element. Browser-side watch-progress/resume tracking currently attaches only to standard `video` elements; it cannot reliably read playback time from Blogger's cross-origin/native player. Progress tracking for these native embeds remains an explicit limitation until a supported player API is available.
 - Verify native playback on Android and desktop, portrait/landscape layout, and the poster image selection on the live test blog.
+
+
+## V9.7 — Single-post hybrid multi-episode series experience (implemented)
+
+- Added a Blogger-post parser for `.dramora-episodes` containing `.dramora-episode[ep-id]` entries.
+- Reads the outer `description.dramora-series-description` as the series synopsis and each episode's `description.dramora-episode-description` as its episode description.
+- Reads optional `ep-title` / `data-episode-title`; otherwise labels entries as Episode N.
+- Sorts episode IDs numerically, rejects duplicate/invalid IDs, and ignores entries without a supported media element.
+- Builds a hybrid series page inside the Blogger post: poster + title + synopsis, selected episode player, episode description, and responsive episode selector.
+- Supports direct episode selection with the `?ep=N` query parameter and updates the URL when users select another episode.
+- Moves the original Blogger-native `object.BLOG_video_class` element into the selected player slot; does not invent a media URL or convert Blogger content IDs into MP4 links.
+- Series UI initialization is independent of Firebase being configured. Existing Firebase favorites and other account features remain separate.
+- The feature uses DOM-created nodes and `textContent` for descriptions/titles rather than injecting post text as HTML.
+
+### V9.7 authoring format
+
+Use one Blogger post per series. Put the series poster image and series description outside the episode wrapper. Each episode must have a unique numeric `ep-id` and contain its Blogger-uploaded native video object. Optional `ep-title` provides a custom episode title.
+
+```html
+<div class="separator">
+  <!-- Add the series poster image using Blogger's image uploader -->
+</div>
+<description class="dramora-series-description">
+  The series synopsis goes here.
+</description>
+<div class="dramora-episodes">
+  <div class="dramora-episode" ep-id="1" ep-title="The First Meeting">
+    <!-- Insert Blogger's native uploaded-video object here -->
+    <description class="dramora-episode-description">Episode 1 summary.</description>
+  </div>
+  <div class="dramora-episode" ep-id="2" ep-title="A New Beginning">
+    <!-- Insert Blogger's native uploaded-video object here -->
+    <description class="dramora-episode-description">Episode 2 summary.</description>
+  </div>
+</div>
+```
+
+### V9.7 verification limits
+
+- GitHub branch code updated; live Blogger rendering and native playback still require a test post.
+- Blogger may normalize or sanitize unknown `description` tags/attributes in the post editor. Confirm the saved post HTML retains the `class`, `ep-id`, and `ep-title` attributes. If Blogger strips them, use equivalent `data-*` attributes or a Blogger-safe wrapper structure.
+- Native Blogger OBJECT playback remains opaque to page JavaScript; per-episode playback position/resume cannot be reliably read from that player. Standard HTML `video` tracking remains separate.
