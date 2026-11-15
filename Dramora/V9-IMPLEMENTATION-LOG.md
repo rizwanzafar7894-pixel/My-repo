@@ -196,3 +196,17 @@ Use the Blogger editor's actual uploaded image URL; do not leave the placeholder
 - Added page bottom spacing on mobile so fixed navigation does not cover the final content.
 - Admin remains accessible through the existing desktop/account navigation and is intentionally not a public bottom-bar destination.
 - GitHub source update is complete; test the Blogger XML installation and tap targets on real Android/iOS viewport sizes before treating the feature as live-verified.
+
+## V9.10 — Mobile carousel gestures and thumbnail-only series poster (implemented)
+
+- Added horizontal swipe navigation to the homepage featured carousel on touch devices. Vertical page scrolling remains available; links, buttons, and form controls are excluded from swipe capture.
+- A touch gesture pauses autoplay while active and restarts it after release/cancel, while reduced-motion and hidden-tab behavior remain respected.
+- Updated hybrid series poster handling: a dedicated `.dramora-thumbnail img` is preferred, used as the post/card metadata image source, then removed from the visible single-post DOM. It is not reused as the visible series cover or episode poster.
+- The series overview no longer reserves a poster column, preventing an empty image gap on the detail page.
+- Existing fallback poster discovery remains available when no dedicated thumbnail wrapper exists.
+
+### V9.10 verification limits
+
+- GitHub branch updates completed. Touch swipe behavior and thumbnail extraction still need testing on an installed Blogger test blog and real mobile browsers.
+- Blogger's feed `media$thumbnail` behavior can vary with the editor's image markup; verify that the dedicated thumbnail is returned in feed cards and saved-content metadata.
+- This change does not alter Firebase data contracts, Firestore rules, media storage, or the Blogger-first / Backblaze B2 fallback architecture.
