@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection'
+  xmlns='http://www.w3.org/1999/xhtml'
+  xmlns:b='http://www.google.com/2005/gml/b'
+  xmlns:data='http://www.google.com/2005/gml/data'
+  xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta content='width=device-width, initial-scale=1, viewport-fit=cover' name='viewport'/>
+  <meta content='dark' name='color-scheme'/>
+  <title><data:blog.pageTitle/></title>
+  <b:include data='blog' name='all-head-content'/>
+  <b:skin><![CDATA[
+    :root{color-scheme:dark;--bg:#090812;--panel:#151322;--muted:#aaa5bb;--text:#f8f6ff;--purple:#9b5cff;--pink:#ed4bd1}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Inter,system-ui,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}.shell{max-width:1240px;margin:auto;padding:0 20px}
+    .top{position:sticky;top:0;z-index:5;background:#090812eF;border-bottom:1px solid #ffffff12;backdrop-filter:blur(18px)}
+    .bar{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{font-size:25px;font-weight:900;letter-spacing:-1px}.brand b{color:var(--purple)}
+    .nav{display:flex;gap:22px;color:#c9c4d5}.nav a:hover{color:white}.hero{padding:48px 0 26px}
+    .eyebrow{color:#c49aff;text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}
+    h1{font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-2px;margin:12px 0}
+    .sub{color:var(--muted);max-width:560px;line-height:1.7}.section{padding:20px 0 46px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h2{font-size:22px;margin:0}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+    .poster{aspect-ratio:3/4;border-radius:16px;background:linear-gradient(145deg,#39265b,#171321 65%,#56234f);display:flex;align-items:end;padding:14px;overflow:hidden;position:relative;border:1px solid #ffffff12}
+    .poster:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 65% 25%,#c18aff55,transparent 45%)}
+    .poster span{position:relative;font-weight:800;text-shadow:0 2px 12px #000}
+    .episode{color:var(--muted);font-size:12px;margin:8px 2px 0}.post{background:var(--panel);padding:20px;border-radius:16px}
+    .post-title{font-size:20px}.post-body{line-height:1.8;color:#d6d1df}.post-body img{max-width:100%;height:auto}
+    .footer{border-top:1px solid #ffffff12;padding:28px 0;color:var(--muted);font-size:12px}
+    .pill{display:inline-block;padding:9px 14px;border-radius:99px;background:linear-gradient(100deg,var(--purple),var(--pink));font-weight:800;margin-top:12px}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{gap:12px}}
+    @media(max-width:600px){.shell{padding:0 14px}.bar{height:60px}.nav{font-size:12px;gap:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hero{padding:34px 0 18px}.brand{font-size:22px}}
+  ]]></b:skin>
+</head>
+<body>
+  <header class='top'><div class='shell bar'>
+    <a class='brand' expr:href='data:blog.homepageUrl'>DRA<b>M</b>ORA</a>
+    <nav class='nav'><a expr:href='data:blog.homepageUrl'>Home</a><a href='/search/label/Drama'>Drama</a><a href='/search/label/Latest'>Latest</a></nav>
+  </div></header>
+  <main class='shell'>
+    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+      <section class='hero'><div class='eyebrow'>Your next obsession starts here</div><h1>Big stories.<br/>Short episodes.</h1><p class='sub'>Discover bite-sized dramas, unforgettable characters and stories made for every moment.</p><a class='pill' href='/search'>Explore dramas</a></section>
+      <section class='section'><div class='section-head'><h2>Latest stories</h2></div>
+        <div class='grid'>
+          <b:loop values='data:posts' var='post'>
+            <article><a expr:href='data:post.url'><div class='poster'><span><data:post.title/></span></div></a><div class='episode'>NEW EPISODE · <data:post.dateHeader/></div></article>
+          </b:loop>
+        </div>
+      </section>
+    <b:else/>
+      <section class='section'><b:loop values='data:posts' var='post'><article class='post'>
+        <h1 class='post-title'><data:post.title/></h1><div class='episode'><data:post.timestamp/></div>
+        <div class='post-body'><data:post.body/></div>
+      </article></b:loop></section>
+    </b:if>
+  </main>
+  <footer class='footer'><div class='shell'>© <data:blog.title/> · Stories for everyone. Always free.</div></footer>
+</body>
+</html>
