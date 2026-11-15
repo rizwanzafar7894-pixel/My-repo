@@ -643,7 +643,6 @@
                 <a class='text-link' expr:href='data:blog.homepageUrl'>← Back to home</a>
               </div>
             </b:if>
-</b:section>
           </section>
           <aside class='sidebar'>
             <div class='sidebar-box'><h3>About Dramora</h3><p>Your home for short-form drama stories and bite-sized entertainment.</p></div>
