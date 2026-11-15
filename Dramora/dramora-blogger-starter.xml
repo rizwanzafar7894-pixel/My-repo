@@ -736,12 +736,12 @@
       if (toggle && nav) toggle.addEventListener('click', function () { nav.classList.toggle('open'); });
       var bottomNav = document.getElementById('mobileBottomNav');
       if (bottomNav) {
-        var currentPath = window.location.pathname.replace(/\\/+$/, '') || '/';
+        var currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
         var navItems = bottomNav.querySelectorAll('[data-nav]');
         navItems.forEach(function (item) {
           var key = item.getAttribute('data-nav');
-          var target = new URL(item.href, window.location.href).pathname.replace(/\\/+$/, '') || '/';
-          var active = key === 'home' ? currentPath === '/' : (currentPath === target || (key === 'home' && currentPath.indexOf('/20') === 0));
+          var target = new URL(item.href, window.location.href).pathname.replace(/\/+$/, '') || '/';
+          var active = currentPath === target;
           if (active) { item.classList.add('active'); item.setAttribute('aria-current','page'); }
           else { item.classList.remove('active'); item.removeAttribute('aria-current'); }
         });
