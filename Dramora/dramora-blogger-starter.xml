@@ -1,61 +1,2788 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html b:version='2' class='v2' expr:dir='data:blog.languageDirection'
-  xmlns='http://www.w3.org/1999/xhtml'
-  xmlns:b='http://www.google.com/2005/gml/b'
-  xmlns:data='http://www.google.com/2005/gml/data'
-  xmlns:expr='http://www.google.com/2005/gml/expr'>
+      xmlns='http://www.w3.org/1999/xhtml'
+      xmlns:b='http://www.google.com/2005/gml/b'
+      xmlns:data='http://www.google.com/2005/gml/data'
+      xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
   <meta content='width=device-width, initial-scale=1, viewport-fit=cover' name='viewport'/>
   <meta content='dark' name='color-scheme'/>
-  <title><data:blog.pageTitle/></title>
   <b:include data='blog' name='all-head-content'/>
+  <title><data:blog.pageTitle/> | DRAMORA</title>
   <b:skin><![CDATA[
-    :root{color-scheme:dark;--bg:#090812;--panel:#151322;--muted:#aaa5bb;--text:#f8f6ff;--purple:#9b5cff;--pink:#ed4bd1}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Inter,system-ui,Arial,sans-serif}
-    a{color:inherit;text-decoration:none}.shell{max-width:1240px;margin:auto;padding:0 20px}
-    .top{position:sticky;top:0;z-index:5;background:#090812eF;border-bottom:1px solid #ffffff12;backdrop-filter:blur(18px)}
-    .bar{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{font-size:25px;font-weight:900;letter-spacing:-1px}.brand b{color:var(--purple)}
-    .nav{display:flex;gap:22px;color:#c9c4d5}.nav a:hover{color:white}.hero{padding:48px 0 26px}
-    .eyebrow{color:#c49aff;text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}
-    h1{font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-2px;margin:12px 0}
-    .sub{color:var(--muted);max-width:560px;line-height:1.7}.section{padding:20px 0 46px}
-    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-    h2{font-size:22px;margin:0}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
-    .poster{aspect-ratio:3/4;border-radius:16px;background:linear-gradient(145deg,#39265b,#171321 65%,#56234f);display:flex;align-items:end;padding:14px;overflow:hidden;position:relative;border:1px solid #ffffff12}
-    .poster:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 65% 25%,#c18aff55,transparent 45%)}
-    .poster span{position:relative;font-weight:800;text-shadow:0 2px 12px #000}
-    .episode{color:var(--muted);font-size:12px;margin:8px 2px 0}.post{background:var(--panel);padding:20px;border-radius:16px}
-    .post-title{font-size:20px}.post-body{line-height:1.8;color:#d6d1df}.post-body img{max-width:100%;height:auto}
-    .footer{border-top:1px solid #ffffff12;padding:28px 0;color:var(--muted);font-size:12px}
-    .pill{display:inline-block;padding:9px 14px;border-radius:99px;background:linear-gradient(100deg,var(--purple),var(--pink));font-weight:800;margin-top:12px}
-    @media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{gap:12px}}
-    @media(max-width:600px){.shell{padding:0 14px}.bar{height:60px}.nav{font-size:12px;gap:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hero{padding:34px 0 18px}.brand{font-size:22px}}
+    :root {
+      --bg: #080910; --surface: #111320; --surface-2: #171a2a;
+      --text: #f7f7fb; --muted: #9b9eb2; --line: rgba(255,255,255,.09);
+      --purple: #9b5cff; --pink: #ff4f91; --radius: 18px;
+      --content: 1240px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    img { max-width: 100%; display: block; }
+    .site-shell { min-height: 100vh; overflow: hidden; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(18px);
+      background: rgba(8,9,16,.86); border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      width: min(var(--content), calc(100% - 40px)); min-height: 72px; margin: auto;
+      display: flex; align-items: center; gap: 28px;
+    }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:850; letter-spacing:-.7px; font-size:22px; }
+    .brand-mark {
+      width:34px; height:34px; display:grid; place-items:center; border-radius:11px;
+      background:linear-gradient(135deg,var(--purple),var(--pink)); color:white;
+      box-shadow:0 7px 26px rgba(155,92,255,.28); font-weight:900;
+    }
+    .nav-links { display:flex; align-items:center; gap:24px; color:#c6c7d3; font-size:14px; }
+    .nav-links a:hover, .nav-links a.active { color:white; }
+    .nav-spacer { flex:1; }
+    .search-box {
+      width:220px; display:flex; align-items:center; gap:9px; padding:10px 13px;
+      background:#141624; border:1px solid var(--line); border-radius:12px; color:var(--muted);
+    }
+    .search-box input { width:100%; min-width:0; border:0; outline:0; color:white; background:transparent; }
+    .nav-action {
+      border:1px solid rgba(178,133,255,.35); color:#fff; border-radius:12px;
+      padding:10px 15px; background:rgba(155,92,255,.13); font-weight:700;
+    }
+    .mobile-menu { display:none; border:1px solid var(--line); color:white; background:var(--surface); border-radius:11px; padding:9px 12px; }
+    .container { width:min(var(--content),calc(100% - 40px)); margin:0 auto; }
+    .hero { padding:52px 0 32px; }
+    .hero-panel {
+      min-height:360px; border:1px solid var(--line); border-radius:26px; overflow:hidden;
+      display:flex; align-items:flex-end; position:relative; isolation:isolate;
+      background:
+        linear-gradient(90deg,rgba(7,8,15,.97) 0%,rgba(7,8,15,.76) 46%,rgba(7,8,15,.12) 100%),
+        radial-gradient(circle at 78% 25%,rgba(155,92,255,.55),transparent 34%),
+        linear-gradient(135deg,#242039,#111321 55%,#311b39);
+    }
+    .hero-panel:after {
+      content:""; position:absolute; inset:0; z-index:-1;
+      background:linear-gradient(0deg,rgba(8,9,16,.6),transparent 55%);
+    }
+    .hero-content { max-width:590px; padding:42px; }
+    .eyebrow { color:#c49aff; text-transform:uppercase; letter-spacing:2px; font-size:11px; font-weight:800; }
+    .hero h1 { font-size:clamp(36px,5vw,62px); line-height:1.02; letter-spacing:-2px; margin:14px 0; }
+    .hero p { color:#c3c3d0; max-width:490px; margin:0 0 24px; }
+    .button-primary {
+      display:inline-flex; align-items:center; justify-content:center; gap:9px;
+      padding:12px 19px; border:0; border-radius:12px; color:white; font-weight:800;
+      background:linear-gradient(110deg,var(--purple),#7655ed 55%,var(--pink));
+      box-shadow:0 10px 28px rgba(155,92,255,.22);
+    }
+    .button-ghost { display:inline-flex; padding:11px 17px; border:1px solid var(--line); border-radius:12px; margin-left:8px; background:rgba(255,255,255,.06); }
+    .section { padding:20px 0 42px; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .section-head h2 { margin:0; font-size:23px; letter-spacing:-.6px; }
+    .section-head p { margin:4px 0 0; color:var(--muted); font-size:13px; }
+    .text-link { color:#c49aff; font-weight:700; font-size:13px; }
+    .chips { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 22px; }
+    .chip { padding:8px 13px; border:1px solid var(--line); border-radius:999px; color:#c8c8d4; background:var(--surface); font-size:12px; }
+    .chip.active { color:white; border-color:rgba(155,92,255,.5); background:rgba(155,92,255,.15); }
+    .drama-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:18px; }
+    .drama-card { min-width:0; }
+    .poster {
+      aspect-ratio: 3/4; position:relative; overflow:hidden; border-radius:15px;
+      background:linear-gradient(145deg,#2d2542,#171827 55%,#4a2441);
+      border:1px solid var(--line);
+    }
+    .poster img { width:100%; height:100%; object-fit:cover; transition:transform .35s ease; }
+    .drama-card:hover .poster img { transform:scale(1.045); }
+    .poster-placeholder { position:absolute; inset:0; display:grid; place-items:center; color:rgba(255,255,255,.65); font-size:12px; text-align:center; padding:15px; }
+    .poster-shade { position:absolute; inset:40% 0 0; background:linear-gradient(transparent,rgba(0,0,0,.55)); pointer-events:none; }
+    .drama-meta { padding:11px 2px 0; }
+    .drama-meta h3 { font-size:14px; line-height:1.35; margin:0 0 5px; font-weight:750; }
+    .drama-meta p { color:var(--muted); font-size:12px; margin:0; }
+    .label-row { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+    .mini-label { color:#d9c5ff; background:rgba(155,92,255,.13); border-radius:6px; padding:3px 7px; font-size:10px; }
+    .content-layout { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:28px; padding-bottom:60px; }
+    .main-posts { min-width:0; }
+    .post-card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:16px; }
+    .post-card h2 { margin:0 0 10px; font-size:23px; }
+    .post-card .post-body { color:#c6c7d3; }
+    .post-body img { border-radius:12px; }
+    .sidebar-box { padding:18px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); margin-bottom:16px; }
+    .sidebar-box h3 { margin:0 0 12px; font-size:15px; }
+    .sidebar-box p { color:var(--muted); font-size:13px; margin:0; }
+    .site-footer { border-top:1px solid var(--line); padding:28px 0; color:var(--muted); font-size:12px; }
+    .footer-inner { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+    .empty-state { padding:35px; text-align:center; color:var(--muted); border:1px dashed var(--line); border-radius:16px; }
+
+    /* Blogger post and episode presentation */
+    .blog-posts { margin:0; }
+    .date-outer { margin:0 0 18px; }
+    .post-outer { margin:0 0 18px; }
+    .post { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:clamp(18px,3vw,30px); overflow:hidden; }
+    .post-title, .post-title.entry-title { color:var(--text); font-size:clamp(24px,3vw,36px); line-height:1.15; letter-spacing:-.8px; margin:0 0 12px; }
+    .post-title a { color:inherit; }
+    .post-header, .post-header-line-1, .post-footer { color:var(--muted); font-size:12px; }
+    .post-body { color:#d0d1dc; font-size:15px; line-height:1.8; overflow-wrap:anywhere; }
+    .post-body h2,.post-body h3 { color:white; line-height:1.25; margin:26px 0 12px; }
+    .post-body p { margin:0 0 16px; }
+    .post-body a { color:#c49aff; text-decoration:underline; text-underline-offset:3px; }
+    .post-body img { height:auto; max-width:100%; border-radius:13px; margin:16px auto; }
+    .post-body iframe { max-width:100%; border:0; border-radius:14px; }
+    .post-body video { display:block; width:100%; max-height:78vh; background:#000; border-radius:16px; }
+    .drama-player, .episode-player, .video-container { width:100%; aspect-ratio:16/9; background:#000; border:1px solid var(--line); border-radius:17px; overflow:hidden; margin:20px 0 24px; }
+    .drama-player iframe, .episode-player iframe, .video-container iframe,
+    .drama-player video, .episode-player video, .video-container video { width:100%; height:100%; display:block; border:0; object-fit:contain; }
+    .post-body .separator { margin:18px auto; }
+    .post-body blockquote { margin:18px 0; padding:14px 18px; border-left:3px solid var(--purple); background:rgba(155,92,255,.08); border-radius:0 12px 12px 0; color:#d7d2e4; }
+    .post-labels a { display:inline-block; margin:5px 5px 0 0; padding:5px 9px; color:#d9c5ff; background:rgba(155,92,255,.13); border-radius:7px; font-size:11px; }
+    .blog-pager { display:flex; justify-content:space-between; gap:12px; margin:20px 0; }
+    .blog-pager a { padding:10px 14px; border:1px solid var(--line); background:var(--surface); border-radius:10px; color:#d9c5ff; }
+    .post-share-buttons, .post-icons, .feed-links { opacity:.85; }
+    .comments { margin-top:24px; padding-top:18px; border-top:1px solid var(--line); }
+    .comments h4 { color:white; }
+    .comment-thread, .comment-form { color:#c6c7d3; }
+    .status-msg-wrap { margin:20px 0; padding:16px; border:1px solid var(--line); border-radius:12px; color:var(--muted); }
+    .post-body .episode-heading { margin:24px 0 10px; color:white; font-size:20px; font-weight:800; }
+    .post-body .episode-note { color:var(--muted); font-size:13px; }
+    .post-body .episode-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin:18px 0; }
+    .post-body .episode-list a { display:block; padding:12px; border:1px solid var(--line); border-radius:11px; background:var(--surface-2); text-decoration:none; }
+    .post-body .episode-list a:hover { border-color:rgba(155,92,255,.55); background:rgba(155,92,255,.1); }
+    .post-body .watch-notice { padding:12px 14px; border:1px solid rgba(155,92,255,.25); background:rgba(155,92,255,.08); color:#d9c5ff; border-radius:11px; font-size:13px; }
+    .blog-feeds, .blog-mobile-link { display:none; }
+    @media(max-width:760px) {
+      .post { padding:17px; border-radius:15px; }
+      .post-body { font-size:14px; }
+      .post-body iframe { width:100%; }
+      .drama-player, .episode-player, .video-container { border-radius:12px; }
+    }
+
+
+    /* DRAMORA V3 — Firebase account and personal library */
+    [hidden] { display: none !important; }
+    body.modal-open { overflow: hidden; }
+    .auth-modal { display:none; position:fixed; inset:0; z-index:1000; place-items:center; padding:18px; }
+    .auth-modal.is-open { display:grid; }
+    .auth-backdrop { position:absolute; inset:0; background:rgba(2,3,9,.78); backdrop-filter:blur(10px); }
+    .auth-dialog { position:relative; z-index:1; width:min(100%,440px); max-height:min(92vh,760px); overflow:auto;
+      padding:30px; border:1px solid rgba(190,150,255,.22); border-radius:24px;
+      background:linear-gradient(160deg,#171526,#0e101b 65%); box-shadow:0 28px 100px rgba(0,0,0,.6); }
+    .auth-close { position:absolute; top:13px; right:14px; width:36px; height:36px; border:1px solid var(--line);
+      border-radius:11px; background:rgba(255,255,255,.05); color:white; font-size:21px; }
+    .auth-brand { display:flex; align-items:center; gap:9px; color:#d7c2ff; font-size:12px; font-weight:850; letter-spacing:2px; }
+    .auth-brand-mark { display:grid; place-items:center; width:28px; height:28px; border-radius:9px;
+      background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; letter-spacing:0; }
+    .auth-dialog h2 { margin:19px 0 5px; font-size:28px; letter-spacing:-.8px; }
+    .auth-subtitle { margin:0 0 21px; color:var(--muted); font-size:13px; }
+    .auth-field { display:block; margin:13px 0; color:#d9d9e5; font-size:12px; font-weight:700; }
+    .auth-field input { display:block; width:100%; margin-top:7px; padding:13px 14px; border:1px solid var(--line);
+      border-radius:11px; outline:none; background:#0a0c15; color:#fff; }
+    .auth-field input:focus { border-color:rgba(174,126,255,.7); box-shadow:0 0 0 3px rgba(155,92,255,.12); }
+    .auth-submit,.auth-google,.auth-secondary { width:100%; min-height:45px; border-radius:11px; font-weight:800; }
+    .auth-submit { margin-top:10px; border:0; color:white; background:linear-gradient(110deg,var(--purple),#7655ed 55%,var(--pink)); }
+    .auth-google,.auth-secondary { margin-top:10px; border:1px solid var(--line); color:#f4f1fb; background:rgba(255,255,255,.045); }
+    .auth-text-button { border:0; padding:8px 0; color:#c9aaff; background:transparent; font-size:12px; font-weight:700; }
+    .auth-switch { display:block; width:100%; margin-top:12px; text-align:center; }
+    .auth-message { padding:11px 12px; border-radius:10px; margin:12px 0; font-size:12px; line-height:1.5; }
+    .auth-message.error { border:1px solid rgba(255,100,130,.28); background:rgba(255,70,100,.09); color:#ffb9c6; }
+    .auth-message.success { border:1px solid rgba(100,220,170,.24); background:rgba(60,190,130,.09); color:#a9f0ce; }
+    .auth-verification { margin-top:16px; padding:14px; border:1px solid rgba(155,92,255,.28); border-radius:13px; background:rgba(155,92,255,.08); }
+    .auth-verification p,.auth-account-copy { color:var(--muted); font-size:12px; line-height:1.6; }
+    .auth-account-name { margin:18px 0 2px; font-size:19px; font-weight:800; }
+    .auth-account-email { margin:0 0 12px; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+    .library-page { padding:8px 0 35px; }
+    .library-page-head { margin:0 0 22px; }
+    .library-page-head h1 { margin:0 0 6px; font-size:clamp(27px,4vw,38px); letter-spacing:-1px; }
+    .library-page-head p { margin:0; color:var(--muted); font-size:13px; }
+    .library-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+    .library-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:15px; background:var(--surface); }
+    .library-card-link { display:block; }
+    .library-card img,.library-card-placeholder { display:grid; width:100%; aspect-ratio:3/4; object-fit:cover; background:linear-gradient(145deg,#2d2542,#171827 55%,#4a2441); }
+    .library-card-placeholder { place-items:center; color:var(--muted); font-size:12px; }
+    .library-card-copy { padding:11px; }
+    .library-card-copy h3 { margin:0 0 8px; font-size:13px; line-height:1.4; }
+    .library-remove { border:1px solid var(--line); border-radius:9px; padding:7px 10px; color:#e7d8ff; background:rgba(155,92,255,.1); font-size:11px; }
+    .library-empty { padding:28px; border:1px dashed var(--line); border-radius:14px; color:var(--muted); text-align:center; }
+    .library-primary { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:0 16px; border:0;
+      border-radius:11px; color:white; background:linear-gradient(110deg,var(--purple),#7655ed 55%,var(--pink)); font-weight:800; }
+    .discover-tools { display:grid; gap:13px; margin:0 0 18px; }
+    .discover-search { width:100%; min-height:45px; padding:0 14px; border:1px solid var(--line); border-radius:12px; outline:none; color:#fff; background:#10121e; }
+    .discover-search:focus { border-color:rgba(174,126,255,.7); box-shadow:0 0 0 3px rgba(155,92,255,.1); }
+    .discover-chip-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .discover-chip { padding:8px 12px; border:1px solid var(--line); border-radius:999px; color:#c9c9d6; background:var(--surface); font-size:11px; font-weight:750; }
+    .discover-chip.active { color:#fff; border-color:rgba(155,92,255,.5); background:rgba(155,92,255,.16); }
+    .discover-count { color:var(--muted); font-size:11px; }
+    .discover-summary { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; margin:7px 0 0; color:var(--muted); font-size:11px; line-height:1.55; }
+    .discover-card-labels { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+    .discover-load-more { display:flex; justify-content:center; margin:22px 0 8px; }
+    .discover-load-more button { min-height:42px; padding:0 18px; border:1px solid rgba(174,126,255,.3); border-radius:11px; color:#e6d9ff; background:rgba(155,92,255,.1); font-size:12px; font-weight:800; }
+    .series-section { margin:28px 0 34px; }
+    .series-section h2 { margin:0 0 14px; color:#fff; font-size:20px; letter-spacing:-.02em; }
+    .series-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px; }
+    .series-card { display:block; min-width:0; padding:16px; border:1px solid var(--line); border-radius:15px;
+      background:linear-gradient(145deg,rgba(155,92,255,.11),rgba(255,255,255,.025)); text-decoration:none; }
+    .series-card:hover { border-color:rgba(174,126,255,.55); transform:translateY(-1px); }
+    .series-card strong { display:block; color:#fff; font-size:14px; overflow-wrap:anywhere; }
+    .series-card span { display:block; margin-top:7px; color:var(--muted); font-size:11px; }
+    .series-episode-list { display:grid; gap:10px; margin-top:18px; }
+    .series-episode { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px;
+      border:1px solid var(--line); border-radius:13px; background:var(--surface); text-decoration:none; }
+    .series-episode:hover { border-color:rgba(174,126,255,.5); background:rgba(155,92,255,.07); }
+    .series-episode-copy { min-width:0; }
+    .series-episode-copy strong { display:block; color:#fff; font-size:13px; overflow-wrap:anywhere; }
+    .series-episode-copy span { display:block; margin-top:5px; color:var(--muted); font-size:11px; }
+    .series-episode-number { flex:0 0 auto; min-width:42px; text-align:center; padding:8px 9px; border-radius:10px;
+      color:#e9dcff; background:rgba(155,92,255,.15); font-size:11px; font-weight:850; }
+    .series-back { display:inline-flex; margin:0 0 16px; color:#d9c7ff; font-size:12px; text-decoration:none; }
+    @media(max-width:600px) { .series-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+      .series-card { padding:13px; } .series-episode { padding:12px; } }
+    .registered-player { margin:0 0 22px; padding:13px; border:1px solid rgba(174,126,255,.2); border-radius:17px; background:linear-gradient(145deg,rgba(155,92,255,.08),rgba(255,255,255,.02)); }
+    .registered-player h2 { margin:0 0 10px; color:#f5f0ff; font-size:16px; }
+    .registered-player video { display:block; width:100%; max-height:78vh; aspect-ratio:16/9; border-radius:12px; background:#000; object-fit:contain; }
+    .dramora-episode-controls a{text-decoration:none}.dramora-episode-controls input{accent-color:#a855f7}
+    @media(max-width:600px){.dramora-episode-controls{align-items:stretch!important}.dramora-episode-controls a{flex:1;text-align:center}.dramora-episode-controls label{width:100%;padding:5px 2px}}
+    .registered-player-note { margin:9px 2px 0; color:var(--muted); font-size:10px; }
+    .profile-panel { display:flex; align-items:center; gap:16px; padding:20px; margin-bottom:25px; border:1px solid var(--line);
+      border-radius:16px; background:var(--surface); }
+    .profile-avatar { display:grid; flex:0 0 58px; width:58px; height:58px; place-items:center; overflow:hidden;
+      border-radius:18px; background:rgba(155,92,255,.18); color:#e2d0ff; font-size:22px; font-weight:850; }
+    .profile-avatar img { width:100%; height:100%; object-fit:cover; }
+    .profile-panel h2 { margin:0 0 3px; font-size:18px; }
+    .profile-panel p { margin:0; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+    .post-actions { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 18px; }
+    .favorite-action { border:1px solid rgba(174,126,255,.35); border-radius:10px; padding:9px 13px; color:#e4d4ff; background:rgba(155,92,255,.12); font-size:12px; font-weight:800; }
+    .favorite-action.is-saved { border-color:rgba(255,79,145,.35); color:#ffc2da; background:rgba(255,79,145,.1); }
+    .dramora-toast { position:fixed; z-index:1100; left:50%; bottom:24px; transform:translate(-50%,18px); opacity:0; pointer-events:none;
+      max-width:calc(100% - 28px); padding:12px 16px; border:1px solid var(--line); border-radius:12px;
+      background:#1a1b2a; color:#fff; box-shadow:0 12px 40px rgba(0,0,0,.4); font-size:12px; transition:.2s ease; }
+    .dramora-toast.show { opacity:1; transform:translate(-50%,0); }
+    @media(max-width:900px) { .library-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media(max-width:600px) {
+      .auth-dialog { padding:24px 20px; border-radius:19px; }
+      .library-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+      .profile-panel { align-items:flex-start; padding:15px; }
+    }
+
+
+    /* DRAMORA V4 — authenticated community and private messages */
+    .community-shell { min-width:0; }
+    .community-tabs { display:flex; gap:8px; padding:5px; margin:0 0 16px; width:max-content; max-width:100%; border:1px solid var(--line); border-radius:13px; background:#0d0f19; }
+    .community-tab { border:0; border-radius:9px; padding:10px 15px; color:var(--muted); background:transparent; font-size:12px; font-weight:800; }
+    .community-tab.active { color:#fff; background:linear-gradient(110deg,rgba(155,92,255,.35),rgba(255,79,145,.18)); box-shadow:inset 0 0 0 1px rgba(190,150,255,.18); }
+    .community-panel { min-width:0; border:1px solid var(--line); border-radius:17px; background:linear-gradient(160deg,rgba(22,23,39,.98),rgba(13,15,25,.98)); overflow:hidden; }
+    .community-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 17px; border-bottom:1px solid var(--line); }
+    .community-panel-head h2 { margin:0; font-size:15px; }
+    .community-panel-head p { margin:3px 0 0; color:var(--muted); font-size:11px; }
+    .community-status { display:inline-flex; align-items:center; gap:7px; color:#a9f0ce; font-size:10px; font-weight:800; white-space:nowrap; }
+    .community-status:before { content:""; width:7px; height:7px; border-radius:50%; background:#52d69a; box-shadow:0 0 12px rgba(82,214,154,.6); }
+    .community-messages { display:flex; flex-direction:column; gap:12px; min-height:270px; max-height:540px; overflow:auto; padding:16px; overscroll-behavior:contain; }
+    .community-message { min-width:0; padding:12px; border:1px solid rgba(255,255,255,.065); border-radius:13px; background:rgba(255,255,255,.025); }
+    .community-message-head { display:flex; align-items:center; flex-wrap:wrap; gap:7px; margin-bottom:7px; }
+    .community-message-name { color:#e8dcff; font-size:12px; font-weight:850; }
+    .community-message-time { color:#777b91; font-size:10px; }
+    .community-message-body { color:#e2e2ec; font-size:13px; line-height:1.65; overflow-wrap:anywhere; white-space:pre-wrap; }
+    .community-message-body a { color:#c7a5ff; text-decoration:underline; text-underline-offset:2px; overflow-wrap:anywhere; }
+    .community-reply-quote { margin:0 0 8px; padding:7px 10px; border-left:2px solid var(--purple); border-radius:0 8px 8px 0; color:#a7a8b8; background:rgba(155,92,255,.07); font-size:11px; }
+    .community-message-actions { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+    .community-message-action { padding:5px 8px; border:1px solid rgba(255,255,255,.09); border-radius:8px; color:#b8b8c8; background:rgba(255,255,255,.035); font-size:10px; }
+    .community-message-action:hover,.community-message-action.is-active { border-color:rgba(155,92,255,.45); color:#e3d1ff; background:rgba(155,92,255,.12); }
+    .community-load-older { display:block; margin:12px auto 0; padding:8px 12px; border:1px solid var(--line); border-radius:9px; color:#cbb3ff; background:rgba(155,92,255,.08); font-size:11px; font-weight:750; }
+    .community-composer { padding:13px; border-top:1px solid var(--line); background:rgba(7,8,14,.35); }
+    .community-composer textarea { display:block; width:100%; min-height:76px; max-height:170px; resize:vertical; padding:12px 13px; border:1px solid var(--line); border-radius:11px; outline:none; color:#fff; background:#0a0c15; font:inherit; font-size:13px; line-height:1.5; }
+    .community-composer textarea:focus,.community-search:focus { border-color:rgba(174,126,255,.65); box-shadow:0 0 0 3px rgba(155,92,255,.1); }
+    .community-composer-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:9px; }
+    .community-hint { color:#777b91; font-size:10px; }
+    .community-send { min-width:92px; padding:9px 14px; border:0; border-radius:9px; color:#fff; background:linear-gradient(110deg,var(--purple),#7655ed 55%,var(--pink)); font-size:11px; font-weight:850; }
+    .community-send:disabled { opacity:.5; cursor:wait; }
+    .community-replying { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:9px; padding:8px 10px; border-radius:9px; color:#cbb3ff; background:rgba(155,92,255,.1); font-size:11px; }
+    .community-replying button { border:0; color:#fff; background:transparent; font-size:16px; }
+    .community-private-layout { display:grid; grid-template-columns:minmax(210px, .72fr) minmax(0,1.55fr); min-height:490px; }
+    .community-private-sidebar { min-width:0; padding:14px; border-right:1px solid var(--line); }
+    .community-search { width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:10px; outline:none; color:#fff; background:#0a0c15; font-size:12px; }
+    .community-search-results,.community-conversation-list { display:flex; flex-direction:column; gap:7px; margin-top:11px; }
+    .community-section-label { margin:17px 0 8px; color:#8d90a4; font-size:10px; font-weight:850; letter-spacing:1.2px; text-transform:uppercase; }
+    .community-person,.community-conversation { display:flex; align-items:center; gap:10px; width:100%; padding:10px; border:1px solid transparent; border-radius:11px; color:#eee; background:transparent; text-align:left; cursor:pointer; }
+    .community-person:hover,.community-conversation:hover,.community-conversation.active { border-color:rgba(155,92,255,.28); background:rgba(155,92,255,.09); }
+    .community-avatar { display:grid; flex:0 0 34px; width:34px; height:34px; place-items:center; overflow:hidden; border-radius:11px; color:#e7d8ff; background:linear-gradient(135deg,#47316b,#8c477e); font-size:12px; font-weight:850; }
+    .community-avatar img { width:100%; height:100%; object-fit:cover; }
+    .community-person-copy,.community-conversation-copy { display:block; min-width:0; flex:1; }
+    .community-person-copy strong,.community-conversation-copy strong { display:block; overflow:hidden; color:#e9e8f1; font-size:11px; text-overflow:ellipsis; white-space:nowrap; }
+    .community-person-copy small,.community-conversation-copy small { display:block; overflow:hidden; margin-top:3px; color:#85889b; font-size:10px; text-overflow:ellipsis; white-space:nowrap; }
+    .community-unread { display:grid; flex:0 0 19px; width:19px; height:19px; place-items:center; border-radius:50%; color:#fff; background:#8f59ed; font-size:9px; font-weight:850; }
+    .community-private-main { display:flex; min-width:0; flex-direction:column; }
+    .community-private-placeholder { display:grid; flex:1; min-height:350px; place-items:center; padding:25px; color:var(--muted); text-align:center; font-size:13px; }
+    .community-private-head { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:57px; padding:12px 15px; border-bottom:1px solid var(--line); }
+    .community-private-head strong { font-size:13px; }
+    .community-private-head button { border:1px solid var(--line); border-radius:8px; padding:6px 9px; color:#ffb9cb; background:rgba(255,79,145,.08); font-size:10px; }
+    .community-private-main .community-messages { flex:1; min-height:300px; max-height:490px; }
+    .community-error { margin:12px 14px; padding:10px 12px; border:1px solid rgba(255,100,130,.25); border-radius:9px; color:#ffb9c6; background:rgba(255,70,100,.08); font-size:11px; }
+    .community-muted { padding:12px 8px; color:#85889b; font-size:11px; line-height:1.6; }
+    @media(max-width:760px) {
+      .community-private-layout { grid-template-columns:1fr; }
+      .community-private-sidebar { border-right:0; border-bottom:1px solid var(--line); }
+      .community-conversation-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .community-messages { max-height:52vh; }
+      .community-private-main .community-messages { max-height:48vh; }
+    }
+    @media(max-width:420px) {
+      .community-tabs { width:100%; }
+      .community-tab { flex:1; padding:10px 8px; }
+      .community-conversation-list { grid-template-columns:1fr; }
+      .community-message { padding:10px; }
+    }
+
+
+    /* DRAMORA V5 — admin moderation and media management */
+    .admin-shell { display:grid; gap:18px; }
+    .admin-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .admin-stat { padding:16px; border:1px solid var(--line); border-radius:14px; background:linear-gradient(145deg,#17172a,#10121e); }
+    .admin-stat strong { display:block; font-size:25px; letter-spacing:-.8px; }
+    .admin-stat span { color:var(--muted); font-size:11px; }
+    .admin-card { min-width:0; padding:17px; border:1px solid var(--line); border-radius:16px; background:var(--surface); }
+    .admin-card h2 { margin:0 0 5px; font-size:17px; }
+    .admin-card > p { margin:0 0 15px; color:var(--muted); font-size:12px; line-height:1.6; }
+    .admin-report-list,.admin-media-list { display:grid; gap:11px; }
+    .admin-report { padding:14px; border:1px solid rgba(255,255,255,.075); border-radius:13px; background:rgba(255,255,255,.025); }
+    .admin-report-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .admin-report-head strong { display:block; color:#eee8fb; font-size:12px; }
+    .admin-report-meta { color:#85889b; font-size:10px; line-height:1.6; overflow-wrap:anywhere; }
+    .admin-report-excerpt { margin:10px 0; padding:10px 12px; border-left:2px solid var(--purple); border-radius:0 9px 9px 0; background:rgba(155,92,255,.07); color:#d7d2e4; font-size:12px; line-height:1.6; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .admin-status { display:inline-flex; align-items:center; padding:5px 8px; border:1px solid rgba(155,92,255,.28); border-radius:999px; color:#ddc9ff; background:rgba(155,92,255,.1); font-size:9px; font-weight:850; text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+    .admin-status.resolved { border-color:rgba(80,210,150,.25); color:#a9f0ce; background:rgba(60,190,130,.08); }
+    .admin-status.dismissed { border-color:rgba(255,255,255,.12); color:#aeb0bf; background:rgba(255,255,255,.04); }
+    .admin-actions { display:flex; flex-wrap:wrap; gap:7px; margin-top:11px; }
+    .admin-action { padding:8px 10px; border:1px solid var(--line); border-radius:9px; color:#e6dcf7; background:rgba(155,92,255,.09); font-size:10px; font-weight:800; }
+    .admin-action.danger { border-color:rgba(255,90,125,.25); color:#ffb9c6; background:rgba(255,70,100,.08); }
+    .admin-action:disabled { opacity:.45; cursor:wait; }
+    .admin-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .admin-field { display:block; min-width:0; color:#d9d9e5; font-size:11px; font-weight:750; }
+    .admin-field input,.admin-field select,.admin-field textarea { display:block; width:100%; min-width:0; margin-top:6px; padding:11px 12px; border:1px solid var(--line); border-radius:10px; outline:none; color:#fff; background:#0a0c15; font:inherit; font-weight:500; }
+    .admin-field input:focus,.admin-field select:focus,.admin-field textarea:focus { border-color:rgba(174,126,255,.65); box-shadow:0 0 0 3px rgba(155,92,255,.1); }
+    .admin-field.full { grid-column:1/-1; }
+    .admin-check { display:flex; align-items:flex-start; gap:9px; color:var(--muted); font-size:11px; line-height:1.5; }
+    .admin-check input { margin-top:2px; accent-color:var(--purple); }
+    .admin-help { color:#85889b; font-size:10px; line-height:1.6; }
+    .admin-submit { min-height:42px; padding:0 15px; border:0; border-radius:10px; color:#fff; background:linear-gradient(110deg,var(--purple),#7655ed 55%,var(--pink)); font-size:11px; font-weight:850; }
+    .admin-submit:disabled { opacity:.5; cursor:wait; }
+    .admin-media-row { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:12px; border:1px solid rgba(255,255,255,.07); border-radius:11px; }
+    .admin-media-row strong { display:block; color:#eee8fb; font-size:11px; overflow-wrap:anywhere; }
+    .admin-media-row small { display:block; margin-top:4px; color:#85889b; font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+    .admin-link { color:#c9aaff; font-size:10px; font-weight:800; text-decoration:underline; }
+    .admin-warning { padding:11px 12px; border:1px solid rgba(255,180,80,.2); border-radius:10px; color:#f4d6a1; background:rgba(255,180,80,.06); font-size:11px; line-height:1.6; }
+    .admin-denied { padding:25px; border:1px solid rgba(255,100,130,.22); border-radius:14px; color:#ffbdc9; background:rgba(255,70,100,.07); text-align:center; }
+    @media(max-width:600px) {
+      .admin-stats { grid-template-columns:1fr 1fr; }
+      .admin-form-grid { grid-template-columns:1fr; }
+      .admin-field.full { grid-column:auto; }
+      .admin-report-head,.admin-media-row { flex-direction:column; }
+    }
+
+    @media(max-width:1050px) { .drama-grid{grid-template-columns:repeat(4,minmax(0,1fr));} .search-box{width:180px;} }
+    @media(max-width:760px) {
+      .nav{width:calc(100% - 28px);min-height:62px;gap:12px;}
+      .nav-links{display:none;position:absolute;top:62px;left:0;right:0;padding:16px 20px 20px;background:#0c0d17;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:16px;}
+      .nav-links.open{display:flex;}
+      .mobile-menu{display:block;} .search-box{display:none;} .nav-action{padding:9px 12px;font-size:12px;}
+      .container{width:calc(100% - 28px);} .hero{padding:25px 0 18px;}
+      .hero-panel{min-height:330px;border-radius:20px;background:linear-gradient(90deg,rgba(7,8,15,.96),rgba(7,8,15,.55)),radial-gradient(circle at 80% 25%,rgba(155,92,255,.5),transparent 45%),linear-gradient(135deg,#242039,#111321);}
+      .hero-content{padding:25px 22px;} .hero h1{font-size:39px;letter-spacing:-1.5px;}
+      .drama-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}
+      .content-layout{grid-template-columns:1fr;} .sidebar{display:none;}
+      .section-head h2{font-size:20px;}
+    }
+    @media(min-width:761px) and (max-width:900px){.drama-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
   ]]></b:skin>
 </head>
 <body>
-  <header class='top'><div class='shell bar'>
-    <a class='brand' expr:href='data:blog.homepageUrl'>DRA<b>M</b>ORA</a>
-    <nav class='nav'><a expr:href='data:blog.homepageUrl'>Home</a><a href='/search/label/Drama'>Drama</a><a href='/search/label/Latest'>Latest</a></nav>
-  </div></header>
-  <main class='shell'>
-    <b:if cond='data:blog.pageType == &quot;index&quot;'>
-      <section class='hero'><div class='eyebrow'>Your next obsession starts here</div><h1>Big stories.<br/>Short episodes.</h1><p class='sub'>Discover bite-sized dramas, unforgettable characters and stories made for every moment.</p><a class='pill' href='/search'>Explore dramas</a></section>
-      <section class='section'><div class='section-head'><h2>Latest stories</h2></div>
-        <div class='grid'>
-          <b:loop values='data:posts' var='post'>
-            <article><a expr:href='data:post.url'><div class='poster'><span><data:post.title/></span></div></a><div class='episode'>NEW EPISODE · <data:post.dateHeader/></div></article>
-          </b:loop>
+  <div class='site-shell'>
+    <header class='topbar'>
+      <nav class='nav'>
+        <a class='brand' expr:href='data:blog.homepageUrl'>
+          <span class='brand-mark'>D</span><span>DRAMORA</span>
+        </a>
+        <div class='nav-links' id='mainNav'>
+          <a class='active' expr:href='data:blog.homepageUrl'>Home</a>
+          <a href='/search/label/Trending'>Trending</a>
+          <a href='/search/label/Latest'>Latest</a>
+          <a href='/p/discover.html'>Discover</a>
+          <a href='/p/community.html'>Community</a>
+          <a href='/p/my-list.html'>My List</a>
+          <a href='/p/profile.html'>Profile</a>
+          <a href='/p/admin.html' id='adminNavLink' hidden='hidden'>Admin</a>
         </div>
-      </section>
+        <div class='nav-spacer'></div>
+        <label class='search-box' aria-label='Search dramas'>
+          <span>⌕</span><input id='siteSearch' placeholder='Search dramas...' type='search'/>
+        </label>
+        <button class='nav-action' id='authOpenBtn' type='button'>Sign in</button>
+        <button aria-label='Open menu' class='mobile-menu' id='menuToggle' type='button'>☰</button>
+      </nav>
+    </header>
+
+    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+      <main class='container'>
+        <section class='hero'>
+          <div class='hero-panel'>
+            <div class='hero-content'>
+              <div class='eyebrow'>Short stories. Big emotions.</div>
+              <h1>Your next<br/>drama obsession.</h1>
+              <p>Discover bite-sized dramas, unforgettable characters and stories made for every free moment.</p>
+              <a class='button-primary' href='/search/label/Latest'>▶ Explore dramas</a>
+              <a class='button-ghost' href='/p/discover.html'>Discover</a>
+            </div>
+          </div>
+        </section>
+        <section class='section'>
+          <div class='section-head'><div><h2>Explore by mood</h2><p>Find a story that matches your mood.</p></div></div>
+          <div class='chips'>
+            <a class='chip active' href='/'>For you</a>
+            <a class='chip' href='/search/label/Romance'>Romance</a>
+            <a class='chip' href='/search/label/Thriller'>Thriller</a>
+            <a class='chip' href='/search/label/Drama'>Drama</a>
+            <a class='chip' href='/search/label/Comedy'>Comedy</a>
+            <a class='chip' href='/search/label/Action'>Action</a>
+            <a class='chip' href='/search/label/Latest'>Latest</a>
+          </div>
+        </section>
+        <section class='section'>
+          <div class='section-head'><div><h2>Recently added</h2><p>Fresh stories, ready to play.</p></div><a class='text-link' href='/search/label/Latest'>View all →</a></div>
+          <div class='drama-grid'>
+            <b:loop values='data:posts' var='post'>
+              <article class='drama-card'>
+                <a expr:href='data:post.url'>
+                  <div class='poster'>
+                    <b:if cond='data:post.thumbnailUrl'>
+                      <img expr:alt='data:post.title' expr:src='data:post.thumbnailUrl'/>
+                    <b:else/>
+                      <div class='poster-placeholder'>Drama poster<br/>Add a post image</div>
+                    </b:if>
+                    <div class='poster-shade'></div>
+                  </div>
+                  <div class='drama-meta'>
+                    <h3><data:post.title/></h3>
+                    <p><data:post.timestamp/></p>
+                  </div>
+                </a>
+              </article>
+            </b:loop>
+          </div>
+          <b:if cond='data:posts.empty'>
+            <div class='empty-state'>Your dramas will appear here when you publish Blogger posts.</div>
+          </b:if>
+        </section>
+      </main>
     <b:else/>
-      <section class='section'><b:loop values='data:posts' var='post'><article class='post'>
-        <h1 class='post-title'><data:post.title/></h1><div class='episode'><data:post.timestamp/></div>
-        <div class='post-body'><data:post.body/></div>
-      </article></b:loop></section>
+      <main class='container' style='padding-top:34px'>
+        <div class='content-layout'>
+          <section class='main-posts'>
+            <b:if cond='data:blog.pageType == &quot;item&quot;'>
+              <div class='section-head' style='margin:0 0 16px'>
+                <div><div class='eyebrow'>DRAMORA ORIGINALS</div><p>Settle in and enjoy the story.</p></div>
+                <a class='text-link' expr:href='data:blog.homepageUrl'>← Back to home</a>
+              </div>
+            </b:if>
+            <b:section class='main' id='main' showaddelement='no'>
+              <b:widget id='Blog1' locked='true' title='Drama &amp; Episodes' type='Blog' version='2' visible='true'>
+                <b:widget-settings>
+                  <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+                  <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+                  <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+                  <b:widget-setting name='showAuthor'>false</b:widget-setting>
+                  <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+                  <b:widget-setting name='showLabels'>true</b:widget-setting>
+                </b:widget-settings>
+              </b:widget>
+            </b:section>
+          </section>
+          <aside class='sidebar'>
+            <div class='sidebar-box'><h3>About Dramora</h3><p>Your home for short-form drama stories and bite-sized entertainment.</p></div>
+            <div class='sidebar-box'><h3>Browse genres</h3><p><a href='/search/label/Romance'>Romance</a> · <a href='/search/label/Thriller'>Thriller</a> · <a href='/search/label/Comedy'>Comedy</a></p></div>
+          </aside>
+        </div>
+      </main>
     </b:if>
-  </main>
-  <footer class='footer'><div class='shell'>© <data:blog.title/> · Stories for everyone. Always free.</div></footer>
+
+
+    <div class='auth-modal' id='authModal' aria-hidden='true'>
+      <div class='auth-backdrop' data-auth-close='true'></div>
+      <section class='auth-dialog' role='dialog' aria-modal='true' aria-labelledby='authTitle'>
+        <button class='auth-close' id='authCloseBtn' type='button' aria-label='Close sign-in dialog'>×</button>
+        <div class='auth-brand'><span class='auth-brand-mark'>D</span> DRAMORA ACCOUNT</div>
+        <h2 id='authTitle'>Welcome back</h2>
+        <p class='auth-subtitle' id='authSubtitle'>Sign in to save your dramas and continue watching.</p>
+        <div class='auth-message error' id='authError' role='alert' hidden='hidden'></div>
+        <div class='auth-message success' id='authSuccess' role='status' hidden='hidden'></div>
+        <div id='authSignedInPanel' hidden='hidden'>
+          <div class='auth-account-name' id='authAccountName'>Your account</div>
+          <p class='auth-account-email' id='authAccountEmail'></p>
+          <p class='auth-account-copy'>Your watch history, favorites and playback progress are linked to this account.</p>
+          <div class='auth-verification' id='authVerificationPanel' hidden='hidden'>
+            <strong>Email verification pending</strong>
+            <p>Please verify your email address. You can request a new verification message below.</p>
+            <button class='auth-text-button' id='authResendBtn' type='button'>Resend verification email</button>
+          </div>
+          <a class='auth-submit' href='/p/profile.html' style='display:flex;align-items:center;justify-content:center;text-decoration:none;margin-top:16px'>View profile</a>
+          <button class='auth-secondary' id='authLogoutBtn' type='button'>Sign out</button>
+        </div>
+        <form id='authForm'>
+          <label class='auth-field' id='authDisplayNameWrap' hidden='hidden'>Display name
+            <input id='authDisplayName' type='text' maxlength='60' autocomplete='name' placeholder='Your name'/>
+          </label>
+          <label class='auth-field'>Email address
+            <input id='authEmail' type='email' required='required' maxlength='254' autocomplete='email' placeholder='you@example.com'/>
+          </label>
+          <label class='auth-field'>Password
+            <input id='authPassword' type='password' required='required' minlength='8' autocomplete='current-password' placeholder='At least 8 characters'/>
+          </label>
+          <label class='auth-field' id='authConfirmWrap' hidden='hidden'>Confirm password
+            <input id='authConfirmPassword' type='password' minlength='8' autocomplete='new-password' placeholder='Enter password again'/>
+          </label>
+          <button class='auth-submit' id='authSubmitBtn' type='submit'>Sign in</button>
+        </form>
+        <button class='auth-google' id='authGoogleBtn' type='button'>Continue with Google</button>
+        <button class='auth-text-button' id='authForgotBtn' type='button'>Forgot password?</button>
+        <button class='auth-text-button auth-switch' id='authModeSwitchBtn' type='button'>New to Dramora? Create a free account</button>
+      </section>
+    </div>
+    <div class='dramora-toast' id='dramoraToast' role='status' aria-live='polite'></div>
+
+    <footer class='site-footer'>
+      <div class='container footer-inner'>
+        <span>© <data:blog.title/> · All stories in one place.</span>
+        <span><a href='/p/about.html'>About</a> · <a href='/p/contact.html'>Contact</a> · <a href='/p/privacy-policy.html'>Privacy</a></span>
+      </div>
+    </footer>
+  </div>
+  <script src='https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js'></script>
+  <script src='https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js'></script>
+  <script src='https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js'></script>
+  <script type='text/javascript'>
+    //<![CDATA[
+    (function () {
+      var toggle = document.getElementById('menuToggle');
+      var nav = document.getElementById('mainNav');
+      if (toggle && nav) toggle.addEventListener('click', function () { nav.classList.toggle('open'); });
+      var search = document.getElementById('siteSearch');
+      if (search) search.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && search.value.trim()) {
+          window.location.href = '/search?q=' + encodeURIComponent(search.value.trim());
+        }
+      });
+
+      // Make Blogger-uploaded videos and supported embeds fit the responsive player area.
+      var postBodies = document.querySelectorAll('.post-body');
+      postBodies.forEach(function (body) {
+        var videos = body.querySelectorAll('video');
+        videos.forEach(function (video) {
+          video.setAttribute('controls', 'controls');
+          video.setAttribute('playsinline', 'playsinline');
+          video.setAttribute('preload', 'metadata');
+          if (!video.parentElement.classList.contains('drama-player') &&
+              !video.parentElement.classList.contains('episode-player') &&
+              !video.parentElement.classList.contains('video-container')) {
+            var wrap = document.createElement('div');
+            wrap.className = 'episode-player';
+            video.parentNode.insertBefore(wrap, video);
+            wrap.appendChild(video);
+          }
+        });
+
+        // Blogger video embeds commonly use iframe; keep their dimensions responsive.
+        body.querySelectorAll('iframe').forEach(function (frame) {
+          if (!frame.closest('.drama-player, .episode-player, .video-container')) {
+            var holder = document.createElement('div');
+            holder.className = 'episode-player';
+            frame.parentNode.insertBefore(holder, frame);
+            holder.appendChild(frame);
+          }
+          frame.setAttribute('allowfullscreen', 'allowfullscreen');
+          frame.setAttribute('loading', 'lazy');
+        });
+
+        // Do not let user-provided links silently replace the drama platform tab.
+        body.querySelectorAll('a[href]').forEach(function (link) {
+          var href = link.getAttribute('href') || '';
+          if (/^https?:\/\//i.test(href) && link.hostname !== window.location.hostname) {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+          }
+        });
+      });
+    }());
+
+    // DRAMORA V3 — Firebase Authentication and personal Firestore data.
+    (function () {
+      'use strict';
+
+      var firebaseConfig = {
+        apiKey: 'REPLACE_WITH_FIREBASE_WEB_API_KEY',
+        authDomain: 'REPLACE_WITH_PROJECT_ID.firebaseapp.com',
+        projectId: 'REPLACE_WITH_PROJECT_ID',
+        appId: 'REPLACE_WITH_FIREBASE_APP_ID'
+      };
+
+      // Set this to the deployed Cloudflare Worker origin, without a trailing slash.
+      var DRAMORA_MEDIA_API_URL = 'REPLACE_WITH_CLOUDFLARE_WORKER_URL';
+
+      var modal = document.getElementById('authModal');
+      var authOpenBtn = document.getElementById('authOpenBtn');
+      var authForm = document.getElementById('authForm');
+      var authError = document.getElementById('authError');
+      var authSuccess = document.getElementById('authSuccess');
+      var signedInPanel = document.getElementById('authSignedInPanel');
+      var verificationPanel = document.getElementById('authVerificationPanel');
+      var mode = 'login';
+      var auth = null;
+      var db = null;
+      var currentUser = null;
+      var firebaseReady = false;
+      var persistenceReady = Promise.resolve();
+      var toastTimer = null;
+      var isAdminUser = false;
+      var adminClaimsReady = false;
+      var adminReportsUnsubscribe = null;
+      var adminPageRoot = null;
+
+      function el(id) { return document.getElementById(id); }
+      function safeUrl(value) {
+        if (!value) return '';
+        try {
+          var url = new URL(value, window.location.origin);
+          return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : '';
+        } catch (error) { return ''; }
+      }
+      function notify(message) {
+        var toast = el('dramoraToast');
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(function () { toast.classList.remove('show'); }, 2800);
+      }
+      function clearMessages() {
+        authError.hidden = true;
+        authSuccess.hidden = true;
+        authError.textContent = '';
+        authSuccess.textContent = '';
+      }
+      function showError(message) {
+        authError.textContent = message;
+        authError.hidden = false;
+        authSuccess.hidden = true;
+      }
+      function showSuccess(message) {
+        authSuccess.textContent = message;
+        authSuccess.hidden = false;
+        authError.hidden = true;
+      }
+      function friendlyError(error) {
+        var code = error && error.code ? error.code : '';
+        var messages = {
+          'auth/email-already-in-use': 'This email is already registered. Try signing in.',
+          'auth/invalid-email': 'Please enter a valid email address.',
+          'auth/weak-password': 'Choose a stronger password with at least 8 characters.',
+          'auth/user-not-found': 'No account was found for this email.',
+          'auth/wrong-password': 'The password is incorrect.',
+          'auth/invalid-credential': 'The email or password is incorrect.',
+          'auth/too-many-requests': 'Too many attempts. Please wait and try again.',
+          'auth/popup-closed-by-user': 'The Google sign-in window was closed before completion.',
+          'auth/popup-blocked': 'Your browser blocked the sign-in window. Allow pop-ups and try again.',
+          'auth/unauthorized-domain': 'This Blogger domain is not authorized in Firebase Authentication.',
+          'auth/network-request-failed': 'Network error. Check your connection and try again.'
+        };
+        return messages[code] || 'Something went wrong. Please try again.';
+      }
+      function setMode(nextMode) {
+        mode = nextMode;
+        clearMessages();
+        var signup = mode === 'signup';
+        el('authTitle').textContent = signup ? 'Create your account' : 'Welcome back';
+        el('authSubtitle').textContent = signup
+          ? 'Create a free account to save dramas and sync your progress.'
+          : 'Sign in to save your dramas and continue watching.';
+        el('authDisplayNameWrap').hidden = !signup;
+        el('authConfirmWrap').hidden = !signup;
+        el('authGoogleBtn').hidden = signup;
+        el('authForgotBtn').hidden = signup;
+        el('authSubmitBtn').textContent = signup ? 'Create free account' : 'Sign in';
+        el('authModeSwitchBtn').textContent = signup
+          ? 'Already have an account? Sign in'
+          : 'New to Dramora? Create a free account';
+        authForm.hidden = false;
+        signedInPanel.hidden = true;
+        verificationPanel.hidden = true;
+        el('authModeSwitchBtn').hidden = false;
+      }
+      function renderSignedIn(user) {
+        if (!user) return;
+        clearMessages();
+        authForm.hidden = true;
+        el('authGoogleBtn').hidden = true;
+        el('authForgotBtn').hidden = true;
+        el('authModeSwitchBtn').hidden = true;
+        signedInPanel.hidden = false;
+        el('authTitle').textContent = 'You are signed in';
+        el('authSubtitle').textContent = 'Your Dramora account is ready.';
+        el('authAccountName').textContent = user.displayName || 'Dramora member';
+        el('authAccountEmail').textContent = user.email || '';
+        verificationPanel.hidden = !!user.emailVerified;
+      }
+      function openModal() {
+        if (!modal) return;
+        clearMessages();
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        if (currentUser) renderSignedIn(currentUser);
+        else {
+          setMode(mode);
+          if (!firebaseReady) showError('Firebase is not configured yet. Add your Firebase Web App values in the Blogger XML and complete the setup guide.');
+          window.setTimeout(function () { el('authEmail').focus(); }, 40);
+        }
+      }
+      function closeModal() {
+        if (!modal) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+      if (authOpenBtn) authOpenBtn.addEventListener('click', openModal);
+      el('authCloseBtn').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (event) {
+        if (event.target && event.target.getAttribute('data-auth-close') === 'true') closeModal();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+      });
+      el('authModeSwitchBtn').addEventListener('click', function () {
+        setMode(mode === 'login' ? 'signup' : 'login');
+      });
+
+      var configReady = firebaseConfig.apiKey.indexOf('REPLACE_') !== 0 &&
+        firebaseConfig.projectId.indexOf('REPLACE_') !== 0 &&
+        firebaseConfig.appId.indexOf('REPLACE_') !== 0 &&
+        window.firebase && typeof window.firebase.initializeApp === 'function';
+
+      var profileSyncTasks = Object.create(null);
+      var bloggerFeedCache = Object.create(null);
+      function syncProfile(user) {
+        if (!db || !user || !user.uid) return Promise.resolve(null);
+        if (profileSyncTasks[user.uid]) return profileSyncTasks[user.uid];
+        var uid = user.uid;
+        var ref = db.collection('users').doc(uid);
+        var displayName = (user.displayName || 'Dramora member').trim().slice(0, 60) || 'Dramora member';
+        var photoURL = safeUrl(user.photoURL) || '';
+        var task = ref.get().then(function (snapshot) {
+          var payload = {
+            uid: uid,
+            email: user.email || '',
+            displayName: displayName,
+            photoURL: photoURL,
+            emailVerified: !!user.emailVerified,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
+          if (!snapshot.exists) payload.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+          return ref.set(payload, { merge: true }).then(function () {
+            var publicPayload = {
+              uid: uid,
+              displayName: displayName,
+              photoURL: photoURL,
+              searchName: displayName.toLowerCase(),
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            return db.collection('publicProfiles').doc(uid).set(publicPayload, { merge: true }).then(function () { return payload; });
+          });
+        });
+        profileSyncTasks[uid] = task.finally(function () { delete profileSyncTasks[uid]; });
+        return profileSyncTasks[uid];
+      }
+
+      function requireUser() {
+        if (!auth || !auth.currentUser) return Promise.reject(new Error('Please sign in to use this feature.'));
+        return Promise.resolve(auth.currentUser);
+      }
+      function encodeDocId(value) {
+        var bytes = new TextEncoder().encode(String(value));
+        var binary = '';
+        for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+        var encoded = window.btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+        if (!encoded || encoded.length > 900) throw new Error('This content identifier is too long.');
+        return encoded;
+      }
+      function normalizeItem(item) {
+        item = item || {};
+        var contentUrl = safeUrl(item.contentUrl || item.url || window.location.href);
+        if (!contentUrl) throw new Error('A valid content URL is required.');
+        return {
+          contentId: String(item.contentId || contentUrl).slice(0, 2048),
+          title: String(item.title || 'Untitled drama').trim().slice(0, 160) || 'Untitled drama',
+          contentUrl: contentUrl,
+          posterUrl: safeUrl(item.posterUrl || item.imageUrl) || ''
+        };
+      }
+      function pageQuery(collectionName, orderField, pageSize, cursor) {
+        return requireUser().then(function (user) {
+          var query = db.collection('users').doc(user.uid).collection(collectionName)
+            .orderBy(orderField, 'desc').limit(Math.max(1, Math.min(Number(pageSize) || 20, 50)));
+          if (cursor) query = query.startAfter(cursor);
+          return query.get().then(function (snapshot) {
+            return {
+              items: snapshot.docs.map(function (doc) { return Object.assign({ id: doc.id }, doc.data()); }),
+              nextCursor: snapshot.docs.length === Math.max(1, Math.min(Number(pageSize) || 20, 50))
+                ? snapshot.docs[snapshot.docs.length - 1] : null
+            };
+          });
+        });
+      }
+
+      var DramoraData = {
+        addFavorite: function (item) {
+          var normalized = normalizeItem(item);
+          return requireUser().then(function (user) {
+            return db.collection('users').doc(user.uid).collection('favorites')
+              .doc(encodeDocId(normalized.contentId)).set({
+                contentId: normalized.contentId, title: normalized.title,
+                contentUrl: normalized.contentUrl, posterUrl: normalized.posterUrl,
+                addedAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+          });
+        },
+        removeFavorite: function (contentId) {
+          return requireUser().then(function (user) {
+            return db.collection('users').doc(user.uid).collection('favorites')
+              .doc(encodeDocId(contentId)).delete();
+          });
+        },
+        isFavorite: function (contentId) {
+          return requireUser().then(function (user) {
+            return db.collection('users').doc(user.uid).collection('favorites')
+              .doc(encodeDocId(contentId)).get().then(function (snapshot) { return snapshot.exists; });
+          });
+        },
+        listFavorites: function (pageSize, cursor) {
+          return pageQuery('favorites', 'addedAt', pageSize, cursor);
+        },
+        listWatchHistory: function (pageSize, cursor) {
+          return pageQuery('watchHistory', 'lastWatchedAt', pageSize, cursor);
+        },
+        getWatchProgress: function (contentId) {
+          return requireUser().then(function (user) {
+            return db.collection('users').doc(user.uid).collection('watchProgress')
+              .doc(encodeDocId(contentId)).get().then(function (snapshot) {
+                return snapshot.exists ? snapshot.data() : null;
+              });
+          });
+        },
+        saveWatchProgress: function (item) {
+          var normalized = normalizeItem(item);
+          var position = Math.max(0, Math.min(Number(item.positionSeconds) || 0, 86400));
+          var duration = Math.max(0, Math.min(Number(item.durationSeconds) || 0, 86400));
+          var completed = !!item.completed;
+          return requireUser().then(function (user) {
+            var userRef = db.collection('users').doc(user.uid);
+            var docId = encodeDocId(normalized.contentId);
+            var stamp = firebase.firestore.FieldValue.serverTimestamp();
+            var batch = db.batch();
+            batch.set(userRef.collection('watchProgress').doc(docId), {
+              contentId: normalized.contentId, title: normalized.title,
+              contentUrl: normalized.contentUrl, posterUrl: normalized.posterUrl,
+              positionSeconds: position, durationSeconds: duration,
+              completed: completed, updatedAt: stamp
+            }, { merge: true });
+            batch.set(userRef.collection('watchHistory').doc(docId), {
+              contentId: normalized.contentId, title: normalized.title,
+              contentUrl: normalized.contentUrl, posterUrl: normalized.posterUrl,
+              positionSeconds: position, durationSeconds: duration,
+              lastWatchedAt: stamp, updatedAt: stamp
+            }, { merge: true });
+            return batch.commit();
+          });
+        },
+        getProfile: function () {
+          return requireUser().then(function (user) {
+            return db.collection('users').doc(user.uid).get().then(function (snapshot) {
+              return snapshot.exists ? snapshot.data() : null;
+            });
+          });
+        }
+      };
+      window.DramoraData = DramoraData;
+
+      function currentContent() {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        var titleNode = document.querySelector('.post-title.entry-title, .post-title');
+        var imageNode = document.querySelector('.post-body img');
+        var ogImage = document.querySelector('meta[property="og:image"]');
+        return normalizeItem({
+          contentId: safeUrl(canonical && canonical.href) || window.location.href,
+          contentUrl: safeUrl(canonical && canonical.href) || window.location.href,
+          title: titleNode ? titleNode.textContent.trim() : document.title,
+          posterUrl: imageNode ? imageNode.src : (ogImage ? ogImage.content : '')
+        });
+      }
+      function normalizeMediaLinkMeta(rawUrl, rawDramaKey, rawEpisodeNumber, rawEpisodeTitle) {
+        var linkedPostUrl = '';
+        var urlText = String(rawUrl || '').trim();
+        if (urlText) {
+          linkedPostUrl = safeUrl(urlText);
+          if (!linkedPostUrl || !/^https:\/\//i.test(linkedPostUrl) || new URL(linkedPostUrl).origin !== window.location.origin) {
+            throw new Error('Use the canonical HTTPS URL of a Blogger post on this Dramora blog.');
+          }
+        }
+        var dramaKey = String(rawDramaKey || '').trim().toLowerCase().slice(0, 80);
+        if (dramaKey && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(dramaKey)) {
+          throw new Error('Drama key must use lowercase letters, numbers and single hyphens only.');
+        }
+        var episodeText = String(rawEpisodeNumber || '').trim();
+        var episodeNumber = episodeText ? Number(episodeText) : 0;
+        if (!Number.isInteger(episodeNumber) || episodeNumber < 0 || episodeNumber > 9999) {
+          throw new Error('Episode number must be a whole number between 1 and 9999, or left blank.');
+        }
+        var episodeTitle = String(rawEpisodeTitle || '').trim().slice(0, 160);
+        if (!linkedPostUrl && (dramaKey || episodeNumber || episodeTitle)) {
+          throw new Error('Add the Blogger post URL before entering episode details.');
+        }
+        return { linkedPostUrl: linkedPostUrl, dramaKey: dramaKey, episodeNumber: episodeNumber, episodeTitle: episodeTitle };
+      }
+
+      var registeredPlayerLookups = Object.create(null);
+      function attachRegisteredMediaPlayer() {
+        if (!db || window.location.pathname.indexOf('/p/') === 0) return;
+        var body = document.querySelector('.post-body');
+        if (!body || body.dataset.dramoraMediaLookup === 'done' || body.dataset.dramoraMediaLookup === 'loading') return;
+        if (body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
+        var item;
+        try { item = currentContent(); } catch (error) { return; }
+        body.dataset.dramoraMediaLookup = 'loading';
+        var queryKey = item.contentUrl;
+        if (registeredPlayerLookups[queryKey]) {
+          registeredPlayerLookups[queryKey].then(function (asset) { mountRegisteredPlayer(body, item, asset); });
+          return;
+        }
+        registeredPlayerLookups[queryKey] = db.collection('mediaAssets')
+          .where('linkedPostUrl', '==', queryKey)
+          .where('mediaType', '==', 'video')
+          .where('status', '==', 'ready')
+          .where('visibility', '==', 'public')
+          .limit(1).get().then(function (snapshot) {
+            if (snapshot.empty) return null;
+            return snapshot.docs[0].data();
+          }).catch(function (error) {
+            delete registeredPlayerLookups[queryKey];
+            throw error;
+          });
+        registeredPlayerLookups[queryKey].then(function (asset) {
+          mountRegisteredPlayer(body, item, asset);
+        }).catch(function (error) {
+          body.dataset.dramoraMediaLookup = '';
+          console.warn('Dramora registered media lookup failed:', error);
+        });
+      }
+      function mountRegisteredPlayer(body, item, asset) {
+        if (!body || !body.isConnected) return;
+        if (!asset || body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
+        var mediaUrl = safeUrl(asset.mediaUrl);
+        if (!mediaUrl || !/^https:\/\//i.test(mediaUrl)) { body.dataset.dramoraMediaLookup = 'done'; return; }
+        var section = document.createElement('section'); section.className = 'registered-player';
+        var heading = document.createElement('h2'); heading.textContent = String(asset.episodeTitle || asset.title || item.title || 'Watch episode');
+        var video = document.createElement('video'); video.controls = true; video.playsInline = true;
+        video.preload = 'metadata'; video.setAttribute('aria-label', heading.textContent); video.setAttribute('controlsList', 'nodownload');
+        var source = document.createElement('source'); source.src = mediaUrl;
+        if (asset.mimeType && asset.mimeType !== 'video/*') source.type = String(asset.mimeType).slice(0, 100);
+        video.appendChild(source);
+        if (item.posterUrl) video.poster = item.posterUrl;
+        var note = document.createElement('p'); note.className = 'registered-player-note';
+        note.textContent = 'Official Dramora episode stream · ' + String(asset.storageProvider || 'media').toUpperCase();
+        var nav = document.createElement('div'); nav.className = 'dramora-episode-controls';
+        nav.style.cssText = 'display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:12px 0;';
+        var previous = document.createElement('a'); previous.className = 'series-back'; previous.textContent = '← Previous episode'; previous.hidden = true;
+        var next = document.createElement('a'); next.className = 'series-back'; next.textContent = 'Next episode →'; next.hidden = true;
+        var autoLabel = document.createElement('label'); autoLabel.style.cssText = 'display:inline-flex;align-items:center;gap:7px;color:#b9b6c9;font-size:12px;';
+        var auto = document.createElement('input'); auto.type = 'checkbox';
+        try { auto.checked = window.localStorage.getItem('dramora-autoplay-next') === '1'; } catch (error) { auto.checked = false; }
+        auto.addEventListener('change', function () { try { window.localStorage.setItem('dramora-autoplay-next', auto.checked ? '1' : '0'); } catch (error) {} });
+        autoLabel.appendChild(auto); autoLabel.appendChild(document.createTextNode('Autoplay next episode'));
+        nav.appendChild(previous); nav.appendChild(next); nav.appendChild(autoLabel);
+        section.appendChild(heading); section.appendChild(video); section.appendChild(nav); section.appendChild(note);
+        body.insertBefore(section, body.firstChild); body.dataset.dramoraMediaLookup = 'done';
+        if (asset.dramaKey && db) {
+          db.collection('mediaAssets').where('dramaKey', '==', String(asset.dramaKey)).where('mediaType', '==', 'video')
+            .where('status', '==', 'ready').where('visibility', '==', 'public').orderBy('episodeNumber', 'asc').limit(100)
+            .get().then(function (snapshot) {
+              var episodes = snapshot.docs.map(function (doc) { return doc.data(); }).filter(function (entry) {
+                var href = safeUrl(entry.linkedPostUrl); if (!href) return false;
+                try { return new URL(href).origin === window.location.origin; } catch (error) { return false; }
+              }).sort(function (a,b) { return (Number(a.episodeNumber)||0)-(Number(b.episodeNumber)||0); });
+              var index = episodes.findIndex(function (entry) { return safeUrl(entry.linkedPostUrl) === item.contentUrl; });
+              if (index > 0) { previous.href = safeUrl(episodes[index-1].linkedPostUrl); previous.hidden = false; }
+              if (index >= 0 && index < episodes.length-1) { next.href = safeUrl(episodes[index+1].linkedPostUrl); next.hidden = false; }
+            }).catch(function (error) { console.warn('Dramora episode navigation unavailable:', error); });
+        }
+        video.addEventListener('error', function () { note.textContent = 'Playback error. Verify media URL, public access, CORS, supported video format and byte-range requests.'; });
+        video.addEventListener('stalled', function () { note.textContent = 'Stream is taking longer than expected. Check your connection or retry playback.'; });
+        video.addEventListener('playing', function () { note.textContent = 'Playing · ' + String(asset.storageProvider || 'media').toUpperCase(); });
+        video.addEventListener('ended', function () {
+          if (next.href && auto.checked) {
+            try { window.sessionStorage.setItem('dramora-autoplay-pending', '1'); } catch (error) {}
+            window.location.assign(next.href);
+          }
+        });
+        try {
+          if (window.sessionStorage.getItem('dramora-autoplay-pending') === '1') {
+            window.sessionStorage.removeItem('dramora-autoplay-pending');
+            video.addEventListener('loadedmetadata', function () {
+              var attempt = video.play();
+              if (attempt && typeof attempt.catch === 'function') attempt.catch(function () { note.textContent = 'Tap Play to continue. Your browser blocked automatic playback.'; });
+            }, { once: true });
+          }
+        } catch (error) {}
+        attachVideoTracking();
+      }
+
+      function insertFavoriteButton() {
+        if (window.location.pathname.indexOf('/p/') === 0) return;
+        var postBody = document.querySelector('.post-body');
+        if (!postBody || document.querySelector('.favorite-action')) return;
+        var item;
+        try { item = currentContent(); } catch (error) { return; }
+        var bar = document.createElement('div');
+        bar.className = 'post-actions';
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'favorite-action';
+        button.textContent = '＋ Add to My List';
+        bar.appendChild(button);
+        postBody.parentNode.insertBefore(bar, postBody);
+        function refresh() {
+          if (!currentUser || !firebaseReady) {
+            button.textContent = '＋ Add to My List';
+            button.classList.remove('is-saved');
+            return;
+          }
+          DramoraData.isFavorite(item.contentId).then(function (saved) {
+            button.textContent = saved ? '♥ Saved to My List' : '＋ Add to My List';
+            button.classList.toggle('is-saved', saved);
+          }).catch(function () {});
+        }
+        button.addEventListener('click', function () {
+          if (!currentUser) { openModal(); return; }
+          button.disabled = true;
+          var operation = button.classList.contains('is-saved')
+            ? DramoraData.removeFavorite(item.contentId)
+            : DramoraData.addFavorite(item);
+          operation.then(function () {
+            refresh();
+            notify(button.classList.contains('is-saved') ? 'Removed from My List.' : 'Added to My List.');
+          }).catch(function (error) { notify(error.message || 'Could not update My List.'); })
+            .finally(function () { button.disabled = false; });
+        });
+        refresh();
+        window.addEventListener('dramora:auth', refresh);
+      }
+
+      function createPageShell(title, subtitle) {
+        var section = document.createElement('section');
+        section.className = 'library-page';
+        var head = document.createElement('div');
+        head.className = 'library-page-head';
+        var h1 = document.createElement('h1'); h1.textContent = title;
+        var p = document.createElement('p'); p.textContent = subtitle;
+        head.appendChild(h1); head.appendChild(p); section.appendChild(head);
+        return section;
+      }
+      function renderEmpty(container, message) {
+        var empty = document.createElement('div');
+        empty.className = 'library-empty';
+        empty.textContent = message;
+        container.appendChild(empty);
+      }
+      function renderCards(container, items, allowRemove) {
+        if (!items.length) { renderEmpty(container, 'Nothing here yet. Add dramas to your list or start watching.'); return; }
+        var grid = document.createElement('div'); grid.className = 'library-grid';
+        items.forEach(function (item) {
+          var card = document.createElement('article'); card.className = 'library-card';
+          var destination = safeUrl(item.contentUrl) || '#';
+          var link = document.createElement('a'); link.className = 'library-card-link';
+          link.href = destination;
+          var image = safeUrl(item.posterUrl);
+          if (image) {
+            var img = document.createElement('img'); img.loading = 'lazy'; img.src = image;
+            img.alt = String(item.title || 'Drama poster'); link.appendChild(img);
+          } else {
+            var placeholder = document.createElement('div'); placeholder.className = 'library-card-placeholder';
+            placeholder.textContent = 'DRAMORA'; link.appendChild(placeholder);
+          }
+          card.appendChild(link);
+          var copy = document.createElement('div'); copy.className = 'library-card-copy';
+          var title = document.createElement('h3');
+          var titleLink = document.createElement('a'); titleLink.href = destination;
+          titleLink.textContent = String(item.title || 'Untitled drama');
+          title.appendChild(titleLink); copy.appendChild(title);
+          if (allowRemove) {
+            var remove = document.createElement('button'); remove.type = 'button';
+            remove.className = 'library-remove'; remove.textContent = 'Remove from My List';
+            remove.addEventListener('click', function () {
+              remove.disabled = true;
+              DramoraData.removeFavorite(item.contentId).then(function () {
+                card.remove();
+                if (!grid.children.length) renderEmpty(container, 'Your list is empty. Explore dramas and save your favorites.');
+                notify('Removed from My List.');
+              }).catch(function (error) {
+                remove.disabled = false; notify(error.message || 'Could not remove this drama.');
+              });
+            });
+            copy.appendChild(remove);
+          }
+          card.appendChild(copy); grid.appendChild(card);
+        });
+        container.appendChild(grid);
+      }
+      function renderSignInPrompt(container) {
+        var empty = document.createElement('div'); empty.className = 'library-empty';
+        var message = document.createElement('p'); message.textContent = 'Sign in to access your personal Dramora library.';
+        var button = document.createElement('button'); button.type = 'button'; button.className = 'library-primary';
+        button.textContent = 'Sign in';
+        button.addEventListener('click', openModal);
+        empty.appendChild(message); empty.appendChild(button); container.appendChild(empty);
+      }
+      function fetchBloggerCatalogPage(startIndex) {
+        var start = Math.max(1, Number(startIndex) || 1);
+        if (bloggerFeedCache[start]) return bloggerFeedCache[start];
+        var request = fetch('/feeds/posts/default?alt=json&max-results=50&start-index=' + start, {
+          method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' }
+        }).then(function (response) {
+          if (!response.ok) throw new Error('Blogger returned HTTP ' + response.status + '.');
+          return response.json();
+        }).then(function (payload) {
+          var entries = payload && payload.feed && Array.isArray(payload.feed.entry) ? payload.feed.entry : [];
+          var items = entries.map(function (entry) {
+            var title = String(entry.title && entry.title.$t || 'Untitled drama').trim().slice(0, 160);
+            var links = Array.isArray(entry.link) ? entry.link : [];
+            var alternate = links.find(function (link) { return link.rel === 'alternate' && link.type === 'text/html'; }) ||
+              links.find(function (link) { return link.rel === 'alternate'; });
+            var permalink = safeUrl(alternate && alternate.href);
+            if (!permalink) return null;
+            try { if (new URL(permalink).origin !== window.location.origin) return null; } catch (error) { return null; }
+            var html = String((entry.summary && entry.summary.$t) || (entry.content && entry.content.$t) || '');
+            var parsed = new DOMParser().parseFromString(html, 'text/html');
+            var summary = String(parsed.body.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 210);
+            var image = entry.media$thumbnail && entry.media$thumbnail.url;
+            if (!image) {
+              var firstImage = parsed.querySelector('img[src]');
+              image = firstImage ? firstImage.getAttribute('src') : '';
+            }
+            var categories = Array.isArray(entry.category) ? entry.category : [];
+            var labels = categories.map(function (category) {
+              return String(category && category.term || '').trim().slice(0, 40);
+            }).filter(function (label, index, list) { return label && list.indexOf(label) === index; }).slice(0, 8);
+            return {
+              title: title || 'Untitled drama', contentUrl: permalink,
+              posterUrl: safeUrl(image) || '', summary: summary,
+              labels: labels,
+              published: String(entry.published && entry.published.$t || '')
+            };
+          }).filter(Boolean);
+          return { items: items, received: entries.length };
+        }).catch(function (error) {
+          delete bloggerFeedCache[start];
+          throw error;
+        });
+        bloggerFeedCache[start] = request;
+        return request;
+      }
+
+
+      function seriesDisplayName(key) {
+        return String(key || '').split('-').map(function (part) {
+          return part ? part.charAt(0).toUpperCase() + part.slice(1) : '';
+        }).join(' ');
+      }
+
+      function fetchPublicSeriesAssets(dramaKey) {
+        if (!firebaseReady || !db) return Promise.reject(new Error('Firebase is not configured. Set the Firebase Web App values first.'));
+        var query = db.collection('mediaAssets')
+          .where('dramaKey', '==', dramaKey)
+          .where('mediaType', '==', 'video')
+          .where('status', '==', 'ready')
+          .where('visibility', '==', 'public')
+          .orderBy('episodeNumber', 'asc')
+          .limit(100);
+        return query.get().then(function (snapshot) {
+          return snapshot.docs.map(function (doc) {
+            return Object.assign({ id: doc.id }, doc.data());
+          }).filter(function (asset) {
+            if (!asset.linkedPostUrl || !safeUrl(asset.linkedPostUrl)) return false;
+            try { return new URL(asset.linkedPostUrl).origin === window.location.origin; }
+            catch (error) { return false; }
+          });
+        });
+      }
+
+      function renderSeriesCatalog(container) {
+        if (!firebaseReady || !db) {
+          renderEmpty(container, 'Series are temporarily unavailable until Firebase is configured.');
+          return;
+        }
+        var section = document.createElement('section'); section.className = 'series-section';
+        var heading = document.createElement('h2'); heading.textContent = 'Complete series';
+        section.appendChild(heading);
+        var grid = document.createElement('div'); grid.className = 'series-grid';
+        section.appendChild(grid); container.appendChild(section);
+        db.collection('mediaAssets')
+          .where('dramaKey', '>', '')
+          .where('mediaType', '==', 'video')
+          .where('status', '==', 'ready')
+          .where('visibility', '==', 'public')
+          .orderBy('dramaKey', 'asc')
+          .orderBy('episodeNumber', 'asc')
+          .limit(200)
+          .get()
+          .then(function (snapshot) {
+            var grouped = Object.create(null);
+            snapshot.forEach(function (doc) {
+              var asset = doc.data();
+              var key = String(asset.dramaKey || '');
+              if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(key)) return;
+              if (!asset.linkedPostUrl || !safeUrl(asset.linkedPostUrl)) return;
+              if (!grouped[key]) grouped[key] = { key: key, count: 0, title: seriesDisplayName(key) };
+              grouped[key].count += 1;
+              if (asset.seriesTitle && String(asset.seriesTitle).trim()) grouped[key].title = String(asset.seriesTitle).trim().slice(0, 100);
+            });
+            var keys = Object.keys(grouped);
+            if (!keys.length) {
+              var empty = document.createElement('p'); empty.className = 'discover-count';
+              empty.textContent = 'No complete series have been published yet. Link episode videos to a drama key in Admin → Media Manager.';
+              grid.appendChild(empty); return;
+            }
+            keys.sort(function (a, b) { return grouped[a].title.localeCompare(grouped[b].title); });
+            keys.forEach(function (key) {
+              var item = grouped[key];
+              var link = document.createElement('a'); link.className = 'series-card';
+              link.href = '/p/drama.html?key=' + encodeURIComponent(item.key);
+              var title = document.createElement('strong'); title.textContent = item.title;
+              var meta = document.createElement('span'); meta.textContent = item.count + (item.count === 1 ? ' episode' : ' episodes') + ' · Free to watch';
+              link.appendChild(title); link.appendChild(meta); grid.appendChild(link);
+            });
+          })
+          .catch(function (error) {
+            var message = document.createElement('p'); message.className = 'discover-count';
+            message.textContent = 'Series could not load: ' + (error.message || 'Check the Firestore index and public media rules.');
+            grid.appendChild(message);
+          });
+      }
+
+      function renderDramaSeriesPage() {
+        var main = document.querySelector('.main-posts');
+        if (!main || window.location.pathname.indexOf('/p/drama.html') !== 0) return;
+        var key = String(new URLSearchParams(window.location.search).get('key') || '').trim().toLowerCase();
+        var page = createPageShell('Drama series', 'Watch every published episode in order. All Dramora episodes are free.');
+        main.replaceChildren(page);
+        var back = document.createElement('a'); back.className = 'series-back'; back.href = '/p/discover.html';
+        back.textContent = '← Back to Discover'; page.appendChild(back);
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(key)) {
+          renderEmpty(page, 'This series link is invalid. Open a series from Discover.');
+          return;
+        }
+        var title = document.createElement('h2'); title.textContent = seriesDisplayName(key);
+        title.style.cssText = 'margin:0 0 8px;color:#fff;font-size:25px;';
+        page.appendChild(title);
+        var subtitle = document.createElement('p'); subtitle.className = 'discover-count';
+        subtitle.textContent = 'Loading episodes…'; page.appendChild(subtitle);
+        var list = document.createElement('div'); list.className = 'series-episode-list'; page.appendChild(list);
+        fetchPublicSeriesAssets(key).then(function (assets) {
+          if (assets[0] && assets[0].seriesTitle) title.textContent = String(assets[0].seriesTitle).slice(0, 100);
+          subtitle.textContent = assets.length + (assets.length === 1 ? ' episode' : ' episodes') + ' · Free to watch';
+          list.replaceChildren();
+          if (!assets.length) {
+            renderEmpty(list, 'No public episodes are linked to this series yet.');
+            return;
+          }
+          assets.sort(function (a, b) {
+            var an = Number(a.episodeNumber) || 0, bn = Number(b.episodeNumber) || 0;
+            return an - bn || String(a.episodeTitle || a.title || '').localeCompare(String(b.episodeTitle || b.title || ''));
+          });
+          assets.forEach(function (asset, index) {
+            var link = document.createElement('a'); link.className = 'series-episode';
+            link.href = asset.linkedPostUrl;
+            var copy = document.createElement('span'); copy.className = 'series-episode-copy';
+            var name = document.createElement('strong');
+            name.textContent = String(asset.episodeTitle || asset.title || ('Episode ' + (index + 1))).slice(0, 160);
+            var detail = document.createElement('span');
+            detail.textContent = asset.sizeBytes ? (asset.storageProvider === 'b2' ? 'Backblaze stream' : 'Blogger stream') + ' · ' + (Number(asset.sizeBytes) / 1048576).toFixed(1) + ' MB' : 'Free episode';
+            copy.appendChild(name); copy.appendChild(detail);
+            var number = document.createElement('span'); number.className = 'series-episode-number';
+            number.textContent = 'EP ' + (Number(asset.episodeNumber) || index + 1);
+            link.appendChild(copy); link.appendChild(number); list.appendChild(link);
+          });
+        }).catch(function (error) {
+          subtitle.textContent = 'Could not load episodes.';
+          renderEmpty(list, error.message || 'Check Firestore rules and indexes.');
+        });
+      }
+
+      function renderDiscover() {
+        var main = document.querySelector('.main-posts');
+        if (!main || window.location.pathname.indexOf('/p/discover.html') !== 0) return;
+        var page = createPageShell('Discover dramas', 'Browse public stories and complete free series published on Dramora.');
+        main.replaceChildren(page);
+        var tools = document.createElement('div'); tools.className = 'discover-tools';
+        var search = document.createElement('input'); search.type = 'search'; search.className = 'discover-search';
+        search.placeholder = 'Search drama titles, descriptions or labels…'; search.setAttribute('aria-label', 'Search dramas');
+        var chips = document.createElement('div'); chips.className = 'discover-chip-row';
+        var count = document.createElement('div'); count.className = 'discover-count'; count.setAttribute('aria-live', 'polite');
+        tools.appendChild(search); tools.appendChild(chips); tools.appendChild(count); page.appendChild(tools);
+        var seriesHost = document.createElement('div'); page.appendChild(seriesHost);
+        renderSeriesCatalog(seriesHost);
+        var results = document.createElement('div'); page.appendChild(results);
+        var moreWrap = document.createElement('div'); moreWrap.className = 'discover-load-more'; page.appendChild(moreWrap);
+        var items = [], nextStart = 1, hasMore = true, loading = false, activeLabel = 'All';
+
+        function renderResults() {
+          chips.replaceChildren();
+          var labels = ['All'];
+          items.forEach(function (item) { (item.labels || []).forEach(function (label) {
+            if (labels.indexOf(label) < 0 && labels.length < 9) labels.push(label);
+          }); });
+          labels.forEach(function (label) {
+            var chip = document.createElement('button'); chip.type = 'button';
+            chip.className = 'discover-chip' + (activeLabel === label ? ' active' : '');
+            chip.textContent = label;
+            chip.addEventListener('click', function () { activeLabel = label; renderResults(); });
+            chips.appendChild(chip);
+          });
+          var term = search.value.trim().toLowerCase();
+          var filtered = items.filter(function (item) {
+            var labelMatch = activeLabel === 'All' || (item.labels || []).indexOf(activeLabel) >= 0;
+            var haystack = [item.title, item.summary, (item.labels || []).join(' ')].join(' ').toLowerCase();
+            return labelMatch && (!term || haystack.indexOf(term) >= 0);
+          });
+          count.textContent = filtered.length + ' dramas shown · ' + items.length + ' posts loaded';
+          results.replaceChildren();
+          if (!filtered.length) {
+            renderEmpty(results, items.length ? 'No dramas match this search. Try another title or label.' : 'No public Blogger posts were found yet. Publish a drama post to populate Discover.');
+          } else {
+            var grid = document.createElement('div'); grid.className = 'library-grid';
+            filtered.forEach(function (item) {
+              var card = document.createElement('article'); card.className = 'library-card';
+              var link = document.createElement('a'); link.className = 'library-card-link'; link.href = item.contentUrl;
+              if (item.posterUrl) {
+                var image = document.createElement('img'); image.src = item.posterUrl; image.alt = item.title;
+                image.loading = 'lazy'; image.decoding = 'async'; link.appendChild(image);
+              } else {
+                var placeholder = document.createElement('div'); placeholder.className = 'library-card-placeholder';
+                placeholder.textContent = 'DRAMORA'; link.appendChild(placeholder);
+              }
+              card.appendChild(link);
+              var copy = document.createElement('div'); copy.className = 'library-card-copy';
+              var heading = document.createElement('h3'); var titleLink = document.createElement('a');
+              titleLink.href = item.contentUrl; titleLink.textContent = item.title; heading.appendChild(titleLink); copy.appendChild(heading);
+              if (item.summary) { var summary = document.createElement('p'); summary.className = 'discover-summary'; summary.textContent = item.summary; copy.appendChild(summary); }
+              if (item.labels && item.labels.length) {
+                var labelRow = document.createElement('div'); labelRow.className = 'discover-card-labels';
+                item.labels.slice(0, 3).forEach(function (label) {
+                  var badge = document.createElement('span'); badge.className = 'mini-label'; badge.textContent = label; labelRow.appendChild(badge);
+                });
+                copy.appendChild(labelRow);
+              }
+              card.appendChild(copy); grid.appendChild(card);
+            });
+            results.appendChild(grid);
+          }
+          moreWrap.replaceChildren();
+          if (hasMore) {
+            var more = document.createElement('button'); more.type = 'button';
+            more.textContent = loading ? 'Loading…' : 'Load more dramas'; more.disabled = loading;
+            more.addEventListener('click', loadNextPage); moreWrap.appendChild(more);
+          }
+        }
+        function loadNextPage() {
+          if (loading || !hasMore) return;
+          loading = true; renderResults();
+          fetchBloggerCatalogPage(nextStart).then(function (result) {
+            items = items.concat(result.items);
+            nextStart += result.received;
+            hasMore = result.received === 50;
+            loading = false; renderResults();
+          }).catch(function (error) {
+            loading = false; hasMore = false;
+            renderResults();
+            var message = document.createElement('p'); message.className = 'admin-help';
+            message.textContent = 'Could not load the public Blogger feed: ' + (error.message || 'Unknown feed error.') + ' Check that the blog and posts are public.';
+            results.appendChild(message);
+          });
+        }
+        search.addEventListener('input', renderResults);
+        renderEmpty(results, 'Loading public drama posts…');
+        loadNextPage();
+      }
+
+      function renderMyList() {
+        var main = document.querySelector('.main-posts');
+        if (!main || window.location.pathname.indexOf('/p/my-list.html') !== 0) return;
+        var page = createPageShell('My List', 'Your saved dramas, synced to your account.');
+        main.replaceChildren(page);
+        if (!currentUser) { renderSignInPrompt(page); return; }
+        var loading = document.createElement('div'); loading.className = 'library-empty'; loading.textContent = 'Loading your list…';
+        page.appendChild(loading);
+        DramoraData.listFavorites(30).then(function (result) {
+          loading.remove(); renderCards(page, result.items, true);
+        }).catch(function (error) {
+          loading.textContent = error.message || 'Could not load your list. Check Firebase setup and Firestore rules.';
+        });
+      }
+      function renderProfile() {
+        var main = document.querySelector('.main-posts');
+        if (!main || window.location.pathname.indexOf('/p/profile.html') !== 0) return;
+        var page = createPageShell('Your Profile', 'Your account and recently watched dramas.');
+        main.replaceChildren(page);
+        if (!currentUser) { renderSignInPrompt(page); return; }
+        var panel = document.createElement('div'); panel.className = 'profile-panel';
+        var avatar = document.createElement('div'); avatar.className = 'profile-avatar';
+        var photo = safeUrl(currentUser.photoURL);
+        if (photo) { var img = document.createElement('img'); img.src = photo; img.alt = ''; avatar.appendChild(img); }
+        else avatar.textContent = (currentUser.displayName || 'D').charAt(0).toUpperCase();
+        var details = document.createElement('div');
+        var name = document.createElement('h2'); name.textContent = currentUser.displayName || 'Dramora member';
+        var email = document.createElement('p'); email.textContent = currentUser.email || '';
+        var verified = document.createElement('p'); verified.textContent = currentUser.emailVerified ? 'Email verified' : 'Email verification pending';
+        details.appendChild(name); details.appendChild(email); details.appendChild(verified);
+        panel.appendChild(avatar); panel.appendChild(details); page.appendChild(panel);
+        var historyTitle = document.createElement('h2'); historyTitle.textContent = 'Watch history';
+        historyTitle.style.margin = '24px 0 14px'; page.appendChild(historyTitle);
+        var loading = document.createElement('div'); loading.className = 'library-empty'; loading.textContent = 'Loading watch history…'; page.appendChild(loading);
+        DramoraData.listWatchHistory(30).then(function (result) {
+          loading.remove(); renderCards(page, result.items, false);
+        }).catch(function (error) {
+          loading.textContent = error.message || 'Could not load watch history.';
+        });
+      }
+
+      // DRAMORA V4 community: one public room and private conversations with exactly two members.
+      var profileSyncPromise = Promise.resolve();
+      var communityState = {
+        root: null, activeTab: 'public',
+        public: { unsub: null, messages: {}, cursor: null, reply: null, blocked: new Set(), elements: null },
+        private: { unsubList: null, unsubMessages: null, unsubConversation: null, messages: {}, cursor: null,
+          selectedId: null, selectedData: null, peer: null, reply: null, elements: null, profileCache: {} }
+      };
+      function communityError(error) {
+        var code = error && error.code ? error.code : '';
+        if (code === 'permission-denied') return 'Access was denied. Check the published Firestore rules, account status, and block settings.';
+        if (code === 'failed-precondition') return 'A Firestore index is required. Deploy the index file included with this release.';
+        if (code === 'unavailable' || code === 'deadline-exceeded') return 'Connection problem. Please try again.';
+        if (error && error.message && !code) return error.message;
+        return 'The community action could not be completed. Please try again.';
+      }
+      function disposeCommunity() {
+        ['unsub'].forEach(function (key) {
+          if (communityState.public[key]) communityState.public[key]();
+          communityState.public[key] = null;
+        });
+        ['unsubList', 'unsubMessages', 'unsubConversation'].forEach(function (key) {
+          if (communityState.private[key]) communityState.private[key]();
+          communityState.private[key] = null;
+        });
+        communityState.public.messages = {};
+        communityState.public.cursor = null;
+        communityState.public.reply = null;
+        communityState.public.elements = null;
+        communityState.private.messages = {};
+        communityState.private.cursor = null;
+        communityState.private.selectedId = null;
+        communityState.private.selectedData = null;
+        communityState.private.peer = null;
+        communityState.private.reply = null;
+        communityState.private.elements = null;
+        communityState.root = null;
+      }
+      function createButton(label, className, handler) {
+        var button = document.createElement('button');
+        button.type = 'button'; button.className = className || ''; button.textContent = label;
+        if (handler) button.addEventListener('click', handler);
+        return button;
+      }
+      function formatCommunityTime(value) {
+        try {
+          var date = value && typeof value.toDate === 'function' ? value.toDate() : new Date(value);
+          if (!date || isNaN(date.getTime())) return 'just now';
+          return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(date);
+        } catch (error) { return 'just now'; }
+      }
+      function appendSafeMessageText(target, value) {
+        var text = String(value || '');
+        var pattern = /https?:\/\/[^\s<>"']+/gi;
+        var cursor = 0, match;
+        while ((match = pattern.exec(text))) {
+          var raw = match[0], clean = raw;
+          while (/[.,!?;:)\]}]$/.test(clean)) clean = clean.slice(0, -1);
+          if (match.index > cursor) target.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+          var href = safeUrl(clean);
+          if (href) {
+            var anchor = document.createElement('a');
+            anchor.href = href; anchor.target = '_blank'; anchor.rel = 'noopener noreferrer';
+            anchor.textContent = clean; target.appendChild(anchor);
+          } else {
+            target.appendChild(document.createTextNode(clean));
+          }
+          if (raw.length > clean.length) target.appendChild(document.createTextNode(raw.slice(clean.length)));
+          cursor = match.index + raw.length;
+        }
+        if (cursor < text.length) target.appendChild(document.createTextNode(text.slice(cursor)));
+      }
+      function messageCollection(scope, conversationId) {
+        if (scope === 'public') return db.collection('communityRooms').doc('public').collection('messages');
+        return db.collection('conversations').doc(conversationId).collection('messages');
+      }
+      function messageReference(scope, conversationId, messageId) {
+        return messageCollection(scope, conversationId).doc(messageId);
+      }
+      function setCommunityReply(scope, message) {
+        var state = scope === 'public' ? communityState.public : communityState.private;
+        state.reply = { id: message.id, text: String(message.text || '').slice(0, 150) };
+        var elements = state.elements;
+        if (elements && elements.replyBar) {
+          elements.replyBar.hidden = false;
+          elements.replyText.textContent = 'Replying to ' + (message.senderName || 'member') + ': ' + state.reply.text;
+        }
+        if (elements && elements.input) elements.input.focus();
+      }
+      function clearCommunityReply(scope) {
+        var state = scope === 'public' ? communityState.public : communityState.private;
+        state.reply = null;
+        if (state.elements && state.elements.replyBar) state.elements.replyBar.hidden = true;
+      }
+      function toggleCommunityReaction(scope, conversationId, messageId, emoji, code, button) {
+        var user = currentUser;
+        if (!user) { openModal(); return; }
+        var ref = messageReference(scope, conversationId, messageId).collection('reactions').doc(user.uid).collection('emojis').doc(code);
+        button.disabled = true;
+        ref.get().then(function (snapshot) {
+          if (snapshot.exists) return ref.delete().then(function () { button.classList.remove('is-active'); });
+          return ref.set({ userId: user.uid, emoji: emoji, createdAt: firebase.firestore.FieldValue.serverTimestamp() })
+            .then(function () { button.classList.add('is-active'); });
+        }).catch(function (error) { notify(communityError(error)); }).finally(function () { button.disabled = false; });
+      }
+      function reportCommunityMessage(scope, conversationId, message) {
+        if (!currentUser || message.senderId === currentUser.uid) return;
+        var reason = window.prompt('Why are you reporting this message? The selected message excerpt (up to 500 characters) will be shared with Dramora moderators.');
+        if (!reason || !reason.trim()) return;
+        var payload = {
+          reporterUid: currentUser.uid,
+          targetUid: String(message.senderId || ''),
+          targetDisplayName: String(message.senderName || 'Dramora member').slice(0, 60),
+          messageId: String(message.id || ''),
+          scope: scope,
+          conversationId: scope === 'private' ? String(conversationId || '') : '',
+          reason: reason.trim().slice(0, 500),
+          // The reporter explicitly submits this bounded excerpt for moderator review.
+          messageExcerpt: String(message.text || '').slice(0, 500),
+          status: 'open',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        db.collection('reports').add(payload).then(function () { notify('Report submitted for review.'); })
+          .catch(function (error) { notify(communityError(error)); });
+      }
+      function blockCommunityUser(targetUid) {
+        if (!currentUser || !targetUid || targetUid === currentUser.uid) return Promise.resolve();
+        if (!window.confirm('Block this user? Their messages will be hidden from your community view.')) return Promise.resolve();
+        var ref = db.collection('userBlocks').doc(currentUser.uid).collection('blockedUsers').doc(targetUid);
+        return ref.get().then(function (existing) {
+          if (existing.exists) { notify('This user is already blocked.'); return null; }
+          return ref.set({ blockedUid: targetUid, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+        }).then(function (result) {
+          if (!result) return;
+          communityState.public.blocked.add(targetUid);
+          notify('User blocked. Their messages are now hidden from your view.');
+          if (communityState.public.elements) renderPublicMessages();
+          if (communityState.private.selectedData && communityState.private.selectedData.members.indexOf(targetUid) !== -1) {
+            if (communityState.private.elements && communityState.private.elements.messages) {
+              renderCommunityMessages(communityState.private.elements.messages, communityState.private.messages, 'private', communityState.private.selectedId);
+            }
+          }
+          renderBlockedUsers();
+          return loadConversationList();
+        }).catch(function (error) { notify(communityError(error)); });
+      }
+      function createCommunityMessageNode(message, scope, conversationId) {
+        var card = document.createElement('article'); card.className = 'community-message';
+        var head = document.createElement('div'); head.className = 'community-message-head';
+        var name = document.createElement('span'); name.className = 'community-message-name';
+        name.textContent = message.senderName || 'Dramora member';
+        var time = document.createElement('time'); time.className = 'community-message-time';
+        time.textContent = formatCommunityTime(message.createdAt);
+        head.appendChild(name); head.appendChild(time); card.appendChild(head);
+        if (message.replyToText) {
+          var quote = document.createElement('div'); quote.className = 'community-reply-quote';
+          quote.textContent = 'Reply: ' + String(message.replyToText).slice(0, 150); card.appendChild(quote);
+        }
+        var body = document.createElement('div'); body.className = 'community-message-body';
+        appendSafeMessageText(body, message.text); card.appendChild(body);
+        var actions = document.createElement('div'); actions.className = 'community-message-actions';
+        actions.appendChild(createButton('↩ Reply', 'community-message-action', function () { setCommunityReply(scope, message); }));
+        [
+          { emoji: '👍', code: 'like' },
+          { emoji: '❤️', code: 'love' },
+          { emoji: '😂', code: 'laugh' }
+        ].forEach(function (choice) {
+          var reaction = createButton(choice.emoji, 'community-message-action', function () {
+            toggleCommunityReaction(scope, conversationId, message.id, choice.emoji, choice.code, reaction);
+          });
+          reaction.setAttribute('aria-label', 'React with ' + choice.emoji);
+          actions.appendChild(reaction);
+        });
+        if (currentUser && message.senderId !== currentUser.uid) {
+          actions.appendChild(createButton('Report', 'community-message-action', function () {
+            reportCommunityMessage(scope, conversationId, message);
+          }));
+          actions.appendChild(createButton('Block', 'community-message-action', function () {
+            blockCommunityUser(message.senderId);
+          }));
+        }
+        card.appendChild(actions);
+        return card;
+      }
+      function renderCommunityMessages(container, map, scope, conversationId) {
+        if (!container) return;
+        container.replaceChildren();
+        var blocked = communityState.public.blocked;
+        var items = Object.keys(map).map(function (id) { return Object.assign({ id: id }, map[id]); })
+          .filter(function (item) { return !blocked.has(item.senderId); })
+          .sort(function (a, b) {
+            var at = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+            var bt = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
+            return at - bt;
+          });
+        if (!items.length) { renderEmpty(container, 'No messages yet. Start the conversation.'); return; }
+        items.forEach(function (message) { container.appendChild(createCommunityMessageNode(message, scope, conversationId)); });
+        container.scrollTop = container.scrollHeight;
+      }
+      function renderPublicMessages() {
+        var elements = communityState.public.elements;
+        if (elements) renderCommunityMessages(elements.messages, communityState.public.messages, 'public', '');
+      }
+      function loadBlockedUsers() {
+        if (!currentUser) return Promise.resolve();
+        return db.collection('userBlocks').doc(currentUser.uid).collection('blockedUsers').get().then(function (snapshot) {
+          communityState.public.blocked = new Set(snapshot.docs.map(function (doc) { return doc.id; }));
+        });
+      }
+      function loadPublicMessages() {
+        var state = communityState.public;
+        if (state.unsub || !state.elements) return;
+        var query = db.collection('communityRooms').doc('public').collection('messages')
+          .orderBy('createdAt', 'desc').limit(30);
+        state.unsub = query.onSnapshot(function (snapshot) {
+          snapshot.docs.forEach(function (doc) { state.messages[doc.id] = doc.data(); });
+          if (!state.cursor && snapshot.docs.length) state.cursor = snapshot.docs[snapshot.docs.length - 1];
+          renderPublicMessages();
+        }, function (error) {
+          state.elements.messages.replaceChildren();
+          var box = document.createElement('div'); box.className = 'community-error'; box.textContent = communityError(error);
+          state.elements.messages.appendChild(box);
+        });
+      }
+      function loadOlderPublicMessages() {
+        var state = communityState.public;
+        if (!state.cursor || !state.elements) return;
+        state.elements.older.disabled = true;
+        db.collection('communityRooms').doc('public').collection('messages').orderBy('createdAt', 'desc')
+          .startAfter(state.cursor).limit(30).get().then(function (snapshot) {
+            snapshot.docs.forEach(function (doc) { state.messages[doc.id] = doc.data(); });
+            if (snapshot.docs.length) state.cursor = snapshot.docs[snapshot.docs.length - 1];
+            else state.elements.older.hidden = true;
+            renderPublicMessages();
+          }).catch(function (error) { notify(communityError(error)); })
+          .finally(function () { state.elements.older.disabled = false; });
+      }
+      function sendCommunityMessage(scope) {
+        var state = scope === 'public' ? communityState.public : communityState.private;
+        var elements = state.elements;
+        if (!currentUser || !elements || !elements.input) return;
+        var text = elements.input.value.trim();
+        if (!text) return;
+        if (text.length > 1000) { notify('Messages can contain up to 1,000 characters.'); return; }
+        var conversationId = scope === 'private' ? state.selectedId : '';
+        if (scope === 'private' && (!conversationId || !state.selectedData)) { notify('Choose a conversation first.'); return; }
+        elements.send.disabled = true;
+        profileSyncPromise.then(function () {
+          var user = currentUser;
+          if (!user) throw new Error('Please sign in again.');
+          var batch = db.batch();
+          var stamp = firebase.firestore.FieldValue.serverTimestamp();
+          var rateRef = db.collection('communityRateLimits').doc(user.uid);
+          batch.set(rateRef, { lastSentAt: stamp }, { merge: true });
+          var messageRef = messageCollection(scope, conversationId).doc();
+          var reply = state.reply || { id: '', text: '' };
+          var payload = {
+            senderId: user.uid,
+            senderName: ((user.displayName || 'Dramora member').trim().slice(0, 60) || 'Dramora member'),
+            senderPhotoURL: safeUrl(user.photoURL) || '',
+            text: text,
+            replyToMessageId: reply.id || '',
+            replyToText: reply.text || '',
+            createdAt: stamp
+          };
+          batch.set(messageRef, payload);
+          if (scope === 'private') {
+            var conversationRef = db.collection('conversations').doc(conversationId);
+            return conversationRef.get().then(function (snapshot) {
+              if (!snapshot.exists) throw new Error('This conversation no longer exists.');
+              var data = snapshot.data();
+              var recipient = data.members.filter(function (uid) { return uid !== user.uid; })[0];
+              if (!recipient) throw new Error('Private conversations must contain exactly two members.');
+              var unread = Object.assign({}, data.unreadFor || {});
+              unread[user.uid] = 0;
+              unread[recipient] = (Number(unread[recipient]) || 0) + 1;
+              batch.update(conversationRef, {
+                lastMessage: text, lastMessageId: messageRef.id, lastSenderId: user.uid,
+                lastMessageAt: stamp, updatedAt: stamp, unreadFor: unread
+              });
+              return batch.commit();
+            });
+          }
+          return batch.commit();
+        }).then(function () {
+          elements.input.value = '';
+          clearCommunityReply(scope);
+        }).catch(function (error) {
+          notify(communityError(error));
+        }).finally(function () { elements.send.disabled = false; });
+      }
+      function createComposer(scope, parent) {
+        var composer = document.createElement('form'); composer.className = 'community-composer';
+        var replyBar = document.createElement('div'); replyBar.className = 'community-replying'; replyBar.hidden = true;
+        var replyText = document.createElement('span');
+        var cancelReply = createButton('×', '', function () { clearCommunityReply(scope); });
+        cancelReply.setAttribute('aria-label', 'Cancel reply');
+        replyBar.appendChild(replyText); replyBar.appendChild(cancelReply);
+        var input = document.createElement('textarea'); input.maxLength = 1000;
+        input.placeholder = 'Write a message…'; input.setAttribute('aria-label', 'Write a message');
+        var foot = document.createElement('div'); foot.className = 'community-composer-foot';
+        var hint = document.createElement('span'); hint.className = 'community-hint'; hint.textContent = 'Text and HTTP/HTTPS links only · 1,000 characters max';
+        var send = createButton('Send message', 'community-send', null); send.type = 'submit';
+        foot.appendChild(hint); foot.appendChild(send);
+        composer.appendChild(replyBar); composer.appendChild(input); composer.appendChild(foot);
+        composer.addEventListener('submit', function (event) { event.preventDefault(); sendCommunityMessage(scope); });
+        input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+            event.preventDefault(); sendCommunityMessage(scope);
+          }
+        });
+        parent.appendChild(composer);
+        return { input: input, send: send, replyBar: replyBar, replyText: replyText };
+      }
+      function buildPublicPanel(parent) {
+        var panel = document.createElement('section'); panel.className = 'community-panel';
+        var head = document.createElement('div'); head.className = 'community-panel-head';
+        var heading = document.createElement('div');
+        var h2 = document.createElement('h2'); h2.textContent = 'Public discussion';
+        var sub = document.createElement('p'); sub.textContent = 'Talk about dramas with the Dramora community.';
+        heading.appendChild(h2); heading.appendChild(sub);
+        var status = document.createElement('span'); status.className = 'community-status'; status.textContent = 'Live room';
+        head.appendChild(heading); head.appendChild(status); panel.appendChild(head);
+        var older = createButton('Load older messages', 'community-load-older', loadOlderPublicMessages);
+        panel.appendChild(older);
+        var messages = document.createElement('div'); messages.className = 'community-messages';
+        messages.setAttribute('role', 'log'); messages.setAttribute('aria-live', 'polite');
+        panel.appendChild(messages);
+        var elements = createComposer('public', panel);
+        elements.messages = messages; elements.older = older;
+        communityState.public.elements = elements;
+        parent.appendChild(panel);
+        loadPublicMessages();
+      }
+      function buildPrivatePanel(parent) {
+        var panel = document.createElement('section'); panel.className = 'community-panel community-private-layout';
+        var sidebar = document.createElement('aside'); sidebar.className = 'community-private-sidebar';
+        var search = document.createElement('input'); search.className = 'community-search'; search.type = 'search';
+        search.placeholder = 'Find a Dramora member…'; search.setAttribute('aria-label', 'Search community members');
+        var results = document.createElement('div'); results.className = 'community-search-results';
+        var conversationsTitle = document.createElement('div'); conversationsTitle.className = 'community-section-label'; conversationsTitle.textContent = 'Private messages';
+        var conversations = document.createElement('div'); conversations.className = 'community-conversation-list';
+        var blockedTitle = document.createElement('div'); blockedTitle.className = 'community-section-label'; blockedTitle.textContent = 'Blocked users';
+        var blockedList = document.createElement('div'); blockedList.className = 'community-conversation-list';
+        sidebar.appendChild(search); sidebar.appendChild(results); sidebar.appendChild(conversationsTitle); sidebar.appendChild(conversations);
+        sidebar.appendChild(blockedTitle); sidebar.appendChild(blockedList);
+        var main = document.createElement('div'); main.className = 'community-private-main';
+        var placeholder = document.createElement('div'); placeholder.className = 'community-private-placeholder';
+        placeholder.textContent = 'Choose a member or an existing conversation to start messaging privately.';
+        main.appendChild(placeholder);
+        panel.appendChild(sidebar); panel.appendChild(main); parent.appendChild(panel);
+        communityState.private.elements = { sidebar: sidebar, search: search, results: results, conversations: conversations, blocked: blockedList, main: main, placeholder: placeholder };
+        var searchTimer = null;
+        search.addEventListener('input', function () {
+          window.clearTimeout(searchTimer);
+          var value = search.value.trim().toLowerCase();
+          searchTimer = window.setTimeout(function () { searchPublicProfiles(value); }, 280);
+        });
+        loadConversationList();
+        renderBlockedUsers();
+        if (communityState.private.selectedId) {
+          var peerUid = communityState.private.selectedData && communityState.private.selectedData.members
+            ? communityState.private.selectedData.members.filter(function (uid) { return uid !== currentUser.uid; })[0] : null;
+          var cachedPeer = peerUid ? communityState.private.profileCache[peerUid] : communityState.private.peer;
+          if (cachedPeer) openPrivateConversation(communityState.private.selectedId, cachedPeer);
+        }
+      }
+      function stopPrivateCommunityListeners() {
+        ['unsubList', 'unsubMessages', 'unsubConversation'].forEach(function (key) {
+          if (communityState.private[key]) communityState.private[key]();
+          communityState.private[key] = null;
+        });
+        communityState.private.elements = null;
+      }
+      function stopPublicCommunityListener() {
+        if (communityState.public.unsub) communityState.public.unsub();
+        communityState.public.unsub = null;
+        communityState.public.elements = null;
+      }
+      function renderCommunityTab(tab) {
+        var root = communityState.root;
+        if (!root) return;
+        communityState.activeTab = tab;
+        if (tab === 'public') stopPrivateCommunityListeners();
+        else stopPublicCommunityListener();
+        root.querySelectorAll('.community-tab').forEach(function (button) {
+          var active = button.getAttribute('data-tab') === tab;
+          button.classList.toggle('active', active); button.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        var panel = root.querySelector('.community-tab-content');
+        panel.replaceChildren();
+        if (tab === 'public') buildPublicPanel(panel);
+        else buildPrivatePanel(panel);
+      }
+      function renderCommunity() {
+        var main = document.querySelector('.main-posts');
+        if (!main || window.location.pathname.indexOf('/p/community.html') !== 0) return;
+        disposeCommunity();
+        var page = createPageShell('Community', 'A safe place to talk about stories and connect with other viewers.');
+        main.replaceChildren(page);
+        if (!currentUser) { renderSignInPrompt(page); return; }
+        var shell = document.createElement('div'); shell.className = 'community-shell';
+        var tabs = document.createElement('div'); tabs.className = 'community-tabs'; tabs.setAttribute('role', 'tablist');
+        var publicTab = createButton('Public Chat', 'community-tab active', null); publicTab.setAttribute('data-tab', 'public'); publicTab.setAttribute('role', 'tab'); publicTab.setAttribute('aria-selected', 'true');
+        var privateTab = createButton('Private Messages', 'community-tab', null); privateTab.setAttribute('data-tab', 'private'); privateTab.setAttribute('role', 'tab'); privateTab.setAttribute('aria-selected', 'false');
+        publicTab.addEventListener('click', function () { renderCommunityTab('public'); });
+        privateTab.addEventListener('click', function () { renderCommunityTab('private'); });
+        tabs.appendChild(publicTab); tabs.appendChild(privateTab);
+        var content = document.createElement('div'); content.className = 'community-tab-content';
+        shell.appendChild(tabs); shell.appendChild(content); page.appendChild(shell); communityState.root = shell;
+        loadBlockedUsers().then(function () {
+          if (communityState.root === shell) renderCommunityTab('public');
+        }).catch(function (error) {
+          var box = document.createElement('div'); box.className = 'community-error'; box.textContent = communityError(error); content.appendChild(box);
+        });
+      }
+      function searchPublicProfiles(value) {
+        var elements = communityState.private.elements;
+        if (!elements) return;
+        elements.results.replaceChildren();
+        if (value.length < 2) return;
+        db.collection('publicProfiles').orderBy('searchName').startAt(value).endAt(value + '\uf8ff').limit(20).get()
+          .then(function (snapshot) {
+            if (!communityState.private.elements) return;
+            elements.results.replaceChildren();
+            var profiles = snapshot.docs.map(function (doc) { return doc.data(); })
+              .filter(function (profile) { return profile.uid !== currentUser.uid && !communityState.public.blocked.has(profile.uid); });
+            if (!profiles.length) { var empty = document.createElement('div'); empty.className = 'community-muted'; empty.textContent = 'No matching members found.'; elements.results.appendChild(empty); return; }
+            profiles.forEach(function (profile) {
+              elements.results.appendChild(createProfileButton(profile, function () { startPrivateConversation(profile); }));
+            });
+          }).catch(function (error) {
+            var box = document.createElement('div'); box.className = 'community-error'; box.textContent = communityError(error); elements.results.appendChild(box);
+          });
+      }
+      function createProfileButton(profile, handler) {
+        var button = createButton('', 'community-person', handler);
+        var avatar = document.createElement('span'); avatar.className = 'community-avatar';
+        var photo = safeUrl(profile.photoURL);
+        if (photo) { var img = document.createElement('img'); img.src = photo; img.alt = ''; avatar.appendChild(img); }
+        else avatar.textContent = String(profile.displayName || 'D').charAt(0).toUpperCase();
+        var copy = document.createElement('span'); copy.className = 'community-person-copy';
+        var name = document.createElement('strong'); name.textContent = profile.displayName || 'Dramora member';
+        var sub = document.createElement('small'); sub.textContent = 'Start a private chat';
+        copy.appendChild(name); copy.appendChild(sub); button.appendChild(avatar); button.appendChild(copy);
+        return button;
+      }
+      function renderBlockedUsers() {
+        var state = communityState.private, elements = state.elements;
+        if (!elements || !elements.blocked || !currentUser) return;
+        elements.blocked.replaceChildren();
+        db.collection('userBlocks').doc(currentUser.uid).collection('blockedUsers').get().then(function (snapshot) {
+          if (!state.elements || state.elements.blocked !== elements.blocked) return;
+          elements.blocked.replaceChildren();
+          if (snapshot.empty) { var empty = document.createElement('div'); empty.className = 'community-muted'; empty.textContent = 'No blocked members.'; elements.blocked.appendChild(empty); return; }
+          snapshot.docs.forEach(function (blockDoc) {
+            var uid = blockDoc.id;
+            db.collection('publicProfiles').doc(uid).get().then(function (profileDoc) {
+              if (!state.elements || state.elements.blocked !== elements.blocked) return;
+              var profile = profileDoc.exists ? profileDoc.data() : { displayName: 'Dramora member' };
+              var row = document.createElement('div'); row.className = 'community-person';
+              var copy = document.createElement('span'); copy.className = 'community-person-copy';
+              var name = document.createElement('strong'); name.textContent = profile.displayName || 'Dramora member';
+              var sub = document.createElement('small'); sub.textContent = 'Blocked';
+              copy.appendChild(name); copy.appendChild(sub);
+              var unblock = createButton('Unblock', 'community-message-action', function () {
+                unblock.disabled = true;
+                blockDoc.ref.delete().then(function () {
+                  communityState.public.blocked.delete(uid);
+                  row.remove(); renderPublicMessages(); renderBlockedUsers();
+                  notify('User unblocked.');
+                }).catch(function (error) { unblock.disabled = false; notify(communityError(error)); });
+              });
+              row.appendChild(copy); row.appendChild(unblock); elements.blocked.appendChild(row);
+            });
+          });
+        }).catch(function (error) { notify(communityError(error)); });
+      }
+      function loadConversationList() {
+        var state = communityState.private;
+        if (state.unsubList || !state.elements) return;
+        var list = db.collection('conversations').where('members', 'array-contains', currentUser.uid)
+          .orderBy('updatedAt', 'desc').limit(30);
+        state.unsubList = list.onSnapshot(function (snapshot) {
+          renderConversationList(snapshot.docs);
+        }, function (error) {
+          state.elements.conversations.replaceChildren();
+          var box = document.createElement('div'); box.className = 'community-error'; box.textContent = communityError(error);
+          state.elements.conversations.appendChild(box);
+        });
+      }
+      function renderConversationList(docs) {
+        var state = communityState.private, elements = state.elements;
+        if (!elements) return;
+        elements.conversations.replaceChildren();
+        if (!docs.length) { var empty = document.createElement('div'); empty.className = 'community-muted'; empty.textContent = 'Your private conversations will appear here.'; elements.conversations.appendChild(empty); return; }
+        Promise.all(docs.map(function (doc) {
+          var data = doc.data();
+          var otherUid = data.members.filter(function (uid) { return uid !== currentUser.uid; })[0];
+          if (!otherUid) return Promise.resolve(null);
+          if (state.profileCache[otherUid]) return Promise.resolve({ doc: doc, data: data, profile: state.profileCache[otherUid] });
+          return db.collection('publicProfiles').doc(otherUid).get().then(function (profileDoc) {
+            var profile = profileDoc.exists ? profileDoc.data() : { uid: otherUid, displayName: 'Dramora member', photoURL: '' };
+            state.profileCache[otherUid] = profile;
+            return { doc: doc, data: data, profile: profile };
+          });
+        })).then(function (rows) {
+          if (!state.elements || state.elements.conversations !== elements.conversations) return;
+          elements.conversations.replaceChildren();
+          rows.filter(Boolean).forEach(function (row) {
+            var button = createButton('', 'community-conversation' + (state.selectedId === row.doc.id ? ' active' : ''), function () {
+              openPrivateConversation(row.doc.id, row.profile);
+            });
+            button.setAttribute('data-conversation-id', row.doc.id);
+            var avatar = document.createElement('span'); avatar.className = 'community-avatar';
+            var photo = safeUrl(row.profile.photoURL);
+            if (photo) { var img = document.createElement('img'); img.src = photo; img.alt = ''; avatar.appendChild(img); }
+            else avatar.textContent = String(row.profile.displayName || 'D').charAt(0).toUpperCase();
+            var copy = document.createElement('span'); copy.className = 'community-conversation-copy';
+            var name = document.createElement('strong'); name.textContent = row.profile.displayName || 'Dramora member';
+            var preview = document.createElement('small'); preview.textContent = row.data.lastMessage || 'Start a conversation';
+            copy.appendChild(name); copy.appendChild(preview); button.appendChild(avatar); button.appendChild(copy);
+            var unread = Number((row.data.unreadFor || {})[currentUser.uid]) || 0;
+            if (unread > 0) { var count = document.createElement('span'); count.className = 'community-unread'; count.textContent = unread > 9 ? '9+' : String(unread); button.appendChild(count); }
+            elements.conversations.appendChild(button);
+          });
+        }).catch(function (error) { notify(communityError(error)); });
+      }
+      function conversationDocumentId(uidA, uidB) {
+        return [String(uidA), String(uidB)].sort().join('__');
+      }
+      function startPrivateConversation(profile) {
+        if (!currentUser || !profile || !profile.uid || profile.uid === currentUser.uid) return;
+        var ownBlock = db.collection('userBlocks').doc(currentUser.uid).collection('blockedUsers').doc(profile.uid);
+        ownBlock.get().then(function (blockDoc) {
+          if (blockDoc.exists) throw new Error('You have blocked this member. Unblock them before starting a conversation.');
+          var members = [currentUser.uid, profile.uid].sort();
+          var id = conversationDocumentId(members[0], members[1]);
+          var ref = db.collection('conversations').doc(id);
+          return db.runTransaction(function (transaction) {
+            return transaction.get(ref).then(function (snapshot) {
+              if (!snapshot.exists) {
+                var unread = {}; unread[members[0]] = 0; unread[members[1]] = 0;
+                var stamp = firebase.firestore.FieldValue.serverTimestamp();
+                transaction.set(ref, {
+                  members: members, createdAt: stamp, updatedAt: stamp, lastMessageAt: stamp,
+                  lastMessage: '', lastMessageId: '', lastSenderId: '', unreadFor: unread
+                });
+              }
+            });
+          }).then(function () { stateProfileCache(profile); return openPrivateConversation(id, profile); });
+        }).catch(function (error) { notify(communityError(error)); });
+      }
+      function stateProfileCache(profile) {
+        if (profile && profile.uid) communityState.private.profileCache[profile.uid] = profile;
+      }
+      function openPrivateConversation(conversationId, peerProfile) {
+        var state = communityState.private, elements = state.elements;
+        if (!elements) return Promise.resolve();
+        if (state.unsubMessages) state.unsubMessages();
+        if (state.unsubConversation) state.unsubConversation();
+        state.unsubMessages = null; state.unsubConversation = null;
+        state.selectedId = conversationId; state.peer = peerProfile || null;
+        state.messages = {}; state.cursor = null; state.reply = null;
+        var main = elements.main; main.replaceChildren();
+        var head = document.createElement('div'); head.className = 'community-private-head';
+        var title = document.createElement('strong'); title.textContent = peerProfile ? peerProfile.displayName : 'Private conversation';
+        var actions = document.createElement('div');
+        var block = createButton('Block', '', function () { if (state.peer) blockCommunityUser(state.peer.uid); });
+        var report = createButton('Report', '', function () {
+          if (!state.peer) return;
+          var reason = window.prompt('Why are you reporting this conversation?');
+          if (!reason || !reason.trim()) return;
+          db.collection('reports').add({
+            reporterUid: currentUser.uid,
+            targetUid: state.peer.uid,
+            targetDisplayName: String(state.peer.displayName || 'Dramora member').slice(0, 60),
+            messageId: '',
+            scope: 'private',
+            conversationId: conversationId,
+            reason: reason.trim().slice(0, 500),
+            messageExcerpt: '',
+            status: 'open',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+            .then(function () { notify('Report submitted for review.'); }).catch(function (error) { notify(communityError(error)); });
+        });
+        actions.appendChild(report); actions.appendChild(block); head.appendChild(title); head.appendChild(actions); main.appendChild(head);
+        var older = createButton('Load older messages', 'community-load-older', loadOlderPrivateMessages);
+        main.appendChild(older);
+        var messages = document.createElement('div'); messages.className = 'community-messages'; messages.setAttribute('role', 'log'); messages.setAttribute('aria-live', 'polite');
+        main.appendChild(messages);
+        var composer = createComposer('private', main);
+        composer.messages = messages; composer.older = older;
+        state.elements.messages = messages; state.elements.older = older;
+        state.elements.input = composer.input; state.elements.send = composer.send;
+        state.elements.replyBar = composer.replyBar; state.elements.replyText = composer.replyText;
+        var ref = db.collection('conversations').doc(conversationId);
+        state.unsubConversation = ref.onSnapshot(function (snapshot) {
+          if (!snapshot.exists) { messages.replaceChildren(); renderEmpty(messages, 'This conversation is no longer available.'); return; }
+          state.selectedData = snapshot.data();
+          if (state.selectedData.members.indexOf(currentUser.uid) === -1) { messages.replaceChildren(); renderEmpty(messages, 'You do not have access to this conversation.'); return; }
+          title.textContent = peerProfile ? peerProfile.displayName : 'Private conversation';
+          markPrivateConversationRead();
+        }, function (error) { notify(communityError(error)); });
+        var query = ref.collection('messages').orderBy('createdAt', 'desc').limit(30);
+        state.unsubMessages = query.onSnapshot(function (snapshot) {
+          snapshot.docs.forEach(function (doc) { state.messages[doc.id] = doc.data(); });
+          if (!state.cursor && snapshot.docs.length) state.cursor = snapshot.docs[snapshot.docs.length - 1];
+          renderCommunityMessages(messages, state.messages, 'private', conversationId);
+          markPrivateConversationRead();
+        }, function (error) { messages.replaceChildren(); var box = document.createElement('div'); box.className = 'community-error'; box.textContent = communityError(error); messages.appendChild(box); });
+        renderConversationListPlaceholderActive();
+        return Promise.resolve();
+      }
+      function renderConversationListPlaceholderActive() {
+        var list = communityState.private.elements && communityState.private.elements.conversations;
+        if (list) list.querySelectorAll('.community-conversation').forEach(function (button) {
+          button.classList.toggle('active', button.getAttribute('data-conversation-id') === communityState.private.selectedId);
+        });
+      }
+      function markPrivateConversationRead() {
+        var state = communityState.private;
+        if (!state.selectedId || !state.selectedData || !currentUser) return;
+        var unread = Object.assign({}, state.selectedData.unreadFor || {});
+        if ((Number(unread[currentUser.uid]) || 0) <= 0) return;
+        unread[currentUser.uid] = 0;
+        db.collection('conversations').doc(state.selectedId).update({ unreadFor: unread }).catch(function (error) {
+          console.warn('Dramora read receipt update failed:', error);
+        });
+      }
+      function loadOlderPrivateMessages() {
+        var state = communityState.private;
+        if (!state.cursor || !state.selectedId || !state.elements || !state.elements.messages) return;
+        state.elements.older.disabled = true;
+        db.collection('conversations').doc(state.selectedId).collection('messages').orderBy('createdAt', 'desc')
+          .startAfter(state.cursor).limit(30).get().then(function (snapshot) {
+            snapshot.docs.forEach(function (doc) { state.messages[doc.id] = doc.data(); });
+            if (snapshot.docs.length) state.cursor = snapshot.docs[snapshot.docs.length - 1];
+            else state.elements.older.hidden = true;
+            renderCommunityMessages(state.elements.messages, state.messages, 'private', state.selectedId);
+          }).catch(function (error) { notify(communityError(error)); })
+          .finally(function () { if (state.elements && state.elements.older) state.elements.older.disabled = false; });
+      }
+
+
+      // DRAMORA V5 — privileged admin console. All privileges are enforced by
+      // Firebase custom claims and Firestore rules; hiding this page is not security.
+      function adminActionButton(label, handler, danger) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'admin-action' + (danger ? ' danger' : '');
+        button.textContent = label;
+        button.addEventListener('click', handler);
+        return button;
+      }
+      function adminDate(value) {
+        if (!value) return 'Date unavailable';
+        var date = value.toDate ? value.toDate() : new Date(value);
+        return isNaN(date.getTime()) ? 'Date unavailable' : date.toLocaleString();
+      }
+      function setUserRestriction(uid, status, reason) {
+        if (!isAdminUser || !currentUser || !uid || uid === currentUser.uid) {
+          return Promise.reject(new Error('You cannot change this account restriction.'));
+        }
+        var ref = db.collection('userModeration').doc(uid);
+        return ref.get().then(function (snapshot) {
+          var stamp = firebase.firestore.FieldValue.serverTimestamp();
+          var payload = {
+            status: status,
+            reason: String(reason || '').slice(0, 500),
+            updatedBy: currentUser.uid,
+            updatedAt: stamp
+          };
+          if (!snapshot.exists) payload.createdAt = stamp;
+          return ref.set(payload, { merge: true });
+        });
+      }
+      function updateReportStatus(reportId, status, note) {
+        if (!isAdminUser || !currentUser) return Promise.reject(new Error('Admin access required.'));
+        return db.collection('reports').doc(reportId).update({
+          status: status,
+          reviewedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          reviewedBy: currentUser.uid,
+          moderationNote: String(note || '').slice(0, 500)
+        });
+      }
+      function renderAdminReportList(container, docs) {
+        container.replaceChildren();
+        var visibleDocs = docs.filter(function (doc) {
+          var status = doc.data().status || 'open';
+          return status !== 'resolved' && status !== 'dismissed';
+        });
+        var count = document.getElementById('adminOpenCount');
+        if (count) count.textContent = String(visibleDocs.length);
+        if (!visibleDocs.length) {
+          renderEmpty(container, 'No active reports. New reports will appear here.');
+          return;
+        }
+        visibleDocs.forEach(function (doc) {
+          var report = doc.data();
+          var card = document.createElement('article'); card.className = 'admin-report';
+          var head = document.createElement('div'); head.className = 'admin-report-head';
+          var titleWrap = document.createElement('div');
+          var title = document.createElement('strong');
+          title.textContent = (report.scope === 'private' ? 'Private message report' : 'Public chat report') +
+            ' · ' + String(report.targetDisplayName || report.targetUid || 'Unknown member').slice(0, 80);
+          var meta = document.createElement('div'); meta.className = 'admin-report-meta';
+          meta.textContent = 'Report: ' + doc.id + ' · Target UID: ' + String(report.targetUid || '').slice(0, 18) +
+            ' · Reporter UID: ' + String(report.reporterUid || '').slice(0, 18) +
+            ' · ' + adminDate(report.createdAt);
+          titleWrap.appendChild(title); titleWrap.appendChild(meta);
+          var status = document.createElement('span'); status.className = 'admin-status ' + String(report.status || 'open');
+          status.textContent = report.status || 'open';
+          head.appendChild(titleWrap); head.appendChild(status); card.appendChild(head);
+          var reason = document.createElement('div'); reason.className = 'admin-report-excerpt';
+          reason.textContent = 'Reason: ' + String(report.reason || 'No reason supplied').slice(0, 500) +
+            '\n\nReported excerpt: ' + String(report.messageExcerpt || 'This is an older report; no message excerpt was saved.').slice(0, 500);
+          card.appendChild(reason);
+          var actions = document.createElement('div'); actions.className = 'admin-actions';
+          var markReviewed = adminActionButton('Mark reviewed', function () {
+            markReviewed.disabled = true;
+            updateReportStatus(doc.id, 'reviewed', 'Reviewed by administrator')
+              .then(function () { notify('Report marked as reviewed.'); })
+              .catch(function (error) { notify(error.message || 'Could not update report.'); })
+              .finally(function () { markReviewed.disabled = false; });
+          });
+          actions.appendChild(markReviewed);
+          var resolve = adminActionButton('Resolve report', function () {
+            var note = window.prompt('Resolution note (optional):', 'Action taken after review');
+            if (note === null) return;
+            resolve.disabled = true;
+            updateReportStatus(doc.id, 'resolved', note)
+              .then(function () { notify('Report resolved.'); })
+              .catch(function (error) { notify(error.message || 'Could not resolve report.'); })
+              .finally(function () { resolve.disabled = false; });
+          });
+          actions.appendChild(resolve);
+          var dismiss = adminActionButton('Dismiss', function () {
+            if (!window.confirm('Dismiss this report?')) return;
+            dismiss.disabled = true;
+            updateReportStatus(doc.id, 'dismissed', 'Dismissed after review')
+              .then(function () { notify('Report dismissed.'); })
+              .catch(function (error) { notify(error.message || 'Could not dismiss report.'); })
+              .finally(function () { dismiss.disabled = false; });
+          }, true);
+          actions.appendChild(dismiss);
+          if (report.scope === 'public' && report.messageId) {
+            var removeMessage = adminActionButton('Remove public message', function () {
+              if (!window.confirm('Remove this reported public message? This cannot be undone from the dashboard.')) return;
+              removeMessage.disabled = true;
+              var batch = db.batch();
+              batch.delete(db.collection('communityRooms').doc('public').collection('messages').doc(report.messageId));
+              batch.update(db.collection('reports').doc(doc.id), {
+                status: 'resolved',
+                reviewedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                reviewedBy: currentUser.uid,
+                moderationNote: 'Reported public message removed'
+              });
+              batch.commit()
+                .then(function () { notify('Public message removed and report resolved.'); })
+                .catch(function (error) { notify(error.message || 'Could not remove message.'); })
+                .finally(function () { removeMessage.disabled = false; });
+            }, true);
+            actions.appendChild(removeMessage);
+          }
+          if (report.targetUid && report.targetUid !== currentUser.uid) {
+            var suspend = adminActionButton('Suspend messaging', function () {
+              var reasonText = window.prompt('Reason for community suspension:', 'Community guidelines violation');
+              if (reasonText === null) return;
+              suspend.disabled = true;
+              setUserRestriction(report.targetUid, 'suspended', reasonText)
+                .then(function () { notify('User messaging suspended.'); })
+                .catch(function (error) { notify(error.message || 'Could not suspend user.'); })
+                .finally(function () { suspend.disabled = false; });
+            }, true);
+            actions.appendChild(suspend);
+            var ban = adminActionButton('Ban from community', function () {
+              var reasonText = window.prompt('Reason for community ban:', 'Repeated community guidelines violation');
+              if (reasonText === null) return;
+              if (!window.confirm('Ban this user from sending public and private community messages?')) return;
+              ban.disabled = true;
+              setUserRestriction(report.targetUid, 'banned', reasonText)
+                .then(function () { notify('User banned from community messaging.'); })
+                .catch(function (error) { notify(error.message || 'Could not ban user.'); })
+                .finally(function () { ban.disabled = false; });
+            }, true);
+            actions.appendChild(ban);
+            var clear = adminActionButton('Clear restriction', function () {
+              clear.disabled = true;
+              setUserRestriction(report.targetUid, 'active', 'Restriction cleared after review')
+                .then(function () { notify('Community restriction cleared.'); })
+                .catch(function (error) { notify(error.message || 'Could not clear restriction.'); })
+                .finally(function () { clear.disabled = false; });
+            });
+            actions.appendChild(clear);
+          }
+          card.appendChild(actions); container.appendChild(card);
+        });
+      }
+      function loadAdminMedia(container) {
+        container.replaceChildren();
+        db.collection('mediaAssets').orderBy('createdAt', 'desc').limit(30).get().then(function (snapshot) {
+          if (!container.isConnected) return;
+          if (snapshot.empty) { renderEmpty(container, 'No media metadata registered yet.'); return; }
+          snapshot.docs.forEach(function (doc) {
+            var item = doc.data();
+            var row = document.createElement('div'); row.className = 'admin-media-row';
+            var copy = document.createElement('div');
+            var name = document.createElement('strong'); name.textContent = String(item.title || item.fileName || 'Untitled media');
+            var detail = document.createElement('small');
+            detail.textContent = String(item.storageProvider || '') + ' · ' + String(item.mediaType || '') +
+              ' · ' + (Number(item.sizeBytes || 0) / 1048576).toFixed(1) + ' MB · ' + String(item.status || 'ready') +
+              (item.linkedPostUrl ? ' · Linked: ' + String(item.dramaKey || 'Blogger post') + (item.episodeNumber ? ' · Ep ' + item.episodeNumber : '') : ' · Not linked to a post');
+            var link = document.createElement('a'); link.className = 'admin-link'; link.href = safeUrl(item.mediaUrl) || '#';
+            link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Open media';
+            copy.appendChild(name); copy.appendChild(detail); copy.appendChild(link);
+            var copyUrl = adminActionButton('Copy URL', function () {
+              var value = safeUrl(item.mediaUrl);
+              if (!value) { notify('This media URL is invalid.'); return; }
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(value).then(function () { notify('Media URL copied.'); })
+                  .catch(function () { window.prompt('Copy this media URL:', value); });
+              } else {
+                window.prompt('Copy this media URL:', value);
+              }
+            });
+            copy.appendChild(copyUrl);
+            row.appendChild(copy);
+            var linkPost = adminActionButton(item.linkedPostUrl ? 'Edit post link' : 'Link to post', function () {
+              var postUrl = window.prompt('Paste the canonical HTTPS Blogger post URL on this Dramora blog:', item.linkedPostUrl || '');
+              if (postUrl === null) return;
+              var meta;
+              if (!postUrl.trim()) {
+                meta = normalizeMediaLinkMeta('', '', '', '');
+              } else {
+                var dramaKey = window.prompt('Drama key (example: hidden-love):', item.dramaKey || '');
+                if (dramaKey === null) return;
+                var episodeNumber = window.prompt('Episode number (leave blank for a non-numbered asset):', item.episodeNumber || '');
+                if (episodeNumber === null) return;
+                var episodeTitle = window.prompt('Episode title (optional):', item.episodeTitle || item.title || '');
+                if (episodeTitle === null) return;
+                var seriesTitle = window.prompt('Series display title (optional):', item.seriesTitle || seriesDisplayName(dramaKey));
+                if (seriesTitle === null) return;
+                try { meta = normalizeMediaLinkMeta(postUrl, dramaKey, episodeNumber, episodeTitle); }
+                catch (error) { notify(error.message); return; }
+              }
+              linkPost.disabled = true;
+              doc.ref.update(Object.assign({}, meta, { seriesTitle: String(seriesTitle || '').trim().slice(0, 100), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }))
+                .then(function () { notify(meta.linkedPostUrl ? 'Media linked to the Blogger post.' : 'Post link cleared.'); loadAdminMedia(container); })
+                .catch(function (error) { notify(error.message || 'Could not update the post link.'); })
+                .finally(function () { linkPost.disabled = false; });
+            });
+            row.appendChild(linkPost);
+            var hide = adminActionButton(item.visibility === 'private' || item.status === 'hidden' ? 'Publish' : 'Hide', function () {
+              var nextVisibility = item.visibility === 'private' || item.status === 'hidden' ? 'public' : 'private';
+              var nextStatus = nextVisibility === 'public' ? 'ready' : 'hidden';
+              hide.disabled = true;
+              doc.ref.update({
+                visibility: nextVisibility, status: nextStatus,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+              }).then(function () { notify('Media visibility updated.'); loadAdminMedia(container); })
+                .catch(function (error) { notify(error.message || 'Could not update media.'); })
+                .finally(function () { hide.disabled = false; });
+            });
+            row.appendChild(hide); container.appendChild(row);
+          });
+        }).catch(function (error) {
+          renderEmpty(container, error.message || 'Could not load media. Check Firestore rules.');
+        });
+      }
+      function renderAdminPage() {
+        var main = document.querySelector('.main-posts');
+        if (!main || window.location.pathname.indexOf('/p/admin.html') !== 0) return;
+        if (adminReportsUnsubscribe) { adminReportsUnsubscribe(); adminReportsUnsubscribe = null; }
+        var page = createPageShell('Dramora Admin', 'Moderation and media operations · restricted administrator access.');
+        main.replaceChildren(page);
+        adminPageRoot = page;
+        if (!currentUser) { renderSignInPrompt(page); return; }
+        if (!adminClaimsReady) { renderEmpty(page, 'Verifying administrator permissions…'); return; }
+        if (!isAdminUser) {
+          var denied = document.createElement('div'); denied.className = 'admin-denied';
+          denied.textContent = 'Access denied. This account does not have the server-assigned administrator role.';
+          page.appendChild(denied); return;
+        }
+
+        var stats = document.createElement('div'); stats.className = 'admin-stats';
+        var stat1 = document.createElement('div'); stat1.className = 'admin-stat';
+        var count = document.createElement('strong'); count.id = 'adminOpenCount'; count.textContent = '—';
+        var label = document.createElement('span'); label.textContent = 'Active reports (latest 50)';
+        stat1.appendChild(count); stat1.appendChild(label);
+        var stat2 = document.createElement('div'); stat2.className = 'admin-stat';
+        var adminLabel = document.createElement('strong'); adminLabel.textContent = 'Verified';
+        var adminSmall = document.createElement('span'); adminSmall.textContent = 'Firebase admin claim';
+        stat2.appendChild(adminLabel); stat2.appendChild(adminSmall);
+        var stat3 = document.createElement('div'); stat3.className = 'admin-stat';
+        var storageLabel = document.createElement('strong'); storageLabel.textContent = 'Blogger + B2';
+        var storageSmall = document.createElement('span'); storageSmall.textContent = 'Primary and fallback media';
+        stat3.appendChild(storageLabel); stat3.appendChild(storageSmall);
+        stats.appendChild(stat1); stats.appendChild(stat2); stats.appendChild(stat3); page.appendChild(stats);
+
+        var reportCard = document.createElement('section'); reportCard.className = 'admin-card';
+        var reportTitle = document.createElement('h2'); reportTitle.textContent = 'Community moderation queue';
+        var reportDesc = document.createElement('p');
+        reportDesc.textContent = 'Review user-submitted reports. Private-message reports show only the excerpt submitted by the reporter; administrators do not get blanket access to private conversations.';
+        var reportList = document.createElement('div'); reportList.className = 'admin-report-list';
+        reportList.id = 'adminReportList';
+        reportCard.appendChild(reportTitle); reportCard.appendChild(reportDesc); reportCard.appendChild(reportList);
+        page.appendChild(reportCard);
+        adminReportsUnsubscribe = db.collection('reports').orderBy('createdAt', 'desc').limit(50).onSnapshot(function (snapshot) {
+          if (adminPageRoot !== page) return;
+          renderAdminReportList(reportList, snapshot.docs);
+        }, function (error) {
+          renderEmpty(reportList, error.message || 'Could not load moderation reports. Publish the V5 Firestore rules.');
+        });
+
+        var mediaCard = document.createElement('section'); mediaCard.className = 'admin-card';
+        var mediaTitle = document.createElement('h2'); mediaTitle.textContent = 'Media manager';
+        var mediaDesc = document.createElement('p');
+        mediaDesc.textContent = 'Register Blogger-hosted media or upload larger/fallback videos directly to Backblaze B2 through a short-lived signed URL.';
+        mediaCard.appendChild(mediaTitle); mediaCard.appendChild(mediaDesc);
+        var warning = document.createElement('div'); warning.className = 'admin-warning';
+        warning.textContent = 'Blogger remains primary. Upload videos up to 100 MB through Blogger first, then register their HTTPS URL here. Use B2 for videos above 100 MB or when Blogger upload fails. Never paste storage secrets here.';
+        mediaCard.appendChild(warning);
+
+        var form = document.createElement('form'); form.className = 'admin-form-grid'; form.style.marginTop = '15px';
+        var titleField = document.createElement('label'); titleField.className = 'admin-field';
+        titleField.textContent = 'Media title';
+        var titleInput = document.createElement('input'); titleInput.required = true; titleInput.maxLength = 160; titleInput.placeholder = 'Drama title · Episode 01';
+        titleField.appendChild(titleInput);
+        var postUrlField = document.createElement('label'); postUrlField.className = 'admin-field full';
+        postUrlField.textContent = 'Blogger episode post URL (optional)';
+        var postUrlInput = document.createElement('input'); postUrlInput.type = 'url';
+        postUrlInput.placeholder = 'https://your-blog.blogspot.com/2026/11/episode-01.html';
+        postUrlField.appendChild(postUrlInput);
+        var dramaKeyField = document.createElement('label'); dramaKeyField.className = 'admin-field';
+        dramaKeyField.textContent = 'Drama key (optional)';
+        var dramaKeyInput = document.createElement('input'); dramaKeyInput.maxLength = 80; dramaKeyInput.placeholder = 'hidden-love';
+        dramaKeyField.appendChild(dramaKeyInput);
+        var episodeNumberField = document.createElement('label'); episodeNumberField.className = 'admin-field';
+        episodeNumberField.textContent = 'Episode number (optional)';
+        var episodeNumberInput = document.createElement('input'); episodeNumberInput.type = 'number'; episodeNumberInput.min = '1'; episodeNumberInput.max = '9999'; episodeNumberInput.step = '1'; episodeNumberInput.placeholder = '1';
+        episodeNumberField.appendChild(episodeNumberInput);
+        var seriesTitleField = document.createElement('label'); seriesTitleField.className = 'admin-field full';
+        seriesTitleField.textContent = 'Series display title (optional)';
+        var seriesTitleInput = document.createElement('input'); seriesTitleInput.maxLength = 100; seriesTitleInput.placeholder = 'Hidden Love';
+        seriesTitleField.appendChild(seriesTitleInput);
+        var episodeTitleField = document.createElement('label'); episodeTitleField.className = 'admin-field full';
+        episodeTitleField.textContent = 'Episode title (optional)';
+        var episodeTitleInput = document.createElement('input'); episodeTitleInput.maxLength = 160; episodeTitleInput.placeholder = 'Episode 01 · The First Meeting';
+        episodeTitleField.appendChild(episodeTitleInput);
+        var providerField = document.createElement('label'); providerField.className = 'admin-field';
+        providerField.textContent = 'Storage provider';
+        var providerSelect = document.createElement('select');
+        [['blogger','Blogger URL (primary)'],['b2','Backblaze B2 upload (fallback)']].forEach(function (pair) {
+          var option = document.createElement('option'); option.value = pair[0]; option.textContent = pair[1]; providerSelect.appendChild(option);
+        });
+        providerField.appendChild(providerSelect);
+        var typeField = document.createElement('label'); typeField.className = 'admin-field';
+        typeField.textContent = 'Media type';
+        var typeSelect = document.createElement('select');
+        [['video','Video'],['image','Image / poster']].forEach(function (pair) {
+          var option = document.createElement('option'); option.value = pair[0]; option.textContent = pair[1]; typeSelect.appendChild(option);
+        });
+        typeField.appendChild(typeSelect);
+        var urlField = document.createElement('label'); urlField.className = 'admin-field full';
+        urlField.textContent = 'Blogger media URL';
+        var urlInput = document.createElement('input'); urlInput.type = 'url'; urlInput.placeholder = 'https://blogger.googleusercontent.com/...';
+        urlField.appendChild(urlInput);
+        var sizeField = document.createElement('label'); sizeField.className = 'admin-field';
+        sizeField.textContent = 'File size (MB)';
+        var sizeInput = document.createElement('input'); sizeInput.type = 'number'; sizeInput.min = '0.01'; sizeInput.step = '0.01'; sizeInput.placeholder = 'e.g. 82.5';
+        sizeField.appendChild(sizeInput);
+        var fileField = document.createElement('label'); fileField.className = 'admin-field full';
+        fileField.textContent = 'Video file for Backblaze B2';
+        var fileInput = document.createElement('input'); fileInput.type = 'file'; fileInput.accept = 'video/mp4,video/webm,video/quicktime,video/x-matroska';
+        fileField.appendChild(fileInput);
+        var fallbackWrap = document.createElement('label'); fallbackWrap.className = 'admin-check full';
+        var fallbackInput = document.createElement('input'); fallbackInput.type = 'checkbox';
+        var fallbackText = document.createElement('span'); fallbackText.textContent = 'Blogger upload failed — allow B2 fallback even if this video is 100 MB or smaller.';
+        fallbackWrap.appendChild(fallbackInput); fallbackWrap.appendChild(fallbackText);
+        var help = document.createElement('p'); help.className = 'admin-help full';
+        help.textContent = 'B2 single-object uploads support up to 5 GB. Larger files require a separate multipart-upload workflow. Direct browser-to-B2 upload avoids sending the video through the Cloudflare Worker.';
+        var submit = document.createElement('button'); submit.type = 'submit'; submit.className = 'admin-submit full'; submit.textContent = 'Save media metadata';
+        var statusNode = document.createElement('p'); statusNode.className = 'admin-help full'; statusNode.setAttribute('role','status'); statusNode.textContent = 'Ready.';
+        var linkHelp = document.createElement('p'); linkHelp.className = 'admin-help full';
+        linkHelp.textContent = 'When a canonical Blogger post URL is provided, Dramora can insert this registered video as the episode player on that post. Drama keys use lowercase letters, numbers and hyphens.';
+        [titleField,postUrlField,dramaKeyField,seriesTitleField,episodeNumberField,episodeTitleField,providerField,typeField,urlField,sizeField,fileField,fallbackWrap,help,linkHelp,submit,statusNode].forEach(function (node) { form.appendChild(node); });
+        function refreshMediaForm() {
+          var b2 = providerSelect.value === 'b2';
+          urlField.hidden = b2;
+          sizeField.hidden = b2;
+          fileField.hidden = !b2;
+          fallbackWrap.hidden = !b2;
+          if (b2) typeSelect.value = 'video';
+          typeSelect.disabled = b2;
+          fileInput.required = b2;
+          urlInput.required = !b2;
+          sizeInput.required = !b2;
+        }
+        providerSelect.addEventListener('change', refreshMediaForm);
+        refreshMediaForm();
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!isAdminUser || !currentUser) { notify('Administrator access required.'); return; }
+          var titleValue = titleInput.value.trim().slice(0,160);
+          if (!titleValue) { notify('Enter a media title.'); return; }
+          submit.disabled = true; statusNode.textContent = 'Preparing media operation…';
+          var linkMeta;
+          try { linkMeta = normalizeMediaLinkMeta(postUrlInput.value, dramaKeyInput.value, episodeNumberInput.value, episodeTitleInput.value); }
+          catch (error) { submit.disabled = false; statusNode.textContent = error.message; notify(error.message); return; }
+          var savePromise;
+          var uploadedB2PublicUrl = '';
+          var b2UploadCompleted = false;
+          if (providerSelect.value === 'blogger') {
+            var mediaUrl = safeUrl(urlInput.value.trim());
+            var sizeMB = Number(sizeInput.value);
+            if (!mediaUrl || !/^https:\/\//i.test(mediaUrl)) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.'; notify('Enter a valid HTTPS Blogger media URL.'); return;
+            }
+            if (!isFinite(sizeMB) || sizeMB <= 0) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.'; notify('Enter the uploaded file size in MB.'); return;
+            }
+            var sizeBytes = Math.round(sizeMB * 1048576);
+            if (typeSelect.value === 'video' && sizeBytes > 100 * 1048576) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.';
+              notify('Blogger primary video limit is 100 MB. Choose B2 for this video.'); return;
+            }
+            savePromise = db.collection('mediaAssets').add({
+              title: titleValue, storageProvider: 'blogger', mediaType: typeSelect.value,
+              mimeType: typeSelect.value === 'video' ? 'video/*' : 'image/*',
+              fileName: '', sizeBytes: sizeBytes, mediaUrl: mediaUrl, objectKey: '',
+              linkedPostUrl: linkMeta.linkedPostUrl, dramaKey: linkMeta.dramaKey,
+              episodeNumber: linkMeta.episodeNumber, episodeTitle: linkMeta.episodeTitle, seriesTitle: String(seriesTitleInput.value || '').trim().slice(0, 100),
+              status: 'ready', visibility: 'public', createdBy: currentUser.uid,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          } else {
+            var file = fileInput.files && fileInput.files[0];
+            if (!file) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.'; notify('Choose a video file for B2.'); return;
+            }
+            if (file.size > 5 * 1024 * 1024 * 1024) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.'; notify('This file exceeds the 5 GB single-upload limit. Multipart upload is a later milestone.'); return;
+            }
+            if (!/^video\/(mp4|webm|quicktime|x-matroska)$/i.test(file.type)) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.'; notify('Use MP4, WebM, MOV or MKV video with a recognized MIME type.'); return;
+            }
+            if (file.size <= 100 * 1048576 && !fallbackInput.checked) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.';
+              notify('B2 is for videos above 100 MB. Tick the fallback option if Blogger upload failed.'); return;
+            }
+            if (!DRAMORA_MEDIA_API_URL || DRAMORA_MEDIA_API_URL.indexOf('REPLACE_') === 0) {
+              submit.disabled = false; statusNode.textContent = 'Please correct the highlighted media details.'; notify('Deploy the Cloudflare Worker and set its URL in the Blogger XML first.'); return;
+            }
+            savePromise = currentUser.getIdToken(true).then(function (token) {
+              statusNode.textContent = 'Requesting a short-lived administrator upload authorization…';
+              return fetch(DRAMORA_MEDIA_API_URL.replace(/\/$/,'') + '/admin/media/presign', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                body: JSON.stringify({
+                  fileName: file.name, mimeType: file.type, sizeBytes: file.size,
+                  fallback: !!fallbackInput.checked
+                })
+              });
+            }).then(function (response) {
+              if (!response.ok) return response.json().catch(function () { return {}; }).then(function (data) {
+                throw new Error(data.error || 'Could not authorize B2 upload.');
+              });
+              return response.json();
+            }).then(function (signed) {
+              if (!signed.uploadUrl || !signed.publicUrl || !signed.objectKey) throw new Error('Media API returned an incomplete upload authorization.');
+              uploadedB2PublicUrl = signed.publicUrl;
+              statusNode.textContent = 'Uploading directly to Backblaze B2. Keep this page open until the upload finishes…';
+              return fetch(signed.uploadUrl, {
+                method: 'PUT',
+                headers: { 'Content-Type': file.type },
+                body: file
+              }).then(function (response) {
+                if (!response.ok) throw new Error('B2 upload failed with HTTP ' + response.status + '. Check bucket CORS and the signed content-length header.');
+                b2UploadCompleted = true;
+                statusNode.textContent = 'Upload complete. Saving media metadata to Firestore…';
+                return db.collection('mediaAssets').add({
+                  title: titleValue, storageProvider: 'b2', mediaType: 'video',
+                  mimeType: file.type, fileName: file.name.slice(0,240), sizeBytes: file.size,
+                  mediaUrl: signed.publicUrl, objectKey: signed.objectKey,
+                  linkedPostUrl: linkMeta.linkedPostUrl, dramaKey: linkMeta.dramaKey,
+                  episodeNumber: linkMeta.episodeNumber, episodeTitle: linkMeta.episodeTitle, seriesTitle: String(seriesTitleInput.value || '').trim().slice(0, 100),
+                  status: 'ready', visibility: 'public', createdBy: currentUser.uid,
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+              });
+            });
+          }
+          // Capture the public URL after the signed authorization is returned, so an
+          // administrator can recover it if Firestore metadata saving later fails.
+          savePromise.then(function () {
+            form.reset(); refreshMediaForm();
+            statusNode.textContent = 'Media metadata saved successfully.';
+            notify('Media metadata saved successfully.');
+            loadAdminMedia(mediaList);
+          }).catch(function (error) {
+            statusNode.textContent = error.message || 'Media operation failed.';
+            if (uploadedB2PublicUrl && b2UploadCompleted) {
+              statusNode.textContent += ' The B2 object may already exist; its URL is shown for recovery.';
+              window.prompt('B2 upload URL (use this if Firestore metadata saving failed):', uploadedB2PublicUrl);
+            }
+            notify(error.message || 'Media operation failed.');
+          }).finally(function () { submit.disabled = false; });
+        });
+        mediaCard.appendChild(form);
+        var mediaListTitle = document.createElement('h3'); mediaListTitle.textContent = 'Recently registered media';
+        mediaListTitle.style.margin = '22px 0 10px'; mediaCard.appendChild(mediaListTitle);
+        var mediaList = document.createElement('div'); mediaList.className = 'admin-media-list';
+        mediaCard.appendChild(mediaList); page.appendChild(mediaCard);
+        loadAdminMedia(mediaList);
+      }
+
+      function disposeAdminPage() {
+        if (adminReportsUnsubscribe) { adminReportsUnsubscribe(); adminReportsUnsubscribe = null; }
+        adminPageRoot = null;
+      }
+
+      function renderAccountPages() {
+        renderDramaSeriesPage();
+        renderDiscover();
+        renderMyList();
+        renderProfile();
+        renderCommunity();
+        renderAdminPage();
+      }
+
+      function attachVideoTracking() {
+        if (!currentUser || !firebaseReady || window.location.pathname.indexOf('/p/') === 0) return;
+        var item; try { item = currentContent(); } catch (error) { return; }
+        document.querySelectorAll('.post-body video').forEach(function (video) {
+          if (video.dataset.dramoraTracking === 'true') return;
+          video.dataset.dramoraTracking = 'true';
+          var lastSave = 0, resumeStarted = false, saveInFlight = false;
+          function resume() {
+            if (resumeStarted || !currentUser) return; resumeStarted = true;
+            DramoraData.getWatchProgress(item.contentId).then(function (progress) {
+              if (!progress || progress.completed || video.currentTime > 1) return;
+              var position = Number(progress.positionSeconds) || 0, duration = Number(video.duration) || 0;
+              if (position > 5 && (!duration || duration-position > 8)) {
+                try {
+                  video.currentTime = position;
+                  var hint = document.createElement('p'); hint.className = 'registered-player-note';
+                  hint.textContent = 'Resumed from ' + Math.floor(position/60) + ':' + String(Math.floor(position%60)).padStart(2,'0');
+                  if (video.parentNode) video.parentNode.insertBefore(hint, video.nextSibling);
+                } catch (error) {}
+              }
+            }).catch(function () {});
+          }
+          function save(force) {
+            if (!currentUser || !isFinite(video.currentTime) || saveInFlight) return;
+            var now = Date.now(); if (!force && now-lastSave < 15000 && !video.paused && !video.ended) return;
+            lastSave = now; saveInFlight = true;
+            DramoraData.saveWatchProgress({
+              contentId:item.contentId, contentUrl:item.contentUrl, title:item.title, posterUrl:item.posterUrl,
+              positionSeconds:video.ended && isFinite(video.duration) ? video.duration : video.currentTime,
+              durationSeconds:isFinite(video.duration) ? video.duration : 0, completed:!!video.ended
+            }).catch(function (error) { console.warn('Dramora watch progress could not be saved:',error); })
+              .finally(function () { saveInFlight = false; });
+          }
+          video.addEventListener('loadedmetadata',resume);
+          video.addEventListener('timeupdate',function(){save(false);});
+          video.addEventListener('pause',function(){save(true);});
+          video.addEventListener('ended',function(){save(true);});
+          window.addEventListener('pagehide',function(){save(true);});
+          if (video.readyState >= 1) resume();
+        });
+      }
+
+      function handleAuthChange(user) {
+        currentUser = user || null;
+        isAdminUser = false;
+        adminClaimsReady = !currentUser;
+        var adminNav = document.getElementById('adminNavLink');
+        if (adminNav) adminNav.hidden = true;
+        if (authOpenBtn) authOpenBtn.textContent = currentUser ? 'My Account' : 'Sign in';
+        if (currentUser) {
+          profileSyncPromise = syncProfile(currentUser).catch(function (error) {
+            console.warn('Dramora profile sync failed:', error);
+            if (modal.classList.contains('is-open')) showError('You are signed in, but your profile could not sync. Check the published Firestore rules.');
+            throw error;
+          });
+          profileSyncPromise.catch(function () {});
+          currentUser.getIdTokenResult(true).then(function (tokenResult) {
+            isAdminUser = tokenResult.claims.admin === true;
+            adminClaimsReady = true;
+            if (adminNav) adminNav.hidden = !isAdminUser;
+            renderAdminPage();
+          }).catch(function (error) {
+            console.warn('Dramora admin claim check failed:', error);
+            adminClaimsReady = true;
+            isAdminUser = false;
+            renderAdminPage();
+          });
+        } else {
+          profileSyncPromise = Promise.resolve();
+          disposeCommunity();
+          disposeAdminPage();
+        }
+        if (modal.classList.contains('is-open')) {
+          if (currentUser) renderSignedIn(currentUser);
+          else setMode('login');
+        }
+        window.dispatchEvent(new CustomEvent('dramora:auth', { detail: { user: currentUser } }));
+        renderAccountPages();
+        attachRegisteredMediaPlayer();
+        attachVideoTracking();
+        if (currentUser) insertFavoriteButton();
+      }
+
+      if (configReady) {
+        try {
+          if (!window.firebase.apps.length) window.firebase.initializeApp(firebaseConfig);
+          auth = window.firebase.auth();
+          db = window.firebase.firestore();
+          firebaseReady = true;
+          persistenceReady = auth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL)
+            .catch(function (error) { console.warn('Dramora persistence setup:', error); });
+          persistenceReady.then(function () {
+            auth.onAuthStateChanged(handleAuthChange);
+            auth.getRedirectResult().catch(function (error) {
+              console.warn('Dramora Google redirect sign-in:', error);
+            });
+          });
+        } catch (error) {
+          console.error('Dramora Firebase initialization failed:', error);
+          showError('Firebase could not initialize. Check the Web App configuration in the theme.');
+        }
+      } else {
+        if (authOpenBtn) authOpenBtn.addEventListener('click', function () {
+          showError('Firebase is not configured yet. Add your Firebase Web App values in the Blogger XML and complete the setup guide.');
+        });
+        renderAccountPages();
+      }
+
+      authForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (!firebaseReady) { showError('Firebase is not configured. Follow the setup guide first.'); return; }
+        clearMessages();
+        var email = el('authEmail').value.trim();
+        var password = el('authPassword').value;
+        var submit = el('authSubmitBtn');
+        if (password.length < 8) { showError('Use a password with at least 8 characters.'); return; }
+        submit.disabled = true;
+        persistenceReady.then(function () {
+          if (mode === 'signup') {
+            var displayName = el('authDisplayName').value.trim().slice(0, 60) || 'Dramora member';
+            if (password !== el('authConfirmPassword').value) throw new Error('The passwords do not match.');
+            return auth.createUserWithEmailAndPassword(email, password).then(function (credential) {
+              return credential.user.updateProfile({ displayName: displayName })
+                .then(function () { return credential.user.sendEmailVerification(); })
+                .then(function () { return credential.user.reload(); })
+                .then(function () { return syncProfile(auth.currentUser || credential.user); })
+                .then(function () { renderSignedIn(auth.currentUser || credential.user); showSuccess('Account created. Check your inbox for the verification email.'); });
+            });
+          }
+          return auth.signInWithEmailAndPassword(email, password).then(function (credential) {
+            return credential.user.reload().then(function () {
+              return credential.user.getIdToken(true);
+            }).then(function () {
+              return syncProfile(auth.currentUser || credential.user);
+            }).then(function () { renderSignedIn(auth.currentUser || credential.user); });
+          });
+        }).catch(function (error) {
+          showError(error.message && !error.code ? error.message : friendlyError(error));
+        }).finally(function () { submit.disabled = false; });
+      });
+
+      el('authGoogleBtn').addEventListener('click', function () {
+        if (!firebaseReady) { showError('Firebase is not configured. Follow the setup guide first.'); return; }
+        clearMessages();
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        el('authGoogleBtn').disabled = true;
+        persistenceReady.then(function () { return auth.signInWithPopup(provider); })
+          .then(function (credential) { return syncProfile(credential.user); })
+          .then(function () { if (auth.currentUser) renderSignedIn(auth.currentUser); })
+          .catch(function (error) {
+            if (error.code === 'auth/popup-blocked' || error.code === 'auth/operation-not-supported-in-this-environment') {
+              auth.signInWithRedirect(provider).catch(function (redirectError) {
+                showError(friendlyError(redirectError));
+              });
+              return;
+            }
+            showError(friendlyError(error));
+          })
+          .finally(function () { el('authGoogleBtn').disabled = false; });
+      });
+      el('authForgotBtn').addEventListener('click', function () {
+        if (!firebaseReady) { showError('Firebase is not configured. Follow the setup guide first.'); return; }
+        var email = el('authEmail').value.trim();
+        if (!email) { showError('Enter your email address first.'); el('authEmail').focus(); return; }
+        auth.sendPasswordResetEmail(email).then(function () {
+          showSuccess('If an account exists for this email, a password reset message has been sent.');
+        }).catch(function (error) { showError(friendlyError(error)); });
+      });
+      el('authResendBtn').addEventListener('click', function () {
+        if (!auth || !auth.currentUser) return;
+        auth.currentUser.sendEmailVerification().then(function () {
+          showSuccess('Verification email sent. Check your inbox and spam folder.');
+        }).catch(function (error) { showError(friendlyError(error)); });
+      });
+      el('authLogoutBtn').addEventListener('click', function () {
+        if (!auth) return;
+        auth.signOut().then(function () { closeModal(); notify('You have signed out.'); })
+          .catch(function (error) { showError(friendlyError(error)); });
+      });
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { insertFavoriteButton(); attachRegisteredMediaPlayer(); });
+      } else {
+        insertFavoriteButton();
+        attachRegisteredMediaPlayer();
+      }
+    }());
+
+    //]]>
+  </script>
 </body>
 </html>
