@@ -108,3 +108,14 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - Confirm the poster image is selected for Favorites / My List and Continue Watching cards.
 - Confirm multiple images do not cause the wrong poster to be selected; if needed, standardize the poster as the first image inside a Blogger `.separator` block.
 - Note: playback progress/resume tracking is currently available for standard HTML `video` elements only. It cannot reliably read the current time from Blogger's native `OBJECT` player.
+
+
+### Single-post hybrid multi-episode series tests
+- Create one Blogger series post with a poster image outside the episode wrappers, one series description, and at least three `.dramora-episode[ep-id]` blocks.
+- Verify episode order is numeric (1, 2, 10), duplicate IDs are ignored, and entries without a video are skipped.
+- Verify the first episode opens by default and `?ep=2` opens Episode 2 directly.
+- Select episodes repeatedly and confirm the correct original Blogger video object moves into the player slot.
+- Verify series poster, synopsis, episode title and episode description on mobile and desktop.
+- Verify the hybrid layout still initializes when Firebase is not yet configured.
+- Confirm Blogger editor preserves the `description` tags and `ep-id` / `ep-title` attributes after saving.
+- Native Blogger OBJECT playback progress/resume remains unverified and is not exposed through a supported standard HTML media API.
