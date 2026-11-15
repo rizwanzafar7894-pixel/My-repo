@@ -148,3 +148,13 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - [ ] Confirm empty new sections do not create visible gaps and existing five V9.11 gadget areas still work.
 - [ ] Confirm the fixed five-item mobile bottom navigation remains visible and usable; it intentionally remains a compact app navigation, independent of the desktop LinkList.
 - [ ] Confirm Blogger Pages still exist at the exact required paths; menu configuration does not create pages.
+
+
+## V9.13 — Blog widget registration regression test (pending)
+
+- [ ] Install the updated XML from `dramora-v9` on the Blogger test/live theme after taking a backup.
+- [ ] Open Blogger Dashboard → Layout and confirm the locked `Blog Posts / Drama & Episodes` widget is visible.
+- [ ] Open a published post URL and confirm its title, full `data:post.body` content, labels, and Blogger-native video appear.
+- [ ] Open the homepage and confirm the custom Dramora homepage still renders normally without a duplicate post list.
+- [ ] Confirm static pages and the mobile layout remain intact.
+- [ ] If the Blog widget is still missing from Layout after XML installation, export the currently active Blogger theme and compare its widget/section IDs before any further rewrite.
