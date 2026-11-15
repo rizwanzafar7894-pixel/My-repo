@@ -1204,10 +1204,11 @@
       }
 
       function attachRegisteredMediaPlayer() {
-        if (!db || window.location.pathname.indexOf('/p/') === 0) return;
+        if (window.location.pathname.indexOf('/p/') === 0) return;
         var body = document.querySelector('.post-body');
         if (!body || body.dataset.dramoraMediaLookup === 'done' || body.dataset.dramoraMediaLookup === 'loading') return;
         if (buildHybridSeriesExperience(body) || prepareNativeBloggerPost(body) || body.querySelector('video, iframe')) { body.dataset.dramoraMediaLookup = 'done'; return; }
+        if (!db) return;
         var item;
         try { item = currentContent(); } catch (error) { return; }
         body.dataset.dramoraMediaLookup = 'loading';
