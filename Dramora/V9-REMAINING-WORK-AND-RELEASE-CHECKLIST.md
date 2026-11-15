@@ -100,3 +100,11 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - Base branch: `main`
 - Existing draft PR: #1
 - Keep the PR in draft until live acceptance tests are complete.
+
+
+### Blogger-native uploaded video acceptance tests
+- Publish a test episode containing Blogger's `object.BLOG_video_class` embed followed by a poster image in a `.separator` block.
+- Confirm the native Blogger player is preserved (no duplicate Firestore player is injected) and scales within the Dramora post layout on mobile and desktop.
+- Confirm the poster image is selected for Favorites / My List and Continue Watching cards.
+- Confirm multiple images do not cause the wrong poster to be selected; if needed, standardize the poster as the first image inside a Blogger `.separator` block.
+- Note: playback progress/resume tracking is currently available for standard HTML `video` elements only. It cannot reliably read the current time from Blogger's native `OBJECT` player.
