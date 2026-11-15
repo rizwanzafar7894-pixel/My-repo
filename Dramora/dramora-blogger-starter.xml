@@ -130,6 +130,26 @@
     .continue-copy span { display:block; margin-top:5px; color:var(--muted); font-size:11px; }
     .continue-progress { height:4px; margin-top:10px; overflow:hidden; border-radius:9px; background:rgba(255,255,255,.12); }
     .continue-progress span { display:block; height:100%; border-radius:9px; background:linear-gradient(90deg,var(--purple),var(--pink)); }
+    .feed-section { content-visibility:auto; contain-intrinsic-size:460px; }
+    .feed-section .drama-card { min-width:0; }
+    .feed-section .drama-card a { display:block; height:100%; }
+    .feed-section .drama-meta p { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .post-actions { display:flex; flex-wrap:wrap; gap:10px; margin:0 0 18px; }
+    .favorite-action,.share-post-action { border:1px solid rgba(178,133,255,.35); color:#fff; background:rgba(155,92,255,.12); border-radius:11px; padding:10px 14px; font-weight:700; }
+    .favorite-action.is-saved { background:rgba(255,79,145,.16); border-color:rgba(255,79,145,.4); }
+    .registered-player-note { color:#d8c3ff; font-size:12px; margin:8px 0; }
+    @media(max-width:640px) {
+      .continue-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      .feed-section .drama-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      .hero { padding-top:22px; }
+      .hero-panel,.featured-track,.featured-slide { min-height:330px; }
+      .featured-controls { right:12px; bottom:12px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+    }
+
 
 
     /* Blogger post and episode presentation */
@@ -515,6 +535,14 @@
           <b:if cond='data:posts.empty'>
             <div class='empty-state'>Your dramas will appear here when you publish Blogger posts.</div>
           </b:if>
+        </section>
+        <section class='section feed-section' id='dramoraTrendingSection'>
+          <div class='section-head'><div><h2>Trending now</h2><p>Editor-picked stories to watch next.</p></div><a class='text-link' href='/search/label/Trending'>View all →</a></div>
+          <div class='drama-grid' id='dramoraTrendingGrid'><div class='empty-state'>Loading trending dramas…</div></div>
+        </section>
+        <section class='section feed-section' id='dramoraLatestSection'>
+          <div class='section-head'><div><h2>Latest episodes</h2><p>The newest stories published on Dramora.</p></div><a class='text-link' href='/search/label/Latest'>View all →</a></div>
+          <div class='drama-grid' id='dramoraLatestGrid'><div class='empty-state'>Loading latest episodes…</div></div>
         </section>
       </main>
     <b:else/>
@@ -2966,6 +2994,75 @@
       root.addEventListener('focusout', function (event) { if (!root.contains(event.relatedTarget)) start(); });
       document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
       show(0); start();
+    }());
+    // V9.3: public Blogger feed sections. Trending is an editorial Blogger label, not a fabricated popularity score.
+    (function initDramoraHomeFeeds() {
+      var configs = [
+        { id: 'dramoraTrendingGrid', url: '/feeds/posts/default/-/Trending?alt=json&max-results=8', empty: 'No dramas have been marked with the Trending label yet.' },
+        { id: 'dramoraLatestGrid', url: '/feeds/posts/default?alt=json&max-results=8', empty: 'No recent posts are available yet.' }
+      ];
+      function field(entry, key) { return entry && entry[key] && entry[key].$t ? entry[key].$t : ''; }
+      function entryUrl(entry) {
+        var links = entry && entry.link || [];
+        for (var i = 0; i < links.length; i++) if (links[i].rel === 'alternate') return safeUrl(links[i].href);
+        return '';
+      }
+      function renderFeed(host, entries, emptyText) {
+        host.replaceChildren();
+        if (!entries.length) {
+          var empty = document.createElement('div'); empty.className = 'empty-state';
+          empty.textContent = emptyText; host.appendChild(empty); return;
+        }
+        entries.forEach(function (entry) {
+          var url = entryUrl(entry); if (!url) return;
+          var card = document.createElement('article'); card.className = 'drama-card';
+          var link = document.createElement('a'); link.href = url;
+          var poster = document.createElement('div'); poster.className = 'poster';
+          var thumb = entry['media$thumbnail'] && entry['media$thumbnail'].url;
+          if (!thumb) {
+            var html = field(entry, 'content') || field(entry, 'summary');
+            var match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+            thumb = match ? match[1] : '';
+          }
+          var imageUrl = safeUrl(thumb);
+          if (imageUrl) {
+            var img = document.createElement('img'); img.src = imageUrl; img.alt = field(entry, 'title') || 'Drama poster';
+            img.loading = 'lazy'; img.decoding = 'async'; poster.appendChild(img);
+          } else {
+            var placeholder = document.createElement('div'); placeholder.className = 'poster-placeholder';
+            placeholder.textContent = 'DRAMORA'; poster.appendChild(placeholder);
+          }
+          var shade = document.createElement('div'); shade.className = 'poster-shade'; poster.appendChild(shade);
+          link.appendChild(poster);
+          var meta = document.createElement('div'); meta.className = 'drama-meta';
+          var title = document.createElement('h3'); title.textContent = field(entry, 'title') || 'Untitled drama';
+          var date = document.createElement('p'); date.textContent = field(entry, 'published');
+          meta.appendChild(title); meta.appendChild(date); link.appendChild(meta);
+          card.appendChild(link); host.appendChild(card);
+        });
+        if (!host.children.length) {
+          var none = document.createElement('div'); none.className = 'empty-state';
+          none.textContent = emptyText; host.appendChild(none);
+        }
+      }
+      configs.forEach(function (config) {
+        var host = document.getElementById(config.id); if (!host) return;
+        fetch(config.url, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+          .then(function (response) {
+            if (!response.ok) throw new Error('Blogger feed request failed (' + response.status + ').');
+            return response.json();
+          })
+          .then(function (data) {
+            var entries = data && data.feed && data.feed.entry ? data.feed.entry : [];
+            renderFeed(host, entries, config.empty);
+          })
+          .catch(function () {
+            host.replaceChildren();
+            var fallback = document.createElement('div'); fallback.className = 'empty-state';
+            fallback.textContent = 'This section could not load. Please check the Blogger feed settings.';
+            host.appendChild(fallback);
+          });
+      });
     }());
     //]]>
   </script>
