@@ -1126,6 +1126,25 @@
         button.className = 'favorite-action';
         button.textContent = '＋ Add to My List';
         bar.appendChild(button);
+        var share = document.createElement('button');
+        share.type = 'button';
+        share.className = 'share-post-action';
+        share.textContent = '↗ Share drama';
+        share.addEventListener('click', function () {
+          var shareData = { title: item.title, text: 'Watch ' + item.title + ' free on Dramora', url: item.contentUrl };
+          if (navigator.share) {
+            navigator.share(shareData).catch(function (error) {
+              if (error && error.name !== 'AbortError') notify('Could not open the share menu.');
+            });
+          } else if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(item.contentUrl).then(function () {
+              notify('Drama link copied.');
+            }).catch(function () { notify('Copy failed. You can copy the page URL from your browser.'); });
+          } else {
+            notify('Use your browser menu to copy or share this page.');
+          }
+        });
+        bar.appendChild(share);
         postBody.parentNode.insertBefore(bar, postBody);
         function refresh() {
           if (!currentUser || !firebaseReady) {
