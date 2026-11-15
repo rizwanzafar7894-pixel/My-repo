@@ -186,8 +186,8 @@
     .status-msg-wrap { margin:20px 0; padding:16px; border:1px solid var(--line); border-radius:12px; color:var(--muted); }
     /* DRAMORA V9.7 — one-post multi-episode hybrid series layout */
     .dramora-hybrid-series { display:grid; gap:18px; }
-    .dramora-series-overview { display:grid; grid-template-columns:minmax(110px,180px) minmax(0,1fr); gap:18px; align-items:start; padding:16px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(140deg,rgba(155,92,255,.12),rgba(255,255,255,.025)); }
-    .dramora-series-cover { width:100%; max-height:250px; object-fit:cover; border-radius:13px; margin:0!important; }
+    .dramora-series-overview { display:grid; grid-template-columns:minmax(0,1fr); gap:18px; align-items:start; padding:16px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(140deg,rgba(155,92,255,.12),rgba(255,255,255,.025)); }
+    .dramora-series-cover { display:none!important; }
     .dramora-series-overview h2 { margin:0 0 8px; color:#fff; font-size:23px; line-height:1.2; }
     .dramora-series-description { color:#c9c5d5; font-size:13px; line-height:1.75; white-space:pre-wrap; }
     .dramora-hybrid-player { min-width:0; padding:14px; border:1px solid rgba(174,126,255,.22); border-radius:17px; background:#0b0c13; }
@@ -202,7 +202,7 @@
     .dramora-hybrid-episode-copy { min-width:0; display:grid; gap:3px; }
     .dramora-hybrid-episode-copy strong { font-size:12px; overflow-wrap:anywhere; }
     .dramora-hybrid-episode-copy small { color:var(--muted); font-size:10px; }
-    @media(max-width:560px) { .dramora-series-overview { grid-template-columns:104px minmax(0,1fr); gap:12px; padding:12px; } .dramora-series-overview h2 { font-size:18px; } .dramora-series-cover { max-height:160px; } .dramora-hybrid-episode-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .dramora-hybrid-episode { padding:9px; } }
+    @media(max-width:560px) { .dramora-series-overview { grid-template-columns:minmax(0,1fr); gap:12px; padding:12px; } .dramora-series-overview h2 { font-size:18px; } .dramora-hybrid-episode-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .dramora-hybrid-episode { padding:9px; } }
     .post-body .episode-heading { margin:24px 0 10px; color:white; font-size:20px; font-weight:800; }
     .post-body .episode-note { color:var(--muted); font-size:13px; }
     .post-body .episode-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin:18px 0; }
@@ -1177,7 +1177,7 @@
           }) || null;
         }
         var seriesDescription = seriesDescriptionNode ? seriesDescriptionNode.textContent.trim() : '';
-        var poster = Array.prototype.slice.call(body.querySelectorAll('.separator img, img')).find(function (img) {
+        var poster = body.querySelector('.dramora-thumbnail img, .dramora-series-cover, .separator img:not(.dramora-episode img)') || Array.prototype.slice.call(body.querySelectorAll('img')).find(function (img) {
           return !img.closest('.dramora-episode') && !img.closest('.dramora-thumbnail');
         }) || null;
         var titleNode = document.querySelector('.post-title.entry-title, .post-title');
@@ -1188,7 +1188,9 @@
           poster.classList.add('dramora-series-cover');
           poster.alt = poster.alt || (seriesTitle + ' poster');
           poster.loading = 'eager'; poster.decoding = 'async';
-          overview.appendChild(poster);
+          var posterWrapper = poster.parentElement;
+          poster.remove();
+          if (posterWrapper && posterWrapper.classList.contains('separator') && !posterWrapper.textContent.trim() && posterWrapper.children.length === 0) posterWrapper.remove();
         }
         var summary = document.createElement('div');
         var heading = document.createElement('h2'); heading.textContent = seriesTitle;
