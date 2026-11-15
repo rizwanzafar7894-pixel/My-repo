@@ -27,6 +27,24 @@ File: `Dramora/dramora-blogger-starter.xml`
 - Existing Firebase/authentication/player functions were not intentionally edited by this change.
 - No reference-template scripts or external packages were added.
 
+## V9.2 — Personalized Continue Watching (implemented in this branch)
+
+File: `Dramora/dramora-blogger-starter.xml`
+
+- Added a homepage Continue Watching section that is visible only to an authenticated user.
+- Reads the signed-in user's existing Firestore `watchHistory` through `DramoraData.listWatchHistory(8)`; it does not introduce a new collection or alter the V8 data contract.
+- Cards use the saved canonical content URL, title, poster URL, position, and duration. URLs are passed through the existing `safeUrl` validation before use.
+- Displays a progress indicator when a duration is available and a friendly empty state when no history exists.
+- Handles loading and query errors without inserting Firestore text as HTML.
+- Hides the section on sign-out and guards asynchronous responses against rendering data after the active account changes.
+- Added a Trending Blogger label shortcut. It is a label navigation link, not a fabricated ranking or analytics feed.
+
+## V9.2 static verification notes
+
+- Confirmed the homepage host, authenticated-history query, URL validation, progress rendering, sign-out hiding, account-switch guard, and auth-render hook are present in the updated XML.
+- The feature reuses the existing V8 Firestore watch-history contract; no rules or indexes were changed.
+- Not yet verified on a live Blogger blog or against a live Firebase project. Actual rendered Blogger data, security rules, and mobile layout still require runtime testing.
+
 ## Live verification still required
 
 1. Install the branch XML on a Blogger test blog and confirm Blogger accepts the template.
