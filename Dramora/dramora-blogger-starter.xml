@@ -1177,7 +1177,7 @@
           }) || null;
         }
         var seriesDescription = seriesDescriptionNode ? seriesDescriptionNode.textContent.trim() : '';
-        var poster = body.querySelector('.dramora-thumbnail img, .dramora-series-cover, .separator img:not(.dramora-episode img)') || Array.prototype.slice.call(body.querySelectorAll('img')).find(function (img) {
+        var poster = body.querySelector('.dramora-thumbnail img, .dramora-series-cover') || Array.prototype.slice.call(body.querySelectorAll('.separator img, img')).find(function (img) {
           return !img.closest('.dramora-episode') && !img.closest('.dramora-thumbnail');
         }) || null;
         var titleNode = document.querySelector('.post-title.entry-title, .post-title');
