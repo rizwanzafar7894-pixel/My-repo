@@ -210,3 +210,11 @@ Use the Blogger editor's actual uploaded image URL; do not leave the placeholder
 - GitHub branch updates completed. Touch swipe behavior and thumbnail extraction still need testing on an installed Blogger test blog and real mobile browsers.
 - Blogger's feed `media$thumbnail` behavior can vary with the editor's image markup; verify that the dedicated thumbnail is returned in feed cards and saved-content metadata.
 - This change does not alter Firebase data contracts, Firestore rules, media storage, or the Blogger-first / Backblaze B2 fallback architecture.
+
+
+## V9.11 — Blogger Layout editor sections
+- Added five editable Blogger Layout gadget areas: header/announcement, homepage top, homepage after hero, homepage bottom, and footer.
+- Header brand text now uses the Blogger blog title (`data:blog.title`) so the visible name follows Blogger blog settings.
+- Added responsive styling for inserted Layout gadgets; existing navigation, featured carousel, Blogger post feed, Firebase logic, and episode player code are otherwise unchanged.
+- Gadget areas are empty by default and can be populated through Blogger Dashboard → Layout → Add a Gadget.
+- Blogger install/save and live Layout editor behavior still require testing on the user's test blog.
