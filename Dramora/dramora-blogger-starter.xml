@@ -451,6 +451,26 @@
       .section-head h2{font-size:20px;}
     }
     @media(min-width:761px) and (max-width:900px){.drama-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+
+    /* DRAMORA V9.9 — mobile bottom navigation */
+    .mobile-bottom-nav { display:none; }
+    @media(max-width:760px) {
+      body { padding-bottom:calc(72px + env(safe-area-inset-bottom, 0px)); }
+      .mobile-bottom-nav {
+        position:fixed; left:0; right:0; bottom:0; z-index:900;
+        display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+        min-height:62px; padding:7px 8px calc(7px + env(safe-area-inset-bottom, 0px));
+        border-top:1px solid rgba(190,150,255,.16);
+        background:rgba(10,11,19,.94); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+        box-shadow:0 -10px 34px rgba(0,0,0,.28);
+      }
+      .mobile-bottom-item { min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:12px; color:#918da3; font-size:10px; font-weight:700; line-height:1.2; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+      .mobile-bottom-icon { display:grid; place-items:center; width:27px; height:25px; font-size:23px; line-height:1; font-weight:500; }
+      .mobile-bottom-item.active { color:#d9c2ff; background:rgba(155,92,255,.13); }
+      .mobile-bottom-item.active .mobile-bottom-icon { color:#c59aff; text-shadow:0 0 16px rgba(169,112,255,.55); }
+      .mobile-bottom-item:focus-visible { outline:2px solid #b78aff; outline-offset:-2px; }
+    }
+
   ]]></b:skin>
 </head>
 <body>
@@ -697,6 +717,13 @@
         <span><a href='/p/about.html'>About</a> · <a href='/p/contact.html'>Contact</a> · <a href='/p/privacy-policy.html'>Privacy</a></span>
       </div>
     </footer>
+    <nav class='mobile-bottom-nav' id='mobileBottomNav' aria-label='Mobile navigation'>
+      <a class='mobile-bottom-item' data-nav='home' expr:href='data:blog.homepageUrl' aria-label='Home'><span class='mobile-bottom-icon' aria-hidden='true'>⌂</span><span>Home</span></a>
+      <a class='mobile-bottom-item' data-nav='discover' href='/p/discover.html' aria-label='Discover'><span class='mobile-bottom-icon' aria-hidden='true'>⌕</span><span>Discover</span></a>
+      <a class='mobile-bottom-item' data-nav='list' href='/p/my-list.html' aria-label='My List'><span class='mobile-bottom-icon' aria-hidden='true'>♡</span><span>My List</span></a>
+      <a class='mobile-bottom-item' data-nav='community' href='/p/community.html' aria-label='Community'><span class='mobile-bottom-icon' aria-hidden='true'>◌</span><span>Community</span></a>
+      <a class='mobile-bottom-item' data-nav='profile' href='/p/profile.html' aria-label='Profile'><span class='mobile-bottom-icon' aria-hidden='true'>♙</span><span>Profile</span></a>
+    </nav>
   </div>
   <script src='https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js'></script>
   <script src='https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js'></script>
@@ -707,6 +734,18 @@
       var toggle = document.getElementById('menuToggle');
       var nav = document.getElementById('mainNav');
       if (toggle && nav) toggle.addEventListener('click', function () { nav.classList.toggle('open'); });
+      var bottomNav = document.getElementById('mobileBottomNav');
+      if (bottomNav) {
+        var currentPath = window.location.pathname.replace(/\\/+$/, '') || '/';
+        var navItems = bottomNav.querySelectorAll('[data-nav]');
+        navItems.forEach(function (item) {
+          var key = item.getAttribute('data-nav');
+          var target = new URL(item.href, window.location.href).pathname.replace(/\\/+$/, '') || '/';
+          var active = key === 'home' ? currentPath === '/' : (currentPath === target || (key === 'home' && currentPath.indexOf('/20') === 0));
+          if (active) { item.classList.add('active'); item.setAttribute('aria-current','page'); }
+          else { item.classList.remove('active'); item.removeAttribute('aria-current'); }
+        });
+      }
       var search = document.getElementById('siteSearch');
       if (search) search.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' && search.value.trim()) {
