@@ -126,3 +126,13 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - Publish a test series with a dedicated `.dramora-thumbnail` image and confirm it appears in homepage/feed cards, Favorites, and Continue Watching metadata where supported, but is absent from the visible series detail page.
 - Confirm the series overview has no blank poster column when a dedicated thumbnail is supplied.
 - Repeat with no dedicated thumbnail and verify the fallback image behavior is acceptable.
+
+
+## V9.11 — Blogger Layout editor verification
+- [ ] Install updated XML on a Blogger test blog and confirm it saves without `Update failed`.
+- [ ] Open Blogger Dashboard → Layout and confirm all five Dramora gadget areas appear.
+- [ ] Add an HTML/JavaScript gadget to each area, save, and verify content appears in the intended position.
+- [ ] Confirm empty gadget areas do not leave unwanted blank gaps.
+- [ ] Change Blogger blog title and verify header brand text updates automatically.
+- [ ] Check mobile/desktop spacing, sticky header, footer, and homepage sections.
+- [ ] Confirm Firebase auth, Blogger post pages, episode switching, and mobile bottom navigation remain functional.
