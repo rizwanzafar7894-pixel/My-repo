@@ -96,3 +96,18 @@ File: `Dramora/dramora-blogger-starter.xml`
 - Static preflight confirmed one `Blog1` widget, explicit `main` and `dramoraPost` includables, a matching main-to-post include, and balanced CDATA markers.
 - This is not a live Blogger parser/install test. Blogger may still reject an unsupported data expression or widget construct; the test blog remains the final authority.
 - Do not claim the generic Blogger “Update failed” message is resolved until the updated XML is accepted by Blogger.
+
+
+## V9.6 — Blogger-native uploaded episode video support (implemented)
+
+- Detects Blogger's native uploaded-video markup: `object.BLOG_video_class` and IDs beginning with `BLOG_video-`.
+- Preserves Blogger's native player instead of replacing it with a guessed MP4 URL or injecting a duplicate Firestore-registered player.
+- Adds responsive sizing for the native object embed and marks the post's separator image (or first post image) as the episode poster.
+- Uses the same post image as the poster source for Dramora's existing favorites/watch-history metadata, so library cards can display it automatically.
+- This implementation does not extract undocumented Blogger video tokens or bypass Blogger's player.
+
+### V9.6 verification limits
+
+- GitHub commit completed on `dramora-v9`; no live Blogger playback test was performed in this change.
+- Blogger's native video is an `OBJECT` embed, not a standard HTML `VIDEO` element. Browser-side watch-progress/resume tracking currently attaches only to standard `video` elements; it cannot reliably read playback time from Blogger's cross-origin/native player. Progress tracking for these native embeds remains an explicit limitation until a supported player API is available.
+- Verify native playback on Android and desktop, portrait/landscape layout, and the poster image selection on the live test blog.
