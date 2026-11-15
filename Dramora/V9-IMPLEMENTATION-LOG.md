@@ -239,3 +239,15 @@ Use the Blogger editor's actual uploaded image URL; do not leave the placeholder
 - The full post body remains sourced from Blogger's `data:post.body` field.
 - This is a targeted structural change; it does not alter Firebase, Firestore, player, community, or media-storage contracts.
 - GitHub update completed on `dramora-v9`. The live Blogger Layout editor and single-post output have not yet been re-tested; do not mark this as fixed until the user installs the updated XML and confirms the Blog Posts gadget and post content appear.
+
+
+## V10 — Reference-led Blogger layout and archive rendering (code updated; live test pending)
+
+- Re-inspected the supplied SoraFlix Free Version 1.0 XML as the primary architecture/layout reference and Smart Tube Free as a secondary thumbnail/recent-content reference. Dramora uses the references for layout patterns only; no vendor branding, obfuscated code, redirects, or old third-party dependencies were copied.
+- Reworked the homepage into a responsive main-content + sidebar composition while retaining the Dramora featured carousel, continue-watching area, mood/category links, recent/trending/latest feeds, and home Layout gadget zones.
+- Added configurable Blogger sidebar gadget zones for homepage and post/archive views, with Dramora genre and account quick links.
+- Moved the inner-page title/back navigation into the Blog1 content column so the post renderer and sidebar share one coherent layout.
+- Extended the existing Blog1 includable to render archive/search/label cards with Blogger thumbnails, snippets, Watch links, and older/newer pagination. The archive loop is suppressed on the homepage to avoid duplicating the custom Dramora feed. Single-item pages continue to render the full Blogger post body.
+- Added responsive archive-card and sidebar styling in Dramora's existing dark cinematic purple visual system.
+- Existing Firebase Auth/Firestore, favorites, watch history/progress, episode navigation, Blogger-first media storage and Backblaze B2 fallback decisions were left unchanged. No premium, paid-membership, or payment flow was added.
+- XML tag nesting was checked after the edits, and static feature-presence checks passed. This is not a Blogger server/parser validation: installation, Layout gadget registration, archive pagination, and live post rendering still require a test-blog confirmation.
