@@ -109,6 +109,9 @@
     .mini-label { color:#d9c5ff; background:rgba(155,92,255,.13); border-radius:6px; padding:3px 7px; font-size:10px; }
     .content-layout { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:28px; padding-bottom:60px; }
     .main-posts { min-width:0; }
+    .blog-content-container { padding-top:0; }
+    .blog-content-layout { grid-template-columns:minmax(0,1fr); }
+    .blog-content-section .widget.Blog:empty { display:none; }
     .post-card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:16px; }
     .post-card h2 { margin:0 0 10px; font-size:23px; }
     .post-card .post-body { color:#c6c7d3; }
@@ -640,66 +643,7 @@
                 <a class='text-link' expr:href='data:blog.homepageUrl'>← Back to home</a>
               </div>
             </b:if>
-            <b:section class='main' id='main' showaddelement='no'>
-              <b:widget id='Blog1' locked='true' title='Drama &amp; Episodes' type='Blog' version='2' visible='true'>
-                <b:widget-settings>
-                  <b:widget-setting name='showDateHeader'>false</b:widget-setting>
-                  <b:widget-setting name='showShareButtons'>true</b:widget-setting>
-                  <b:widget-setting name='showCommentLink'>true</b:widget-setting>
-                  <b:widget-setting name='showAuthor'>false</b:widget-setting>
-                  <b:widget-setting name='showTimestamp'>true</b:widget-setting>
-                  <b:widget-setting name='showLabels'>true</b:widget-setting>
-                </b:widget-settings>
-                <b:includable id='main' var='this'>
-                  <div class='blog-posts hfeed'>
-                    <b:loop values='data:posts' var='post'>
-                      <b:include data='post' name='dramoraPost'/>
-                    </b:loop>
-                  </div>
-                  <b:if cond='data:blog.pageType == &quot;index&quot;'>
-                    <nav class='blog-pager' aria-label='Blog pagination'>
-                      <b:if cond='data:olderPageUrl'>
-                        <a class='button-ghost' expr:href='data:olderPageUrl'>Older posts</a>
-                      </b:if>
-                      <b:if cond='data:newerPageUrl'>
-                        <a class='button-ghost' expr:href='data:newerPageUrl'>Newer posts</a>
-                      </b:if>
-                    </nav>
-                  </b:if>
-                </b:includable>
-                <b:includable id='dramoraPost' var='post'>
-                  <article class='post-outer post hentry'>
-                    <header class='post-header'>
-                      <h2 class='post-title entry-title'>
-                        <b:if cond='data:view.isSingleItem'>
-                          <data:post.title/>
-                        <b:else/>
-                          <a expr:href='data:post.url'><data:post.title/></a>
-                        </b:if>
-                      </h2>
-                      <b:if cond='data:post.timestamp'>
-                        <div class='post-header-line-1'><data:post.timestamp/></div>
-                      </b:if>
-                    </header>
-                    <div class='post-body entry-content'>
-                      <b:if cond='data:view.isSingleItem'>
-                        <data:post.body/>
-                      <b:else/>
-                        <p><data:post.snippet/></p>
-                        <a class='button-primary' expr:href='data:post.url'>Watch episode</a>
-                      </b:if>
-                    </div>
-                    <b:if cond='data:post.labels'>
-                      <div class='post-labels' aria-label='Post labels'>
-                        <b:loop values='data:post.labels' var='label'>
-                          <a expr:href='data:label.url'><data:label.name/></a>
-                        </b:loop>
-                      </div>
-                    </b:if>
-                  </article>
-                </b:includable>
-              </b:widget>
-            </b:section>
+</b:section>
           </section>
           <aside class='sidebar'>
             <div class='sidebar-box'><h3>About Dramora</h3><p>Your home for short-form drama stories and bite-sized entertainment.</p></div>
@@ -709,6 +653,65 @@
       </main>
     </b:if>
 
+    <!-- Blog1 stays outside page-type conditions so Blogger registers it in Layout. -->
+    <main class='container blog-content-container'>
+      <div class='content-layout blog-content-layout'>
+        <section class='main-posts blog-content-posts'>
+                      <b:section class='main blog-content-section' id='main' showaddelement='no'>
+                        <b:widget id='Blog1' locked='true' title='Drama &amp; Episodes' type='Blog' version='2' visible='true'>
+                          <b:widget-settings>
+                            <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+                            <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+                            <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+                            <b:widget-setting name='showAuthor'>false</b:widget-setting>
+                            <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+                            <b:widget-setting name='showLabels'>true</b:widget-setting>
+                          </b:widget-settings>
+                          <b:includable id='main' var='this'>
+                            <b:if cond='data:view.isSingleItem'>
+                              <div class='blog-posts hfeed'>
+                                <b:loop values='data:posts' var='post'>
+                                  <b:include data='post' name='dramoraPost'/>
+                                </b:loop>
+                              </div>
+                            </b:if>
+                          </b:includable> </b:includable>
+                          <b:includable id='dramoraPost' var='post'>
+                            <article class='post-outer post hentry'>
+                              <header class='post-header'>
+                                <h2 class='post-title entry-title'>
+                                  <b:if cond='data:view.isSingleItem'>
+                                    <data:post.title/>
+                                  <b:else/>
+                                    <a expr:href='data:post.url'><data:post.title/></a>
+                                  </b:if>
+                                </h2>
+                                <b:if cond='data:post.timestamp'>
+                                  <div class='post-header-line-1'><data:post.timestamp/></div>
+                                </b:if>
+                              </header>
+                              <div class='post-body entry-content'>
+                                <b:if cond='data:view.isSingleItem'>
+                                  <data:post.body/>
+                                <b:else/>
+                                  <p><data:post.snippet/></p>
+                                  <a class='button-primary' expr:href='data:post.url'>Watch episode</a>
+                                </b:if>
+                              </div>
+                              <b:if cond='data:post.labels'>
+                                <div class='post-labels' aria-label='Post labels'>
+                                  <b:loop values='data:post.labels' var='label'>
+                                    <a expr:href='data:label.url'><data:label.name/></a>
+                                  </b:loop>
+                                </div>
+                              </b:if>
+                            </article>
+                          </b:includable>
+                        </b:widget>
+                      
+        </section>
+      </div>
+    </main>
 
     <div class='auth-modal' id='authModal' aria-hidden='true'>
       <div class='auth-backdrop' data-auth-close='true'></div>
