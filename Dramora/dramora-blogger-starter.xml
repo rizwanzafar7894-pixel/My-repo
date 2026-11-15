@@ -675,7 +675,7 @@
                                 </b:loop>
                               </div>
                             </b:if>
-                          </b:includable> </b:includable>
+                          </b:includable>
                           <b:includable id='dramoraPost' var='post'>
                             <article class='post-outer post hentry'>
                               <header class='post-header'>
@@ -708,7 +708,7 @@
                             </article>
                           </b:includable>
                         </b:widget>
-                      
+                      </b:section>
         </section>
       </div>
     </main>
