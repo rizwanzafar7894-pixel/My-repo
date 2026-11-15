@@ -119,3 +119,10 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - Verify the hybrid layout still initializes when Firebase is not yet configured.
 - Confirm Blogger editor preserves the `description` tags and `ep-id` / `ep-title` attributes after saving.
 - Native Blogger OBJECT playback progress/resume remains unverified and is not exposed through a supported standard HTML media API.
+
+### V9.10 UI regression checks
+- On a touch device, swipe left/right across the featured hero background and confirm the carousel changes slides; swipe vertically and confirm the page still scrolls normally.
+- Confirm tapping the hero's Watch / Discover links and carousel arrow/dot buttons still activates the controls rather than triggering a swipe.
+- Publish a test series with a dedicated `.dramora-thumbnail` image and confirm it appears in homepage/feed cards, Favorites, and Continue Watching metadata where supported, but is absent from the visible series detail page.
+- Confirm the series overview has no blank poster column when a dedicated thumbnail is supplied.
+- Repeat with no dedicated thumbnail and verify the fallback image behavior is acceptable.
