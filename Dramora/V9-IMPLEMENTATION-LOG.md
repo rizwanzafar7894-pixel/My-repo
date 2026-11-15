@@ -185,3 +185,14 @@ Recommended authoring format:
 ```
 
 Use the Blogger editor's actual uploaded image URL; do not leave the placeholder URL in a published post.
+
+
+### V9.9 responsive mobile bottom navigation
+
+- Added a fixed five-item mobile bottom bar: Home, Discover, My List, Community, and Profile.
+- The bar is hidden on desktop/tablet widths above 760px; the existing desktop top navigation remains unchanged.
+- Active destination is detected from the current URL path and receives an active purple treatment plus `aria-current="page"`.
+- Added translucent dark/glass styling, compact icon-and-label layout, keyboard focus indication, and bottom safe-area padding for phones with gesture navigation.
+- Added page bottom spacing on mobile so fixed navigation does not cover the final content.
+- Admin remains accessible through the existing desktop/account navigation and is intentionally not a public bottom-bar destination.
+- GitHub source update is complete; test the Blogger XML installation and tap targets on real Android/iOS viewport sizes before treating the feature as live-verified.
