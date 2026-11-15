@@ -218,3 +218,14 @@ Use the Blogger editor's actual uploaded image URL; do not leave the placeholder
 - Added responsive styling for inserted Layout gadgets; existing navigation, featured carousel, Blogger post feed, Firebase logic, and episode player code are otherwise unchanged.
 - Gadget areas are empty by default and can be populated through Blogger Dashboard → Layout → Add a Gadget.
 - Blogger install/save and live Layout editor behavior still require testing on the user's test blog.
+
+
+## V9.12 — Layout-managed navigation and categories
+- Added a dedicated Blogger Layout section inside the desktop navigation for a native LinkList gadget (`dramoraNavWidgets`).
+- Added a Blogger Layout section beside the homepage mood chips for a native Label gadget (`dramoraCategoryWidgets`).
+- The original built-in navigation and category chips remain as safe fallbacks. Once the corresponding native Blogger gadget is actually added, front-end initialization hides only that fallback to avoid duplicate menus/chips.
+- Styled Blogger LinkList items as the existing horizontal navigation on desktop and a vertical list in the mobile expanded menu; Label gadget links use Dramora pill styling.
+- Existing five V9.11 gadget areas, fixed mobile bottom navigation, Blogger post feeds, Firebase features, and episode player code remain in place.
+- Setup: add a LinkList gadget to the Dramora navigation menu area and configure its URLs; add a Label gadget to the Dramora categories area and select the labels to show. Keep category labels on posts consistent with those selected in the Label gadget.
+- Static Blogger Pages still must be created separately in Dashboard → Pages; adding a menu link does not create its destination page.
+- GitHub source changes are not a Blogger installation test. Confirm the Layout editor accepts both sections and that LinkList/Label gadget output matches the intended CSS on a private test blog.
