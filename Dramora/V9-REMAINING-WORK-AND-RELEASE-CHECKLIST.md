@@ -172,3 +172,25 @@ Use blank page bodies for the app-rendered pages (Discover, Community, My List, 
 - [ ] Confirm Firebase login, Google sign-in, favorites, Continue Watching, watch progress, community, and private messages are unchanged and still work after installation.
 - [ ] Confirm no paid/VIP/premium/payment UI has appeared.
 - [ ] Do not merge the draft PR or publish the theme until all acceptance checks pass.
+
+
+## V11 — Firebase, Firestore and community audit (static review complete; deployment pending)
+
+- [x] Audit the committed Blogger XML for Firebase configuration, auth flows, personal data paths, public/private messaging, reports, blocks, pagination and custom-claim admin UI.
+- [x] Record findings in `Dramora/V11-FIREBASE-AND-COMMUNITY-AUDIT.md`.
+- [ ] Import the exact currently deployed Firestore Rules and indexes into the repository before any rules rewrite.
+- [ ] Obtain the Cloudflare Worker source/configuration contract (never commit secret values).
+- [ ] Set the real Firebase Web App config and Worker endpoint in the Blogger theme.
+- [ ] Decide whether email verification is required for all signed-in access or only community posting/messaging, then enforce it server-side/rules-side as well as in UI.
+- [ ] Replace the current client-only rate-limit marker with enforceable server-side/rules-based throttling.
+- [ ] Verify rules enforce private conversation membership, two participants only, sender identity, block relationships, report privacy, and admin custom claims.
+- [ ] Run two-user and admin authorization tests in Firebase Rules Simulator/emulator and on the test blog.
+- [ ] Do not mark Firebase/community security production-ready until the above tests pass.
+
+### V11 static-audit findings to preserve
+
+- Firebase Web App config and Cloudflare Worker URL are placeholders in the current XML.
+- Email verification is sent/resendable but is not currently an access gate in the inspected client flow.
+- The client writes `communityRateLimits/{uid}.lastSentAt`, but does not enforce a cooldown; this is not a working rate limiter.
+- Client-side block and conversation-membership checks are not security boundaries; Firestore Rules must enforce them.
+- No Firestore Rules/index or Worker source file was located in the repository default-branch search results. This does not prove nothing is deployed; request the exact active artifacts rather than recreating them from assumptions.
