@@ -522,6 +522,7 @@
             <strong>Email verification pending</strong>
             <p>Please verify your email address. You can request a new verification message below.</p>
             <button class='auth-text-button' id='authResendBtn' type='button'>Resend verification email</button>
+            <button class='auth-text-button' id='authCheckVerificationBtn' type='button'>I've verified — refresh status</button>
           </div>
           <a class='auth-submit' href='/p/profile.html' style='display:flex;align-items:center;justify-content:center;text-decoration:none;margin-top:16px'>View profile</a>
           <button class='auth-secondary' id='authLogoutBtn' type='button'>Sign out</button>
@@ -622,6 +623,12 @@
         projectId: 'REPLACE_WITH_PROJECT_ID',
         appId: 'REPLACE_WITH_FIREBASE_APP_ID'
       };
+      // If the project ID is filled but authDomain was left at its default marker,
+      // derive the standard Firebase Auth domain. A custom auth domain may be kept.
+      if (firebaseConfig.projectId.indexOf('REPLACE_') !== 0 &&
+          firebaseConfig.authDomain.indexOf('REPLACE_') === 0) {
+        firebaseConfig.authDomain = firebaseConfig.projectId + '.firebaseapp.com';
+      }
 
       // Set this to the deployed Cloudflare Worker origin, without a trailing slash.
       var DRAMORA_MEDIA_API_URL = 'REPLACE_WITH_CLOUDFLARE_WORKER_URL';
@@ -763,7 +770,10 @@
       var configReady = firebaseConfig.apiKey.indexOf('REPLACE_') !== 0 &&
         firebaseConfig.projectId.indexOf('REPLACE_') !== 0 &&
         firebaseConfig.appId.indexOf('REPLACE_') !== 0 &&
-        window.firebase && typeof window.firebase.initializeApp === 'function';
+        firebaseConfig.authDomain.indexOf('REPLACE_') !== 0 &&
+        window.firebase && typeof window.firebase.initializeApp === 'function' &&
+        typeof window.firebase.auth === 'function' &&
+        typeof window.firebase.firestore === 'function';
 
       var profileSyncTasks = Object.create(null);
       var bloggerFeedCache = Object.create(null);
@@ -1465,7 +1475,7 @@
         root: null, activeTab: 'public',
         public: { unsub: null, messages: {}, cursor: null, reply: null, blocked: new Set(), elements: null },
         private: { unsubList: null, unsubMessages: null, unsubConversation: null, messages: {}, cursor: null,
-          selectedId: null, selectedData: null, peer: null, reply: null, elements: null, profileCache: {} }
+          selectedId: null, selectedData: null, peer: null, reply: null, elements: null, profileCache: {}, listDocs: [] }
       };
       function communityError(error) {
         var code = error && error.code ? error.code : '';
@@ -1490,6 +1500,7 @@
         communityState.public.elements = null;
         communityState.private.messages = {};
         communityState.private.cursor = null;
+        communityState.private.listDocs = [];
         communityState.private.selectedId = null;
         communityState.private.selectedData = null;
         communityState.private.peer = null;
@@ -1602,7 +1613,8 @@
             }
           }
           renderBlockedUsers();
-          return loadConversationList();
+          if (communityState.private.listDocs) renderConversationList(communityState.private.listDocs);
+          return Promise.resolve();
         }).catch(function (error) { notify(communityError(error)); });
       }
       function createCommunityMessageNode(message, scope, conversationId) {
@@ -1736,7 +1748,9 @@
               unread[user.uid] = 0;
               unread[recipient] = (Number(unread[recipient]) || 0) + 1;
               batch.update(conversationRef, {
-                lastMessage: text, lastMessageId: messageRef.id, lastSenderId: user.uid,
+                // Keep message text only in the private messages subcollection,
+                // never in the conversation-list summary document.
+                lastMessage: '', lastMessageId: messageRef.id, lastSenderId: user.uid,
                 lastMessageAt: stamp, updatedAt: stamp, unreadFor: unread
               });
               return batch.commit();
@@ -1929,6 +1943,7 @@
                 blockDoc.ref.delete().then(function () {
                   communityState.public.blocked.delete(uid);
                   row.remove(); renderPublicMessages(); renderBlockedUsers();
+                  if (communityState.private.listDocs) renderConversationList(communityState.private.listDocs);
                   notify('User unblocked.');
                 }).catch(function (error) { unblock.disabled = false; notify(communityError(error)); });
               });
@@ -1943,6 +1958,7 @@
         var list = db.collection('conversations').where('members', 'array-contains', currentUser.uid)
           .orderBy('updatedAt', 'desc').limit(30);
         state.unsubList = list.onSnapshot(function (snapshot) {
+          state.listDocs = snapshot.docs;
           renderConversationList(snapshot.docs);
         }, function (error) {
           state.elements.conversations.replaceChildren();
@@ -1959,16 +1975,25 @@
           var data = doc.data();
           var otherUid = data.members.filter(function (uid) { return uid !== currentUser.uid; })[0];
           if (!otherUid) return Promise.resolve(null);
-          if (state.profileCache[otherUid]) return Promise.resolve({ doc: doc, data: data, profile: state.profileCache[otherUid] });
+          if (state.profileCache[otherUid]) return Promise.resolve({ doc: doc, data: data, profile: state.profileCache[otherUid], otherUid: otherUid });
           return db.collection('publicProfiles').doc(otherUid).get().then(function (profileDoc) {
             var profile = profileDoc.exists ? profileDoc.data() : { uid: otherUid, displayName: 'Dramora member', photoURL: '' };
             state.profileCache[otherUid] = profile;
-            return { doc: doc, data: data, profile: profile };
+            return { doc: doc, data: data, profile: profile, otherUid: otherUid };
           });
         })).then(function (rows) {
           if (!state.elements || state.elements.conversations !== elements.conversations) return;
           elements.conversations.replaceChildren();
-          rows.filter(Boolean).forEach(function (row) {
+          var visibleRows = rows.filter(function (row) {
+            return !!row && !communityState.public.blocked.has(row.otherUid);
+          });
+          if (!visibleRows.length) {
+            var empty = document.createElement('div'); empty.className = 'community-muted';
+            empty.textContent = 'No private conversations to show. Blocked members are hidden here.';
+            elements.conversations.appendChild(empty);
+            return;
+          }
+          visibleRows.forEach(function (row) {
             var button = createButton('', 'community-conversation' + (state.selectedId === row.doc.id ? ' active' : ''), function () {
               openPrivateConversation(row.doc.id, row.profile);
             });
@@ -1979,7 +2004,7 @@
             else avatar.textContent = String(row.profile.displayName || 'D').charAt(0).toUpperCase();
             var copy = document.createElement('span'); copy.className = 'community-conversation-copy';
             var name = document.createElement('strong'); name.textContent = row.profile.displayName || 'Dramora member';
-            var preview = document.createElement('small'); preview.textContent = row.data.lastMessage || 'Start a conversation';
+            var preview = document.createElement('small'); preview.textContent = 'Tap to open private messages';
             copy.appendChild(name); copy.appendChild(preview); button.appendChild(avatar); button.appendChild(copy);
             var unread = Number((row.data.unreadFor || {})[currentUser.uid]) || 0;
             if (unread > 0) { var count = document.createElement('span'); count.className = 'community-unread'; count.textContent = unread > 9 ? '9+' : String(unread); button.appendChild(count); }
@@ -2760,13 +2785,49 @@
         if (!email) { showError('Enter your email address first.'); el('authEmail').focus(); return; }
         auth.sendPasswordResetEmail(email).then(function () {
           showSuccess('If an account exists for this email, a password reset message has been sent.');
-        }).catch(function (error) { showError(friendlyError(error)); });
+        }).catch(function (error) {
+          // Keep the same response for unknown addresses to avoid account enumeration.
+          if (error && error.code === 'auth/user-not-found') {
+            showSuccess('If an account exists for this email, a password reset message has been sent.');
+          } else {
+            showError(friendlyError(error));
+          }
+        });
       });
       el('authResendBtn').addEventListener('click', function () {
         if (!auth || !auth.currentUser) return;
+        var button = el('authResendBtn');
+        button.disabled = true;
         auth.currentUser.sendEmailVerification().then(function () {
           showSuccess('Verification email sent. Check your inbox and spam folder.');
-        }).catch(function (error) { showError(friendlyError(error)); });
+        }).catch(function (error) { showError(friendlyError(error)); })
+          .finally(function () { button.disabled = false; });
+      });
+      el('authCheckVerificationBtn').addEventListener('click', function () {
+        if (!auth || !auth.currentUser) return;
+        var button = el('authCheckVerificationBtn');
+        button.disabled = true;
+        auth.currentUser.reload().then(function () {
+          currentUser = auth.currentUser;
+          return currentUser.getIdToken(true);
+        }).then(function () {
+          // Wait for any initial auth-state profile sync to settle, then write
+          // the refreshed user object so emailVerified cannot be overwritten
+          // by an older in-flight profile payload.
+          return profileSyncPromise.catch(function () { return null; });
+        }).then(function () {
+          return syncProfile(currentUser);
+        }).then(function () {
+          renderSignedIn(currentUser);
+          if (currentUser.emailVerified) {
+            showSuccess('Email verified successfully. Your Dramora profile is up to date.');
+            window.dispatchEvent(new CustomEvent('dramora:auth', { detail: { user: currentUser } }));
+          } else {
+            showError('Verification is not confirmed yet. Open the latest email from Firebase, follow its link, then refresh this status again.');
+          }
+        }).catch(function (error) {
+          showError(friendlyError(error));
+        }).finally(function () { button.disabled = false; });
       });
       el('authLogoutBtn').addEventListener('click', function () {
         if (!auth) return;
